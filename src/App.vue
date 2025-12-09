@@ -38,8 +38,8 @@ import ItemActionsMenu from "./components/inventory/ItemActionsMenu.vue";
 const offlinePopup = ref(null);
 
 const tabs = [
-  { id: "player", label: "Overview", icon: "/icons/player.png", to: "/player", category: "player" },
-  { id: "skills", label: "Overview", icon: "/icons/skills/stats.png", to: "/skills", category: "skills" },
+  { id: "player", label: "Overview", icon: "/icons/ui/player_overview.png", to: "/player", category: "player" },
+  { id: "skills", label: "Overview", icon: "/icons/ui/skills_overview.png", to: "/skills", category: "skills" },
   { id: "woodcutting", label: "Woodcutting", icon: "/icons/skills/woodcutting.png", to: "/skill/woodcutting", category: "skills" },
   { id: "inventory", label: "Inventory", icon: "/icons/ui/backpack.png", to: "/inventory", category: "resources" },
   { id: "shop", label: "Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "resources" },

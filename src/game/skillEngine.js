@@ -13,6 +13,7 @@ import {
   getEffectiveToolStats,
   getPercentModifier,
   getFlatModifier,
+  getFinalStats,
 } from "./modifierEngine";
 
 const TICK_MS = 100;
@@ -110,30 +111,25 @@ function getBaseValues(action) {
  *  - doubleChance for doubling resource gain
  */
 function computeEffectiveStats(skillKey, baseVals) {
-  const tool = getEffectiveToolStats(skillKey);
+  const stats = getFinalStats(skillKey);
 
-  const speedPercent = getPercentModifier(`${skillKey}_speed_percent`) || 0;
-  const xpPercent = getPercentModifier(`${skillKey}_xp_percent`) || 0;
-
-  const globalSpeedPercent = getPercentModifier("speed_global_percent") || 0;
-  const globalXpPercent = getPercentModifier("xp_global_percent") || 0;
-
-  // SPEED: higher speedPercent → lower actionTime
-  const finalSpeedMultiplier = tool.speedMultiplier * (1 + speedPercent + globalSpeedPercent / 100);
+  // SPEED → bepaalt actie-tijd
   const actionTime = Math.max(
-    200, // hard floor on action time
-    Math.floor(baseVals.baseTime / finalSpeedMultiplier)
+    200,
+    Math.floor(baseVals.baseTime / stats.speed)
   );
 
-  // XP: tool + modifiers affect xpGain
-  const finalXpMultiplier = tool.xpMultiplier * (1 + xpPercent + globalXpPercent / 100);
-  const xpGain = Math.floor(baseVals.baseXp * finalXpMultiplier);
+  // XP MULTIPLIER
+  const xpGain = Math.floor(baseVals.baseXp * stats.xp);
 
+  // AMOUNT MULTIPLIER
+  const amountGain = Math.floor(baseVals.baseAmount * stats.amount);
+  console.log(amountGain)
   return {
     actionTime,
     xpGain,
-    amountGain: baseVals.baseAmount,
-    doubleChance: tool.doubleChance || 0,
+    amountGain,
+    doubleChance: stats.doubleChance,
   };
 }
 
@@ -373,15 +369,9 @@ export function performSkillAction(skillKey, actionOverride) {
   const action = actionOverride || skill?.currentAction;
   if (!skill || !action) return null;
 
-  const tool = getEffectiveToolStats(skillKey);
-  const flatAmount = getFlatModifier(`${skillKey}_amount_flat`);
-  const doubleFlat = getFlatModifier(`${skillKey}_doubleChance`);
-  const rarePercent = getPercentModifier(`${skillKey}_rareChance_percent`);
+  const stats = getFinalStats(skillKey);
 
-  const globalRarePercent = getPercentModifier("rare_drop_percent") || 0;
-  const globalAmountPercent = getPercentModifier("amount_global_percent") || 0;
-
-  // 1. Resource variants (weighted random selection)
+  // 1. Resource choice remains unchanged
   let resource = action.resource;
   if (action.variants) {
     let roll = Math.random();
@@ -395,42 +385,34 @@ export function performSkillAction(skillKey, actionOverride) {
     }
   }
 
-  // 2. Base amount + flat bonus
-  let gain = (action.amountGain ?? 0) + (flatAmount || 0);
-  gain = Math.floor(gain * (1 + globalAmountPercent / 100));
+  // 2. Amount gain
+  let gain = action.baseAmount * stats.amount;
 
-  // 3. Critical hit handling
+  // 3. Critical hit unchanged
   let crit = false;
   if (action.critChance && Math.random() < action.critChance) {
     crit = true;
     gain = Math.floor(gain * (action.critMultiplier ?? 2));
-    console.log(`[CRIT] ${action.id}`);
   }
 
-  // 4. Double chance (tool + action + flat modifiers)
-  let finalDouble =
-    (action.doubleChance || 0) +
-    tool.doubleChance +
-    (doubleFlat || 0) / 100;
-
+  // 4. Double chance from final stats
   let doubled = false;
-  if (Math.random() < finalDouble) {
+  if (Math.random() < stats.doubleChance) {
     gain *= 2;
     doubled = true;
-    console.log(`[DOUBLE] ${action.id}`);
   }
 
-  // 5. Award main resource
-  if (resource) addItem(resource, gain);
+  // 5. Award resource
+  if (resource) addItem(resource, Math.floor(gain));
 
-  // 6. Award XP for this action cycle
-  addXp(skillKey, action.xpGain);
+  // 6. XP uses final XP multiplier
+  addXp(skillKey, Math.floor(action.xpGain * stats.xp));
 
-  // 7. Rare drops (e.g., nests, gems, special items)
+  // 7. Rare drops
   const rareDropsGained = [];
   if (Array.isArray(action.rareDrops)) {
     for (const drop of action.rareDrops) {
-      let finalChance = drop.chance * (1 + rarePercent + globalRarePercent / 100);
+      let finalChance = drop.chance * (stats.rareChance ?? 1);
       if (Math.random() < finalChance) {
         addItem(drop.item, 1);
         rareDropsGained.push(drop.item);
@@ -438,7 +420,7 @@ export function performSkillAction(skillKey, actionOverride) {
     }
   }
 
-  // 8. Extra resources (e.g., secondary resources like seeds)
+  // 8. Extra resources unchanged
   const extraGained = [];
   if (Array.isArray(action.extraResources)) {
     for (const extra of action.extraResources) {
@@ -449,15 +431,6 @@ export function performSkillAction(skillKey, actionOverride) {
     }
   }
 
-  // 9. Action-triggered buffs
-  let buffApplied = null;
-  if (action.actionBuff && Math.random() < action.actionBuff.chance) {
-    addBuff(action.actionBuff.buffId, action.actionBuff.duration);
-    buffApplied = action.actionBuff.buffId;
-    console.log("[BUFF] Gained buff:", action.actionBuff.buffId);
-  }
-
-  // Return action result (used by offline progress, logging, UI, etc.)
   return {
     resource,
     gain,
@@ -466,7 +439,7 @@ export function performSkillAction(skillKey, actionOverride) {
     doubled,
     rareDropsGained,
     extraGained,
-    buffApplied,
+    buffApplied: null,
   };
 }
 

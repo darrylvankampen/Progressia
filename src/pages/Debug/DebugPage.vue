@@ -98,6 +98,7 @@
                         </div>
 
                         <button @click="buyPrestige(upgrade.id)">Buy Upgrade</button>
+                        <button @click="prestigeMax(upgrade.id)">Max Upgrade</button>
                     </div>
                 </div>
             </div>
@@ -127,6 +128,12 @@ const buyPrestige = id => {
         console.warn("Purchase failed or insufficient resources.");
     }
 };
+
+function prestigeMax(prestigeId) {
+    const def = getPrestigeDefs().find(p => p.id === prestigeId);
+
+    game.player.prestige[prestigeId] = def.maxLevel;
+}
 
 const searchQuery = ref("");
 

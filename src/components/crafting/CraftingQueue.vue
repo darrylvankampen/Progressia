@@ -1,6 +1,11 @@
 <template>
   <div class="mt-3 p-3 rounded queue-box text-light">
-    <h5>Crafting Queue</h5>
+    <h5 class="d-flex justify-content-between align-items-center">
+      Crafting Queue
+      <button v-if="queue.length > 0" class="stop-btn" @click="stopCrafting">
+        ✖ Stop
+      </button>
+    </h5>
 
     <div v-if="queue.length === 0" class="small">Queue is empty</div>
 
@@ -13,23 +18,19 @@
           <span class="job-qty">× {{ job.quantity }}</span>
         </div>
 
-        <!-- RIGHT SIDE: TIMER OR WAITING -->
+        <!-- RIGHT SIDE -->
         <div class="right">
+
+          <!-- Active craft (first) -->
           <template v-if="i === 0">
-            <!-- PROGRESS BAR -->
             <div class="progress-wrapper">
-              <div
-                class="progress-fill"
-                :style="{ width: progress + '%' }"
-              ></div>
+              <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             </div>
 
-            <!-- TIME LEFT -->
-            <div class="time-text">
-              ⏳ {{ timeLeft }}
-            </div>
+            <div class="time-text">⏳ {{ timeLeft }}</div>
           </template>
 
+          <!-- Waiting queue items -->
           <template v-else>
             <div class="waiting-text">Waiting…</div>
           </template>
@@ -44,23 +45,54 @@
 import { computed } from "vue";
 import { getGame } from "../../game/state/gameState";
 import { formatTime } from "../../game/utils/formatTime";
+import { cancelCraft } from "../../game/crafting/craftingEngine";
 
 const game = getGame();
 
 const queue = computed(() => game.craftingQueue);
-
 const timeLeft = computed(() => formatTime(game.craftingTimeRemaining));
-
 const progress = computed(() => game.craftingProgress);
+
+function stopCrafting() {
+  cancelCraft();
+
+  // verwijder alleen het actieve craft item
+  if (game.craftingQueue.length > 0) {
+    game.craftingQueue.shift();
+  }
+
+  // reset UI values
+  game.craftingProgress = 0;
+  game.craftingTimeRemaining = 0;
+}
 </script>
 
 <style scoped>
+/* ---- STOP BUTTON ---- */
+.stop-btn {
+  background: #ff4f4f;
+  border: none;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 6px #00000040;
+  transition: 0.2s;
+}
+
+.stop-btn:hover {
+  background: #ff2f2f;
+  transform: translateY(-1px);
+}
+
+/* (rest van jouw styling blijft exact hetzelfde) */
+
 .queue-box {
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.08);
 }
 
-/* One row in queue */
 .queue-item {
   padding: 10px 0;
   display: flex;
@@ -74,7 +106,6 @@ const progress = computed(() => game.craftingProgress);
   border-bottom: none;
 }
 
-/* LEFT SIDE */
 .left {
   display: flex;
   flex-direction: column;
@@ -90,7 +121,6 @@ const progress = computed(() => game.craftingProgress);
   font-size: 0.9rem;
 }
 
-/* RIGHT SIDE */
 .right {
   min-width: 150px;
   display: flex;
@@ -98,7 +128,6 @@ const progress = computed(() => game.craftingProgress);
   align-items: flex-end;
 }
 
-/* TIMER BAR */
 .progress-wrapper {
   width: 140px;
   height: 8px;
@@ -114,13 +143,11 @@ const progress = computed(() => game.craftingProgress);
   transition: width 0.1s linear;
 }
 
-/* TIME LEFT */
 .time-text {
   font-size: 0.85rem;
   opacity: 0.9;
 }
 
-/* WAITING JOB STYLE */
 .waiting-text {
   font-size: 0.85rem;
   opacity: 0.6;

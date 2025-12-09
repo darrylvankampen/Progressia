@@ -1,7 +1,7 @@
 {
   "id": "mining",
   "name": "Mining",
-  "icon": "/icons/skills/mining.svg",
+  "icon": "/icons/skills/mining.png",
   "skillType": "idle",
   "maxLevel": 120,
   "actions": [

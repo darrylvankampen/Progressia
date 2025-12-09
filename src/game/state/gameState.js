@@ -154,6 +154,7 @@ function extractSkillProgress(savedSkill) {
       timeLeft: 0,
       isActive: false,
       wasActive: false,
+      totalXP: 0,
     };
   }
 
@@ -165,6 +166,7 @@ function extractSkillProgress(savedSkill) {
     timeLeft: savedSkill.timeLeft ?? 0,
     isActive: false, // runtime-only field; never restored
     wasActive: savedSkill.wasActive ?? false,
+    totalXP: savedSkill.totalXP ?? 0,
   };
 }
 
@@ -209,6 +211,7 @@ export async function resetGame() {
       timeLeft: 0,
       isActive: false,
       wasActive: false,
+      totalXP: 0,
     };
   }
 
@@ -310,6 +313,7 @@ export function saveGame() {
           timeLeft: s.timeLeft,
           isActive: s.isActive,
           wasActive: s.wasActive,
+          totalXP: s.totalXP,
         };
       }
       save.skills = skills;
@@ -359,6 +363,7 @@ export function addXp(skillKey, amount) {
 
   // Update totals
   skill.xp += amount;
+  skill.totalXP += amount;
   game.player.totalXP += amount;
 
   // Achievement checks triggered by XP changes
@@ -393,7 +398,7 @@ export function addXp(skillKey, amount) {
       skill.justLeveled = false;
     }, 1500);
   }
-
+  console.log("XP added to", skillKey, "by", amount);
   saveGame();
 }
 

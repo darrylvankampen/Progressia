@@ -10,7 +10,7 @@
   "stats": {
     "speedMultiplier": 1.00,
     "xpMultiplier": 1.00,
-    "doubleChance": 0.00,
+    "doubleChance": 0.05,
     "requiredLevel": 1
   },
   "modifiers": {

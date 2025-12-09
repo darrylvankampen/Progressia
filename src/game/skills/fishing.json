@@ -1,7 +1,7 @@
 {
   "id": "fishing",
   "name": "Fishing",
-  "icon": "/icons/skills/fishing.svg",
+  "icon": "/icons/skills/fishing.png",
   "level": 1,
   "skillType": "idle",
   "xp": 0,

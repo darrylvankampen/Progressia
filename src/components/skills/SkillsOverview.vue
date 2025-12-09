@@ -1,12 +1,7 @@
 <template>
   <div class="skills-grid">
-    <div
-      v-for="(skill, key) in skillsList"
-      :key="key"
-      class="skill-card"
-      @click="$emit('openSkill', skill.name.toLowerCase())"
-      :style="{ '--accent': skill.accent }"
-    >
+    <div v-for="(skill, key) in skillsList" :key="key" class="skill-card"
+      @click="$emit('openSkill', skill.name.toLowerCase())" :style="{ '--accent': skill.accent }">
       <!-- Icon badge -->
       <div class="icon-ring">
         <img :src="skill.icon" class="skill-icon" />
@@ -23,7 +18,7 @@
         <div class="xp-fill" :style="{ width: skill.xpPercent + '%' }"></div>
       </div>
 
-      <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP</div>
+      <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP (total XP: {{ skill.totalXP }})</div>
     </div>
   </div>
 </template>
@@ -51,6 +46,7 @@ const skillsList = computed(() => {
       xpToNextLevel: s.xpToNextLevel,
       xpPercent,
       accent: getSkillColor(def.name.toLowerCase()),
+      totalXP: s.totalXP,
     };
   });
 });
@@ -134,11 +130,9 @@ const skillsList = computed(() => {
 }
 
 .xp-fill {
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    white
-  );
+  background: linear-gradient(90deg,
+      var(--accent),
+      white);
   height: 100%;
   transition: width 0.35s ease;
 }

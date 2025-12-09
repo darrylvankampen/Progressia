@@ -21,7 +21,7 @@
             "maxLevel": 20,
             "baseCost": 2000,
             "costMultiplier": 1.75,
-            "bonusPerLevel": 0.02,
+            "bonusPerLevel": 0.1,
             "effectType": "xp_percent_global"
         },
         {
@@ -33,7 +33,7 @@
             "maxLevel": 15,
             "baseCost": 2500,
             "costMultiplier": 1.8,
-            "bonusPerLevel": 0.03,
+            "bonusPerLevel": 0.05,
             "effectType": "amount_percent_global"
         },
         {

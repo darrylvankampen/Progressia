@@ -19,7 +19,7 @@
         <div class="xp-bar">
           <div class="xp-fill" :style="{ width: xpPercent + '%' }"></div>
         </div>
-        <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP</div>
+        <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP (total: {{ skill.totalXP }} XP)</div>
       </div>
     </div>
 
