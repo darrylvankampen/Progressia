@@ -3,7 +3,7 @@
     "name": "Plank",
     "category": "resources",
     "description": "A sturdy wooden plank commonly used for crafting, construction and basic equipment.",
-    "icon": "/icons/items/wooden_plank.png",
+    "icon": "/icons/items/resources/wood/wooden_plank.png",
     "rarity": "common",
     "value": 1,
     "stats": {}

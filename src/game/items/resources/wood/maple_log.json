@@ -1,0 +1,10 @@
+{
+  "id": "maple_log",
+  "name": "Maple Log",
+  "category": "resources",
+  "description": "A warm-colored log obtained from maple trees.",
+  "icon": "/icons/items/resources/wood/maple_logs.png",
+  "rarity": "common",
+  "value": 5,
+  "stats": {}
+}

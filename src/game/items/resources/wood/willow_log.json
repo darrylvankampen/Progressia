@@ -1,0 +1,10 @@
+{
+  "id": "willow_log",
+  "name": "Willow Log",
+  "category": "resources",
+  "description": "A flexible piece of wood from willow trees, useful for crafting.",
+  "icon": "/icons/items/resources/wood/willow_logs.png",
+  "rarity": "common",
+  "value": 3,
+  "stats": {}
+}

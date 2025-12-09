@@ -98,7 +98,7 @@
       "requiredLevel": 75,
       "baseTime": 8000,
       "xpGain": 30,
-      "resource": "aspen_log",
+      "resource": "magic_log",
       "amountBase": 3,
       "rareDrops": [
         {

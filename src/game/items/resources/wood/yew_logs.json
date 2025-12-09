@@ -1,0 +1,10 @@
+{
+    "id": "yew_log",
+    "name": "Yew Log",
+    "category": "resources",
+    "description": "A dense, high-quality log harvested from ancient yew trees.",
+    "icon": "/icons/items/resources/wood/yew_logs.png",
+    "rarity": "common",
+    "value": 12,
+    "stats": {}
+}

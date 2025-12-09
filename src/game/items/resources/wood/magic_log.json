@@ -1,0 +1,10 @@
+{
+  "id": "magic_log",
+  "name": "Magic Log",
+  "category": "resources",
+  "description": "A lightweight magical log from fast-growing enchanted trees.",
+  "icon": "/icons/items/resources/wood/magic_logs.png",
+  "rarity": "common",
+  "value": 15,
+  "stats": {}
+}

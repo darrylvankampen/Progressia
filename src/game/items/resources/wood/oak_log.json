@@ -1,0 +1,10 @@
+{
+    "id": "oak_log",
+    "name": "Oak Log",
+    "category": "resources",
+    "description": "A sturdy log harvested from oak trees.",
+    "icon": "/icons/items/resources/wood/oak_log.png",
+    "rarity": "common",
+    "value": 2,
+    "stats": {}
+}

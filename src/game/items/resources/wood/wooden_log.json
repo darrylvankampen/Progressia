@@ -1,0 +1,10 @@
+{
+    "id": "wooden_log",
+    "name": "Regular Log",
+    "category": "resources",
+    "description": "Basic wood resource harvested from common trees.",
+    "icon": "/icons/items/resources/wood/wooden_log.png",
+    "rarity": "common",
+    "value": 1,
+    "stats": {}
+}

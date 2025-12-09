@@ -23,8 +23,8 @@
  *  - Partial cycles are ignored (consistent with real-time behavior)
  */
 
-import { getGame, saveGame } from "./gameState";
-import { performSkillAction } from "../skillEngine";
+import { getGame, saveGame, addItem, addXp } from "./gameState";
+const MAX_OFFLINE_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 /**
  * Computes offline progress for all skills.
@@ -52,11 +52,12 @@ export function handleOfflineProgress() {
 
   const now = Date.now();
   const last = Number(localStorage.getItem("lastOnline")) || now;
+  let elapsed = now - last;
 
-  // Total offline duration in milliseconds
-  const elapsed = now - last;
+  if (elapsed > MAX_OFFLINE_MS) {
+    elapsed = MAX_OFFLINE_MS;
+  }
 
-  // If nothing meaningful elapsed (or system clock changed negatively), stop.
   if (elapsed <= 0) {
     localStorage.setItem("lastOnline", now);
     saveGame();
@@ -68,60 +69,49 @@ export function handleOfflineProgress() {
   for (const key in game.skills) {
     const skill = game.skills[key];
 
-    // Skill never marked as active before logout → skip
     if (!skill.wasActive) continue;
-
-    // Skill action missing (skill update? corrupted save?) → skip
     if (!skill.currentAction) continue;
 
     const action = skill.currentAction;
-
-    /**
-     * actionTime is already modified by:
-     *   - tools
-     *   - skill modifiers
-     *   - buffs
-     *
-     * If actionTime is missing, fall back to stored baseTime or a safe default.
-     */
     const actionTime = action.actionTime || action.baseTime || 3000;
-
-    // Total number of full cycles completed offline
     const cycles = Math.floor(elapsed / actionTime);
     if (cycles <= 0) continue;
 
-    let totalAmount = 0;
-    let totalXp = 0;
-    let resourceId = action.resource;
+    // Basic batch calculations:
+    const xpPer = action.xpGain ?? 0;
+    const amountPer = action.amountGain ?? 1;
 
-    /**
-     * Replay the action logic N times using the real skill engine.
-     * This guarantees:
-     *   - XP behaves identically to online play
-     *   - Drops/amountGain follow real drop tables or modifiers
-     *   - Achievements, stats, and notifications are updated consistently
-     */
-    for (let i = 0; i < cycles; i++) {
-      const result = performSkillAction(key, action);
-      if (!result) continue;
+    let totalXp = xpPer * cycles;
+    let totalAmount = amountPer * cycles;
 
-      totalAmount += result.gain;
-      totalXp += result.xp;
-      resourceId = result.resource || resourceId;
+    // Double chance -> expected value
+    const doubleChance = action.doubleChance || 0;
+    totalAmount += Math.floor(cycles * doubleChance);
+
+    // Rare drops
+    if (Array.isArray(action.rareDrops)) {
+      for (const drop of action.rareDrops) {
+        const amt = Math.floor(cycles * drop.chance);
+        if (amt > 0) addItem(drop.item, amt);
+      }
     }
 
-    // Store final summary for UI
+    // Give player resources + xp
+    if (action.resource) addItem(action.resource, totalAmount);
+    addXp(key, totalXp);
+
     summary.push({
       skill: key,
       action: action.id,
       cycles,
       gainedXp: totalXp,
-      gainedResource: resourceId,
+      gainedResource: action.resource,
       gainedAmount: totalAmount,
+      elapsed: elapsed,
+      maxOffline: elapsed === MAX_OFFLINE_MS,
     });
   }
 
-  // Persist new timestamp and game state
   localStorage.setItem("lastOnline", now);
   saveGame();
 
