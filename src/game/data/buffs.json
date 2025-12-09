@@ -1,0 +1,25 @@
+[
+  {
+    "id": "magic_focus",
+    "name": "Magic Focus",
+    "icon": "/icons/buffs/magic_focus.png",
+    "description": "+20% Woodcutting XP and +10% rare drop chance.",
+    "duration": 60000,
+
+    "modifiers": {
+      "woodcutting_xp_percent": 20,
+      "woodcutting_rareChance_percent": 10
+    }
+  },
+  {
+    "id": "wind_blessing",
+    "name": "Wind Blessing",
+    "icon": "/icons/buffs/wind_blessing.png",
+    "description": "+15% Woodcutting speed.",
+    "duration": 30000,
+
+    "modifiers": {
+      "woodcutting_speed_percent": 15
+    }
+  }
+]

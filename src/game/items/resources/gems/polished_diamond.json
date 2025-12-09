@@ -1,0 +1,10 @@
+{
+    "id": "diamond",
+    "name": "Diamond",
+    "category": "resources",
+    "description": "A powerful and extremely rare gemstone valued for upgrades and late-game crafting.",
+    "icon": "/icons/items/resources/gems/polished_diamond.png",
+    "rarity": "epic",
+    "value": 100,
+    "stats": {}
+}

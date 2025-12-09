@@ -1,0 +1,262 @@
+[
+  {
+    "id": "emberforge",
+    "name": "The Emberforge Clan",
+    "shortName": "Emberforge",
+    "slogan": "Strength through flame and steel.",
+    "description": "Masters of fire and metal, the Emberforge Clan tempers strength in the heart of the forge. They believe true power is earned with hammer and heat.",
+    "icon": "/icons/factions/emberforge.png",
+    "colors": {
+      "primary": "#E4572E",
+      "secondary": "#7A1E12"
+    },
+    "startingReputation": 0,
+    "maxReputation": 10000,
+    "favoredSkills": [
+      "mining",
+      "smithing",
+      "combat"
+    ],
+    "passives": {
+      "mining_xp_percent": 5,
+      "smithing_speed_percent": 5,
+      "combat_damage_percent": 2
+    },
+    "reputationTiers": [
+      {
+        "id": "emberforge_tier1",
+        "name": "Spark Initiate",
+        "minReputation": 0,
+        "perks": [
+          "unlock_emberforge_tab",
+          "cosmetic_emberforge_cloak_basic"
+        ]
+      },
+      {
+        "id": "emberforge_tier2",
+        "name": "Flame Acolyte",
+        "minReputation": 500,
+        "perks": [
+          "shop_emberforge_tier1",
+          "title_flame_acolyte",
+          "small_bonus_mining_ores"
+        ]
+      },
+      {
+        "id": "emberforge_tier3",
+        "name": "Forge Adept",
+        "minReputation": 2000,
+        "perks": [
+          "shop_emberforge_tier2",
+          "cosmetic_flameborn_hammer",
+          "small_chance_extra_bars"
+        ]
+      },
+      {
+        "id": "emberforge_tier4",
+        "name": "Inferno Warden",
+        "minReputation": 6000,
+        "perks": [
+          "shop_emberforge_tier3",
+          "title_inferno_warden",
+          "global_smithing_xp_boost"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "verdant",
+    "name": "The Verdant Order",
+    "shortName": "Verdant Order",
+    "slogan": "Walk in step with the roots of the world.",
+    "description": "A circle of wardens who protect the natural balance. To the Verdant Order, every tree, leaf and creature has its place in Progressia.",
+    "icon": "/icons/factions/verdant.png",
+    "colors": {
+      "primary": "#4CAF50",
+      "secondary": "#225531"
+    },
+    "startingReputation": 0,
+    "maxReputation": 10000,
+    "favoredSkills": [
+      "woodcutting",
+      "farming",
+      "fishing"
+    ],
+    "passives": {
+      "woodcutting_xp_percent": 5,
+      "farming_yield_percent": 10,
+      "fishing_speed_percent": 3
+    },
+    "reputationTiers": [
+      {
+        "id": "verdant_tier1",
+        "name": "Seedling",
+        "minReputation": 0,
+        "perks": [
+          "unlock_verdant_tab",
+          "cosmetic_leaf_cloak"
+        ]
+      },
+      {
+        "id": "verdant_tier2",
+        "name": "Grove Warden",
+        "minReputation": 500,
+        "perks": [
+          "shop_verdant_tier1",
+          "title_grove_warden",
+          "small_chance_extra_logs"
+        ]
+      },
+      {
+        "id": "verdant_tier3",
+        "name": "Circle Druid",
+        "minReputation": 2000,
+        "perks": [
+          "shop_verdant_tier2",
+          "cosmetic_forest_staff",
+          "bonus_farming_growth_speed"
+        ]
+      },
+      {
+        "id": "verdant_tier4",
+        "name": "Avatar of the Wilds",
+        "minReputation": 6000,
+        "perks": [
+          "shop_verdant_tier3",
+          "title_avatar_of_the_wilds",
+          "global_gathering_xp_boost"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tidebound",
+    "name": "The Tidebound Court",
+    "shortName": "Tidebound Court",
+    "slogan": "Knowledge flows like water to those who listen.",
+    "description": "An enigmatic court that studies ancient magic and the secrets hidden beneath the waves. Their power ebbs and flows with the tides.",
+    "icon": "/icons/factions/tidebound.png",
+    "colors": {
+      "primary": "#2196F3",
+      "secondary": "#123858"
+    },
+    "startingReputation": 0,
+    "maxReputation": 10000,
+    "favoredSkills": [
+      "magic",
+      "fishing",
+      "runecrafting"
+    ],
+    "passives": {
+      "magic_xp_percent": 6,
+      "fishing_rare_chance_percent": 5,
+      "mana_regen_percent": 5
+    },
+    "reputationTiers": [
+      {
+        "id": "tidebound_tier1",
+        "name": "Wavecaller",
+        "minReputation": 0,
+        "perks": [
+          "unlock_tidebound_tab",
+          "cosmetic_tidebound_cape"
+        ]
+      },
+      {
+        "id": "tidebound_tier2",
+        "name": "Depth Scholar",
+        "minReputation": 500,
+        "perks": [
+          "shop_tidebound_tier1",
+          "title_depth_scholar",
+          "small_bonus_magic_damage"
+        ]
+      },
+      {
+        "id": "tidebound_tier3",
+        "name": "Tide Sage",
+        "minReputation": 2000,
+        "perks": [
+          "shop_tidebound_tier2",
+          "cosmetic_tidal_staff",
+          "reduced_mana_cost_spells"
+        ]
+      },
+      {
+        "id": "tidebound_tier4",
+        "name": "Lord of the Deep",
+        "minReputation": 6000,
+        "perks": [
+          "shop_tidebound_tier3",
+          "title_lord_of_the_deep",
+          "global_magic_xp_boost"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "iron_dominion",
+    "name": "The Iron Dominion",
+    "shortName": "Iron Dominion",
+    "slogan": "Order, progress, and unyielding steel.",
+    "description": "A strict, disciplined faction that worships efficiency and innovation. To the Iron Dominion, the future belongs to those who build it.",
+    "icon": "/icons/factions/iron_dominion.png",
+    "colors": {
+      "primary": "#9E9E9E",
+      "secondary": "#3E3E3E"
+    },
+    "startingReputation": 0,
+    "maxReputation": 10000,
+    "favoredSkills": [
+      "crafting",
+      "engineering",
+      "smithing"
+    ],
+    "passives": {
+      "crafting_speed_percent": 7,
+      "tool_durability_percent": 10,
+      "idle_resource_gain_percent": 5
+    },
+    "reputationTiers": [
+      {
+        "id": "iron_tier1",
+        "name": "Cog Initiate",
+        "minReputation": 0,
+        "perks": [
+          "unlock_iron_tab",
+          "cosmetic_iron_emblem"
+        ]
+      },
+      {
+        "id": "iron_tier2",
+        "name": "Mechanist",
+        "minReputation": 500,
+        "perks": [
+          "shop_iron_tier1",
+          "title_mechanist",
+          "small_bonus_idle_speed"
+        ]
+      },
+      {
+        "id": "iron_tier3",
+        "name": "Architect of Steel",
+        "minReputation": 2000,
+        "perks": [
+          "shop_iron_tier2",
+          "cosmetic_gear_helmet",
+          "reduced_crafting_costs"
+        ]
+      },
+      {
+        "id": "iron_tier4",
+        "name": "Overseer of the Dominion",
+        "minReputation": 6000,
+        "perks": [
+          "shop_iron_tier3",
+          "title_overseer_of_the_dominion",
+          "global_crafting_xp_boost"
+        ]
+      }
+    ]
+  }
+]

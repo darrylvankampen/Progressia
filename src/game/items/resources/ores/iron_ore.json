@@ -1,0 +1,10 @@
+{
+    "id": "iron_ore",
+    "name": "Iron Ore",
+    "category": "resources",
+    "description": "A strong metallic ore used for smelting iron bars. Found in deeper rock layers.",
+    "icon": "/icons/items/resources/ores/iron_ore.png",
+    "rarity": "uncommon",
+    "value": 4,
+    "stats": {}
+}

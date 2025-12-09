@@ -1,0 +1,10 @@
+{
+  "id": "magic_leaf",
+  "name": "Magic Leaf",
+  "category": "resources",
+  "description": "",
+  "icon": "/icons/items/wooden_log.png",
+  "rarity": "rare",
+  "value": 4,
+  "stats": {}
+}

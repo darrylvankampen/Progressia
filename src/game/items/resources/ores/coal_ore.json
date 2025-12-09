@@ -1,0 +1,10 @@
+{
+    "id": "coal",
+    "name": "Coal",
+    "category": "resources",
+    "description": "A dense black rock used as fuel and in high-level smelting recipes.",
+    "icon": "/icons/items/resources/ores/coal_ore.png",
+    "rarity": "uncommon",
+    "value": 5,
+    "stats": {}
+}

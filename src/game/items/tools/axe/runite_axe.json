@@ -1,0 +1,16 @@
+{
+    "id": "runite_axe",
+    "name": "Runite Axe",
+    "category": "tools",
+    "description": "",
+    "icon": "/icons/items/tools/runite_axe.png",
+    "skill": "woodcutting",
+    "rarity": "common",
+    "value": 1,
+    "stats": {
+        "speedMultiplier": 1.5,
+        "xpMultiplier": 1.3,
+        "doubleChance": 0.00,
+        "requiredLevel": 40
+    }
+}

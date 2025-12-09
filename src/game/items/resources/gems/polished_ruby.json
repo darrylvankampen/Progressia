@@ -1,0 +1,10 @@
+{
+    "id": "ruby",
+    "name": "Ruby",
+    "category": "resources",
+    "description": "A polished red gemstone used for enchanting and high-level crafting.",
+    "icon": "/icons/items/resources/gems/polished_ruby.png",
+    "rarity": "rare",
+    "value": 40,
+    "stats": {}
+}

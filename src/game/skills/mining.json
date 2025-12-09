@@ -1,0 +1,101 @@
+{
+  "id": "mining",
+  "name": "Mining",
+  "icon": "/icons/skills/mining.svg",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": [
+    {
+      "id": "mine_copper",
+      "name": "Mine Copper Ore",
+      "requiredLevel": 1,
+      "baseTime": 3000,
+      "strength": 3,
+      "xpPerHit": 4,
+      "resource": "copper_ore",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "small_geode",
+          "chance": 0.003
+        }
+      ]
+    },
+    {
+      "id": "mine_tin",
+      "name": "Mine Tin Ore",
+      "requiredLevel": 5,
+      "baseTime": 3000,
+      "strength": 3,
+      "xpPerHit": 5,
+      "resource": "tin_ore",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "small_geode",
+          "chance": 0.003
+        }
+      ]
+    },
+    {
+      "id": "mine_iron",
+      "name": "Mine Iron Ore",
+      "requiredLevel": 15,
+      "baseTime": 3500,
+      "strength": 5,
+      "xpPerHit": 7,
+      "resource": "iron_ore",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "geode",
+          "chance": 0.004
+        },
+        {
+          "item": "raw_gem_fragment",
+          "chance": 0.0005
+        }
+      ]
+    },
+    {
+      "id": "mine_coal",
+      "name": "Mine Coal",
+      "requiredLevel": 30,
+      "baseTime": 4000,
+      "strength": 6,
+      "xpPerHit": 9,
+      "resource": "coal",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "geode",
+          "chance": 0.006
+        },
+        {
+          "item": "raw_gem_fragment",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "mine_mithril",
+      "name": "Mine Mithril Ore",
+      "requiredLevel": 55,
+      "baseTime": 5000,
+      "strength": 8,
+      "xpPerHit": 12,
+      "resource": "mithril_ore",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "large_geode",
+          "chance": 0.01
+        },
+        {
+          "item": "raw_gem_fragment",
+          "chance": 0.0015
+        }
+      ]
+    }
+  ]
+}

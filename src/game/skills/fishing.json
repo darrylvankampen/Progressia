@@ -1,0 +1,17 @@
+{
+  "id": "fishing",
+  "name": "Fishing",
+  "icon": "/icons/skills/fishing.svg",
+  "level": 1,
+  "skillType": "idle",
+  "xp": 0,
+  "xpToNext": 100,
+  "totalXp": 0,
+  "actionTime": 3000,
+  "resource": "",
+  "xpGain": 10,
+  "amountGain": 1,
+  "isActive": false,
+  "wasActive": false,
+  "isIdle": true
+}

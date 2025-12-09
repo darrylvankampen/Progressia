@@ -1,0 +1,33 @@
+{
+    "id": "small_geode",
+    "name": "Small Geode",
+    "category": "resources",
+    "description": "A small geode containing low-tier minerals or fragments.",
+    "icon": "/icons/items/resources/misc/geode.png",
+    "rarity": "uncommon",
+    "value": 6,
+    "stats": {},
+    "openable": {
+        "rolls": 2,
+        "loot": [
+            {
+                "item": "raw_gem_fragment",
+                "weight": 5,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "copper_ore",
+                "weight": 3,
+                "min": 1,
+                "max": 3
+            },
+            {
+                "item": "tin_ore",
+                "weight": 3,
+                "min": 1,
+                "max": 3
+            }
+        ]
+    }
+}

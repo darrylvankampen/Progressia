@@ -1,0 +1,10 @@
+{
+    "id": "mithril_ore",
+    "name": "Mithril Ore",
+    "category": "resources",
+    "description": "A refined blue-tinted ore that forms the base of advanced metalworking.",
+    "icon": "/icons/items/resources/ores/mithril_ore.png",
+    "rarity": "rare",
+    "value": 10,
+    "stats": {}
+}

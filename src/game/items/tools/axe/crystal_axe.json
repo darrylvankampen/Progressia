@@ -1,0 +1,16 @@
+{
+    "id": "crystal_axe",
+    "name": "Crystal Axe",
+    "category": "tools",
+    "description": "",
+    "icon": "/icons/items/tools/crystal_axe.png",
+    "skill": "woodcutting",
+    "rarity": "common",
+    "value": 1,
+    "stats": {
+        "speedMultiplier": 2,
+        "xpMultiplier": 1.6,
+        "doubleChance": 0.00,
+        "requiredLevel": 70
+    }
+}

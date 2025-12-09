@@ -1,0 +1,10 @@
+{
+  "id": "sapphire",
+  "name": "Sapphire",
+  "category": "resources",
+  "description": "A polished blue gem containing magical conductivity.",
+  "icon": "/icons/items/resources/gems/polished_sapphire.png",
+  "rarity": "rare",
+  "value": 45,
+  "stats": {}
+}

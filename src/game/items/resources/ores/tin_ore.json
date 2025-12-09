@@ -1,0 +1,10 @@
+{
+    "id": "tin_ore",
+    "name": "Tin Ore",
+    "category": "resources",
+    "description": "A pale metal ore commonly paired with copper to create bronze.",
+    "icon": "/icons/items/resources/ores/tin_ore.png",
+    "rarity": "common",
+    "value": 2,
+    "stats": {}
+}

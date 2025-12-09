@@ -1,0 +1,10 @@
+{
+    "id": "emerald",
+    "name": "Emerald",
+    "category": "resources",
+    "description": "A vivid green gem associated with nature and restoration.",
+    "icon": "/icons/items/resources/gems/polished_emerald.png",
+    "rarity": "rare",
+    "value": 50,
+    "stats": {}
+}

@@ -1,0 +1,16 @@
+{
+    "id": "mithril_axe",
+    "name": "Mithril Axe",
+    "category": "tools",
+    "description": "",
+    "icon": "/icons/items/tools/mithril_axe.png",
+    "skill": "woodcutting",
+    "rarity": "common",
+    "value": 1,
+    "stats": {
+        "speedMultiplier": 1.2,
+        "xpMultiplier": 1.05,
+        "doubleChance": 0.00,
+        "requiredLevel": 20
+    }
+}

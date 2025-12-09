@@ -1,0 +1,18 @@
+{
+  "id": "crafting",
+  "name": "Crafting",
+  "icon": "/icons/skills/crafting.svg",
+  "level": 1,
+  "skillType": "utility",
+  "maxLevel": 120,
+  "xp": 0,
+  "xpToNext": 100,
+  "totalXp": 0,
+  "actionTime": 3000,
+  "resource": "",
+  "xpGain": 10,
+  "amountGain": 1,
+  "isActive": false,
+  "wasActive": false,
+  "isIdle": false
+}

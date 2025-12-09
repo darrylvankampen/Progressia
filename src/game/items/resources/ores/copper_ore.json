@@ -1,0 +1,10 @@
+{
+    "id": "copper_ore",
+    "name": "Copper Ore",
+    "category": "resources",
+    "description": "A common ore used to smelt bronze. Mined from basic copper rocks.",
+    "icon": "/icons/items/resources/ores/copper_ore.png",
+    "rarity": "common",
+    "value": 2,
+    "stats": {}
+}

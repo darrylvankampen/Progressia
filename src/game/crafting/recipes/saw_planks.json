@@ -1,0 +1,12 @@
+{
+  "id": "saw_planks",
+  "name": "Saw Planks",
+  "icon": "",
+  "category": "wood",
+  "time": 2000,
+  "inputs": [{ "item": "wooden_log", "amount": 3 }],
+  "outputs": [{ "item": "wooden_plank", "amount": 1 }],
+  "xp": 15,
+  "skill": "crafting",
+  "requiredLevel": 1
+}

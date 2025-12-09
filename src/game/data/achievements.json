@@ -1,0 +1,78 @@
+{
+  "achievements": [
+    {
+      "id": "woodcut_10",
+      "name": "Novice Woodcutter",
+      "description": "Reach Level 10 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 10
+      },
+
+      "points": 10,
+      "reward": [
+        "bonus:woodcutting_speed_percent:2"
+      ]
+    },
+    {
+      "id": "woodcut_25",
+      "name": "Skilled Woodcutter",
+      "description": "Reach Level 25 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:woodcutting_speed_percent:4"
+      ]
+    },
+    {
+      "id": "woodcut_50",
+      "name": "Expert Lumberjack",
+      "description": "Reach Level 50 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:woodcutting_speed_percent:6"
+      ]
+    },
+    {
+      "id": "woodcut_120",
+      "name": "Master of the Axe",
+      "description": "Reach Level 120 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 120
+      },
+      "points": 100,
+      "reward": [
+        "title:Master Lumberjack"
+      ],
+      "rarity": "legendary"
+    },
+    {
+      "id": "total_level_100",
+      "name": "Progressian",
+      "description": "Reach a total combined level of 100.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "total_level",
+        "value": 100
+      },
+      "points": 50,
+      "reward": ["title:Progressian"]
+    }
+  ]
+}

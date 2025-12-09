@@ -1,0 +1,115 @@
+{
+  "id": "woodcutting",
+  "name": "Woodcutting",
+  "icon": "/icons/skills/woodcutting.svg",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": [
+    {
+      "id": "cut_regular",
+      "name": "Cut Regular Wood",
+      "requiredLevel": 1,
+      "baseTime": 2000,
+      "xpGain": 3,
+      "resource": "wooden_log",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.002
+        }
+      ]
+    },
+    {
+      "id": "cut_oak",
+      "name": "Cut Oak Wood",
+      "requiredLevel": 10,
+      "baseTime": 3500,
+      "xpGain": 5,
+      "resource": "oak_log",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.003
+        }
+      ]
+    },
+    {
+      "id": "cut_willow",
+      "name": "Cut Willow Wood",
+      "requiredLevel": 20,
+      "baseTime": 4500,
+      "xpGain": 8,
+      "resource": "willow_log",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.004
+        },
+        {
+          "item": "mystic_seed",
+          "chance": 0.0005
+        }
+      ]
+    },
+    {
+      "id": "cut_maple",
+      "name": "Cut Maple Wood",
+      "requiredLevel": 40,
+      "baseTime": 5000,
+      "xpGain": 12,
+      "resource": "maple_log",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.005
+        },
+        {
+          "item": "mystic_seed",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "cut_yew",
+      "name": "Cut Yew Wood",
+      "requiredLevel": 60,
+      "baseTime": 6500,
+      "xpGain": 20,
+      "resource": "yew_log",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.008
+        },
+        {
+          "item": "mystic_seed",
+          "chance": 0.002
+        }
+      ]
+    },
+    {
+      "id": "cut_magic",
+      "name": "Cut Magic Wood",
+      "requiredLevel": 75,
+      "baseTime": 8000,
+      "xpGain": 30,
+      "resource": "aspen_log",
+      "amountBase": 3,
+      "rareDrops": [
+        {
+          "item": "magic_leaf",
+          "chance": 0.01
+        },
+        {
+          "item": "ancient_seed",
+          "chance": 0.0005
+        }
+      ]
+    }
+  ]
+}

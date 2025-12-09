@@ -1,0 +1,10 @@
+{
+    "id": "raw_gem_fragment",
+    "name": "Raw Gem Fragment",
+    "category": "resources",
+    "description": "A small shard of mineral crystal. Can be refined into a polished gem.",
+    "icon": "/icons/items/placeholder.png",
+    "rarity": "uncommon",
+    "value": 3,
+    "stats": {}
+}

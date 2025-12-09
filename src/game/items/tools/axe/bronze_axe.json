@@ -1,0 +1,21 @@
+{
+  "id": "bronze_axe",
+  "name": "Bronze Axe",
+  "category": "tools",
+  "description": "A simple bronze axe. Not very sharp, but better than using bare hands.",
+  "icon": "/icons/items/tools/bronze_axe.png",
+  "skill": "woodcutting",
+  "rarity": "common",
+  "value": 1,
+  "stats": {
+    "speedMultiplier": 1.00,
+    "xpMultiplier": 1.00,
+    "doubleChance": 0.00,
+    "requiredLevel": 1
+  },
+  "modifiers": {
+    "woodcutting_speed_percent": 100,
+    "woodcutting_xp_percent": 20,
+    "woodcutting_doubleChance": 0
+  }
+}
