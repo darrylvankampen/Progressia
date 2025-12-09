@@ -14,8 +14,8 @@
     "requiredLevel": 1
   },
   "modifiers": {
-    "woodcutting_speed_percent": 100,
-    "woodcutting_xp_percent": 20,
+    "woodcutting_speed_percent": 0,
+    "woodcutting_xp_percent": 0,
     "woodcutting_doubleChance": 0
   }
 }

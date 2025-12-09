@@ -14,7 +14,8 @@ export const defaultGame = {
       verdant: 0,
       tidebound: 0,
       iron_dominion: 0
-    }
+    },
+    prestige: {}
   },
   skills: {},
   inventory: {},

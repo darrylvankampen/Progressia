@@ -1,0 +1,64 @@
+{
+    "prestigeUpgrades": [
+        {
+            "id": "offline_efficiency",
+            "category": "offline",
+            "name": "Offline Efficiency",
+            "description": "Increase offline efficiency for XP and resources.",
+            "level": 0,
+            "maxLevel": 10,
+            "baseCost": 1000,
+            "costMultiplier": 2,
+            "bonusPerLevel": 0.05,
+            "effectType": "offline_efficiency"
+        },
+        {
+            "id": "xp_global_boost",
+            "category": "xp",
+            "name": "Global XP Boost",
+            "description": "Increases XP gained from all skills.",
+            "level": 0,
+            "maxLevel": 20,
+            "baseCost": 2000,
+            "costMultiplier": 1.75,
+            "bonusPerLevel": 0.02,
+            "effectType": "xp_percent_global"
+        },
+        {
+            "id": "resource_yield",
+            "category": "resources",
+            "name": "Gathering Yield",
+            "description": "Increase all resource gains from skill actions.",
+            "level": 0,
+            "maxLevel": 15,
+            "baseCost": 2500,
+            "costMultiplier": 1.8,
+            "bonusPerLevel": 0.03,
+            "effectType": "amount_percent_global"
+        },
+        {
+            "id": "rare_drop_chance",
+            "category": "loot",
+            "name": "Rare Drop Mastery",
+            "description": "Increase chance of obtaining rare drops from actions.",
+            "level": 0,
+            "maxLevel": 10,
+            "baseCost": 3000,
+            "costMultiplier": 2.2,
+            "bonusPerLevel": 0.01,
+            "effectType": "rare_drop_percent"
+        },
+        {
+            "id": "action_speed",
+            "category": "speed",
+            "name": "Action Speed Boost",
+            "description": "Increases the speed of all skill actions.",
+            "level": 0,
+            "maxLevel": 20,
+            "baseCost": 5000,
+            "costMultiplier": 1.65,
+            "bonusPerLevel": 0.02,
+            "effectType": "speed_percent_global"
+        }
+    ]
+}
