@@ -1,0 +1,10 @@
+{
+    "id": "ethereal_bark",
+    "name": "Ethereal Bark",
+    "category": "resources",
+    "description": "A weightless piece of bark that flickers between realms.",
+    "icon": "/icons/items/resources/wood/ethereal_bark.png",
+    "rarity": "rare",
+    "value": 150,
+    "stats": {}
+}

@@ -1,0 +1,10 @@
+{
+    "id": "cosmic_seed",
+    "name": "Cosmic Seed",
+    "category": "resources",
+    "description": "A seed rumored to grow into a tree not bound by mortal realms.",
+    "icon": "/icons/items/resources/wood/cosmic_seed.png",
+    "rarity": "legendary",
+    "value": 400,
+    "stats": {}
+}

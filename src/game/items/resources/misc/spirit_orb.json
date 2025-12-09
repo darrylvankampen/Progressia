@@ -1,0 +1,10 @@
+{
+    "id": "spirit_orb",
+    "name": "Spirit Orb",
+    "category": "resources",
+    "description": "A condensed manifestation of a woodland spirit.",
+    "icon": "/icons/items/resources/wood/spirit_orb.png",
+    "rarity": "epic",
+    "value": 200,
+    "stats": {}
+}

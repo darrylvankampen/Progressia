@@ -1,0 +1,10 @@
+{
+    "id": "celestial_log",
+    "name": "Celestial Log",
+    "category": "resources",
+    "description": "A radiant log infused with cosmic energy.",
+    "icon": "/icons/items/resources/wood/celestial_log.png",
+    "rarity": "rare",
+    "value": 120,
+    "stats": {}
+}

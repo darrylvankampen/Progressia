@@ -110,6 +110,121 @@
           "chance": 0.0005
         }
       ]
+    },
+    {
+      "id": "cut_elder",
+      "name": "Cut Elder Wood",
+      "requiredLevel": 90,
+      "baseTime": 10000,
+      "xpGain": 45,
+      "resource": "elder_log",
+      "amountBase": 3,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.01
+        },
+        {
+          "item": "mystic_seed",
+          "chance": 0.003
+        },
+        {
+          "item": "elder_bark",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "cut_redwood",
+      "name": "Cut Redwood Tree",
+      "requiredLevel": 105,
+      "baseTime": 12000,
+      "xpGain": 60,
+      "resource": "redwood_log",
+      "amountBase": 4,
+      "rareDrops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.012
+        },
+        {
+          "item": "ancient_seed",
+          "chance": 0.001
+        },
+        {
+          "item": "redwood_heart",
+          "chance": 0.0008
+        }
+      ]
+    },
+    {
+      "id": "cut_sacred",
+      "name": "Cut Sacred Tree",
+      "requiredLevel": 115,
+      "baseTime": 15000,
+      "xpGain": 80,
+      "resource": "sacred_log",
+      "amountBase": 4,
+      "rareDrops": [
+        {
+          "item": "druidic_root",
+          "chance": 0.002
+        },
+        {
+          "item": "ancestor_seed",
+          "chance": 0.0008
+        },
+        {
+          "item": "spiritsap",
+          "chance": 0.0015
+        }
+      ]
+    },
+    {
+      "id": "cut_spirit",
+      "name": "Cut Spirit Tree",
+      "requiredLevel": 118,
+      "baseTime": 18000,
+      "xpGain": 100,
+      "resource": "spirit_log",
+      "amountBase": 5,
+      "rareDrops": [
+        {
+          "item": "spirit_orb",
+          "chance": 0.001
+        },
+        {
+          "item": "forest_core",
+          "chance": 0.0006
+        },
+        {
+          "item": "ethereal_bark",
+          "chance": 0.002
+        }
+      ]
+    },
+    {
+      "id": "cut_celestial",
+      "name": "Cut Celestial Tree",
+      "requiredLevel": 120,
+      "baseTime": 22000,
+      "xpGain": 140,
+      "resource": "celestial_log",
+      "amountBase": 6,
+      "rareDrops": [
+        {
+          "item": "celestial_shard",
+          "chance": 0.002
+        },
+        {
+          "item": "starlight_sap",
+          "chance": 0.001
+        },
+        {
+          "item": "cosmic_seed",
+          "chance": 0.0004
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,10 @@
+{
+    "id": "redwood_heart",
+    "name": "Redwood Heart",
+    "category": "resources",
+    "description": "The living core of an ancient redwood tree.",
+    "icon": "/icons/items/resources/wood/redwood_heart.png",
+    "rarity": "rare",
+    "value": 120,
+    "stats": {}
+}

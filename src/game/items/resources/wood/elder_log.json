@@ -1,0 +1,10 @@
+{
+    "id": "elder_log",
+    "name": "Elder Log",
+    "category": "resources",
+    "description": "An ancient, dense log from long-lived elder trees.",
+    "icon": "/icons/items/resources/wood/elder_log.png",
+    "rarity": "uncommon",
+    "value": 35,
+    "stats": {}
+}
