@@ -14,7 +14,7 @@
             <div v-if="currentTab === 'General'">
                 <h2>General Debug Tools</h2>
                 <button @click="resetGame">Reset Game</button>
-                <button @click="giveGold(100)">+100 Gold</button>
+                <button @click="giveGold(10000)">+10000 Gold</button>
                 <button @click="giveXp(100)">+100 XP</button>
 
                 <h3>Game State</h3>
@@ -77,6 +77,30 @@
                 <h3>Faction DB</h3>
                 <pre>{{ factionDB }}</pre>
             </div>
+
+            <!-- PRESTIGE TAB -->
+            <div v-if="currentTab === 'Prestiges' && allPrestiges">
+                <h2>Prestige Upgrades</h2>
+
+                <div class="item-grid">
+                    <div class="item-card" v-for="upgrade in allPrestiges" :key="upgrade.id">
+
+                        <div class="name">{{ upgrade.name }}</div>
+                        <div class="id">ID: {{ upgrade.id }}</div>
+                        <div class="desc">{{ upgrade.description }}</div>
+
+                        <div class="level">
+                            Level: {{ getPrestigeLevel(upgrade.id) }} / {{ upgrade.maxLevel }}
+                        </div>
+
+                        <div class="cost">
+                            Cost: {{ getPrestigeCost(upgrade.id) }} gold
+                        </div>
+
+                        <button @click="buyPrestige(upgrade.id)">Buy Upgrade</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -85,14 +109,24 @@
 import { ref, computed } from "vue";
 import { addItem, getGame } from "../../game/state/gameState";
 import { getAllItems } from "../../game/utils/itemDB";
+import { getPrestigeDefs } from "../../game/prestiges/prestigeDB";
+import { getPrestigeLevel, purchasePrestigeUpgrade, getPrestigeCost } from "../../game/prestiges/prestigesEngine";
 
 const game = getGame();
 
 // TABS
-const tabs = ["General", "Player", "Items", "Skills", "Factions", "Systems"];
+const tabs = ["General", "Player", "Items", "Skills", "Factions", "Systems", "Prestiges"];
 const currentTab = ref("General");
 
 const allItems = computed(() => getAllItems());
+const allPrestiges = computed(() => getPrestigeDefs());
+
+const buyPrestige = id => {
+    const success = purchasePrestigeUpgrade(id);
+    if (!success) {
+        console.warn("Purchase failed or insufficient resources.");
+    }
+};
 
 const searchQuery = ref("");
 

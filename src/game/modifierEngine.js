@@ -4,6 +4,7 @@ import { reactive } from "vue";
 import { getGame } from "./state/gameState";
 import { getItem } from "./utils/itemDB";
 import { getBuffDef } from "./utils/buffDB";
+import { getPrestigeModifiers } from "./prestiges/prestigesEngine";
 
 /**
  * =============================================================================
@@ -147,6 +148,13 @@ export function recalculateModifiers() {
       }
     }
   }
+
+  // Apply Prestige Modifiers
+  const prestiges = getPrestigeModifiers();
+  addValue(percent, "xp_global_percent", prestiges.xp_global_percent);
+  addValue(percent, "amount_global_percent", prestiges.amount_global_percent);
+  addValue(percent, "speed_global_percent", prestiges.speed_global_percent);
+  addValue(percent, "rare_drop_percent", prestiges.rare_drop_percent);
 
   // Write rebuilt modifiers to reactive store
   modifiers.flat = flat;

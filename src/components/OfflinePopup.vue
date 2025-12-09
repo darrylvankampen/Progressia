@@ -9,6 +9,19 @@
 
       <!-- BODY -->
       <div class="summary-list">
+        <!-- OFFLINE DURATION -->
+        <div class="offline-duration">
+          Offline for:
+          <strong>{{ formatDuration(summary[0]?.elapsed) }} - Efficiency: {{ summary[0]?.efficiency * 100 }}%</strong>
+        </div>
+
+        <!-- MAX OFFLINE WARNING -->
+        <div v-if="summary.length > 0 && summary[0].maxOffline" class="offline-cap-warning">
+          You reached the maximum offline limit (24 hours).
+          Rewards beyond this point are not counted.
+        </div>
+
+        <!-- PROGRESS LIST -->
         <div v-for="entry in summary" :key="entry.skill + entry.action" class="summary-row">
           <div class="left">
             <img :src="getSkillIcon(entry.skill)" class="skill-icon" />
@@ -20,10 +33,12 @@
 
           <div class="right">
             <div class="reward">
-              <span class="amount">+{{ entry.gainedAmount }}</span>
-              <span class="resource">{{ getItemName(entry.gainedResource) }}</span>
+              <img :src="getResourceIcon(entry.gainedResource)" class="resource-icon" />
+              <div class="reward-text">
+                <span class="amount">+{{ entry.gainedAmount }}</span>
+                <span class="resource">{{ getItemName(entry.gainedResource) }}</span>
+              </div>
             </div>
-
             <div class="xp">+{{ entry.gainedXp }} XP</div>
           </div>
         </div>
@@ -74,6 +89,22 @@ function formatAction(id) {
 
 function getItemName(id) {
   return getItem(id).name;
+}
+
+function formatDuration(ms) {
+  if (!ms || ms <= 0) return "0 minutes";
+
+  const minutes = Math.floor(ms / 60000);
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+
+  if (hours > 0) return `${hours}h ${mins}m`;
+  return `${minutes} minutes`;
+}
+
+function getResourceIcon(id) {
+  const item = getItem(id);
+  return item?.icon || "/icons/ui/default.png";
 }
 
 // Expose for parent
@@ -180,6 +211,25 @@ defineExpose({ show });
   opacity: 0.8;
 }
 
+.reward {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resource-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(255, 230, 180, 0.5));
+}
+
+.reward-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
 .xp {
   color: #7af3ff;
   font-size: 0.9rem;
@@ -201,6 +251,23 @@ defineExpose({ show });
 
 .btn-confirm:hover {
   filter: brightness(1.15);
+}
+
+.offline-duration {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.offline-cap-warning {
+  background: rgba(255, 80, 80, 0.12);
+  border: 1px solid rgba(255, 120, 120, 0.4);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  color: #ff9c9c;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 /* Animations */

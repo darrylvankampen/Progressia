@@ -36,6 +36,7 @@ import { getBuffDef, rebuildDynamicBuffDefs, registerDynamicBuff } from "../util
 import { checkAchievements } from "../achievements/achievementEngine";
 import { rollFromLootTable } from "../utils/lootTables";
 import { validateAmount } from "../helpers/gameHelpers";
+import { resetPrestige } from "../prestiges/prestigesEngine";
 
 const { pushNotification } = useNotifications();
 
@@ -217,7 +218,7 @@ export async function resetGame() {
 
   // Replace entire game state
   Object.assign(game, fresh);
-
+  resetPrestige();
   recalculateModifiers();
   saveGame();
 }
@@ -290,7 +291,8 @@ export function saveGame() {
         titles: deepClone(game.player.titles),
         activeTitle: game.player.activeTitle,
         achievementPoints: game.player.achievementPoints,
-        factions: deepClone(game.player.factions)
+        factions: deepClone(game.player.factions),
+        prestige: deepClone(game.player.prestige)
       };
       continue;
     }

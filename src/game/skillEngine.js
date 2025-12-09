@@ -115,15 +115,18 @@ function computeEffectiveStats(skillKey, baseVals) {
   const speedPercent = getPercentModifier(`${skillKey}_speed_percent`) || 0;
   const xpPercent = getPercentModifier(`${skillKey}_xp_percent`) || 0;
 
+  const globalSpeedPercent = getPercentModifier("speed_global_percent") || 0;
+  const globalXpPercent = getPercentModifier("xp_global_percent") || 0;
+
   // SPEED: higher speedPercent → lower actionTime
-  const finalSpeedMultiplier = tool.speedMultiplier * (1 + speedPercent / 100);
+  const finalSpeedMultiplier = tool.speedMultiplier * (1 + speedPercent + globalSpeedPercent / 100);
   const actionTime = Math.max(
     200, // hard floor on action time
     Math.floor(baseVals.baseTime / finalSpeedMultiplier)
   );
 
   // XP: tool + modifiers affect xpGain
-  const finalXpMultiplier = tool.xpMultiplier * (1 + xpPercent / 100);
+  const finalXpMultiplier = tool.xpMultiplier * (1 + xpPercent + globalXpPercent / 100);
   const xpGain = Math.floor(baseVals.baseXp * finalXpMultiplier);
 
   return {
@@ -375,6 +378,9 @@ export function performSkillAction(skillKey, actionOverride) {
   const doubleFlat = getFlatModifier(`${skillKey}_doubleChance`);
   const rarePercent = getPercentModifier(`${skillKey}_rareChance_percent`);
 
+  const globalRarePercent = getPercentModifier("rare_drop_percent") || 0;
+  const globalAmountPercent = getPercentModifier("amount_global_percent") || 0;
+
   // 1. Resource variants (weighted random selection)
   let resource = action.resource;
   if (action.variants) {
@@ -391,6 +397,7 @@ export function performSkillAction(skillKey, actionOverride) {
 
   // 2. Base amount + flat bonus
   let gain = (action.amountGain ?? 0) + (flatAmount || 0);
+  gain = Math.floor(gain * (1 + globalAmountPercent / 100));
 
   // 3. Critical hit handling
   let crit = false;
@@ -423,7 +430,7 @@ export function performSkillAction(skillKey, actionOverride) {
   const rareDropsGained = [];
   if (Array.isArray(action.rareDrops)) {
     for (const drop of action.rareDrops) {
-      let finalChance = drop.chance * (1 + rarePercent / 100);
+      let finalChance = drop.chance * (1 + rarePercent + globalRarePercent / 100);
       if (Math.random() < finalChance) {
         addItem(drop.item, 1);
         rareDropsGained.push(drop.item);

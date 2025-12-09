@@ -3,57 +3,32 @@
  *  PROGRESSIA — OFFLINE PROGRESS HANDLER
  * =============================================================================
  *
- * This module simulates progress while the player is offline.
- *
- * Responsibilities:
- *  - Determine time spent offline
- *  - Simulate repeated skill actions for all skills that were active before exit
- *  - Award XP, resources, and progress using the same logic as real-time gameplay
- *  - Provide a structured summary for UI purposes (modals, notifications)
- *
- * Key assumptions:
- *  - Skills marked with `wasActive: true` should continue performing actions offline
- *  - `performSkillAction()` is responsible for game-rules correctness (XP, drops, etc.)
- *  - Multiple cycles may be simulated depending on elapsed time and action speed
- *  - Modifiers, tools, buffs, etc., are already baked into action.actionTime
- *
- * Edge cases handled:
- *  - Negative or zero elapsed time (e.g., device clock changed)
- *  - Missing action definitions due to version updates
- *  - Partial cycles are ignored (consistent with real-time behavior)
+ * Simulates progress while the player is offline.
+ * Now integrated with the prestige.json upgrade system.
  */
 
 import { getGame, saveGame, addItem, addXp } from "./gameState";
-const MAX_OFFLINE_MS = 24 * 60 * 60 * 1000; // 24 hours
+import { getOfflineEfficiencyBonus } from "../prestiges/prestigesEngine";
 
-/**
- * Computes offline progress for all skills.
- *
- * Returns:
- *  Array of offline results, each containing:
- *    {
- *      skill: "mining",
- *      action: "mine_stone",
- *      cycles: 120,
- *      gainedXp: 450,
- *      gainedResource: "stone",
- *      gainedAmount: 38
- *    }
- *
- * Behavior:
- *  - Determines elapsed time since lastOnline
- *  - For each active skill:
- *      - Calculates how many action cycles would have occurred offline
- *      - Replays the action N times using performSkillAction()
- *      - Tracks total XP and resources produced
- */
+const MAX_OFFLINE_MS = 24 * 60 * 60 * 1000;  // 24 hours
+const BASE_OFFLINE_EFFICIENCY = 0.8;        // 80% base efficiency
+const MAX_EFFICIENCY = 1.5;                  // 150% offline max efficiency cap
+
 export function handleOfflineProgress() {
   const game = getGame();
+
+  // Calculate prestige-based efficiency bonus from JSON definitions
+  const prestigeBonus = getOfflineEfficiencyBonus();
+  let OFFLINE_EFFICIENCY = BASE_OFFLINE_EFFICIENCY + prestigeBonus;
+
+  // Clamp efficiency to prevent extreme gains
+  OFFLINE_EFFICIENCY = Math.min(OFFLINE_EFFICIENCY, MAX_EFFICIENCY);
 
   const now = Date.now();
   const last = Number(localStorage.getItem("lastOnline")) || now;
   let elapsed = now - last;
 
+  // Limit offline progress to max 24 hours
   if (elapsed > MAX_OFFLINE_MS) {
     elapsed = MAX_OFFLINE_MS;
   }
@@ -75,28 +50,29 @@ export function handleOfflineProgress() {
     const action = skill.currentAction;
     const actionTime = action.actionTime || action.baseTime || 3000;
     const cycles = Math.floor(elapsed / actionTime);
+
     if (cycles <= 0) continue;
 
-    // Basic batch calculations:
     const xpPer = action.xpGain ?? 0;
     const amountPer = action.amountGain ?? 1;
 
-    let totalXp = xpPer * cycles;
-    let totalAmount = amountPer * cycles;
+    // Apply offline efficiency to XP and resource gains
+    let totalXp = Math.floor(xpPer * cycles * OFFLINE_EFFICIENCY);
+    let totalAmount = Math.floor(amountPer * cycles * OFFLINE_EFFICIENCY);
 
-    // Double chance -> expected value
+    // Double chance → expected value
     const doubleChance = action.doubleChance || 0;
-    totalAmount += Math.floor(cycles * doubleChance);
+    totalAmount += Math.floor(cycles * doubleChance * OFFLINE_EFFICIENCY);
 
-    // Rare drops
+    // Rare drops (expected value)
     if (Array.isArray(action.rareDrops)) {
       for (const drop of action.rareDrops) {
-        const amt = Math.floor(cycles * drop.chance);
+        const amt = Math.floor(cycles * drop.chance * OFFLINE_EFFICIENCY);
         if (amt > 0) addItem(drop.item, amt);
       }
     }
 
-    // Give player resources + xp
+    // Apply XP and resource rewards
     if (action.resource) addItem(action.resource, totalAmount);
     addXp(key, totalXp);
 
@@ -107,11 +83,17 @@ export function handleOfflineProgress() {
       gainedXp: totalXp,
       gainedResource: action.resource,
       gainedAmount: totalAmount,
-      elapsed: elapsed,
+      elapsed,
       maxOffline: elapsed === MAX_OFFLINE_MS,
+
+      efficiency: OFFLINE_EFFICIENCY,
+
+      // Prestige bonus in %
+      prestigeBonus: Math.round(prestigeBonus * 100)
     });
   }
 
+  // Save new timestamp
   localStorage.setItem("lastOnline", now);
   saveGame();
 
@@ -119,13 +101,7 @@ export function handleOfflineProgress() {
 }
 
 /**
- * Utility function used for QA/Debug:
- *
- * Simulates the effect of being offline for X minutes.
- * Useful for testing:
- *  - pacing
- *  - balancing XP gains
- *  - ensuring offline simulation matches online behavior
+ * Debug helper for testing offline gains.
  */
 export function testOfflineProgress(minutes = 60) {
   const fakePast = Date.now() - minutes * 60 * 1000;
