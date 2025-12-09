@@ -55,7 +55,7 @@ export function getSkillName(skillId) {
 
 export function getSkillIcon(skillId) {
   const defs = getSkillDefs();
-  return defs?.[skillId]?.icon ?? null;  // assuming you store icon path
+  return defs?.[skillId]?.icon ?? null;
 }
 
 export function getSkillConfig(skillId) {
@@ -113,17 +113,9 @@ export function addTitle(title) {
 }
 
 export function validateAmount(input) {
-  // Probeer input te converteren naar nummer
   const amount = Number(input);
-
-  // Controleer of het een echt nummer is
   if (isNaN(amount)) return { valid: false, error: "Amount is not a number." };
-
-  // Optioneel: Negatieve waarden blokkeren
   if (amount < 0) return { valid: false, error: "Amount cannot be negative." };
-
-  // Geen oneindige getallen
   if (!isFinite(amount)) return { valid: false, error: "Amount must be finite." };
-
   return { valid: true, amount };
 }

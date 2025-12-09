@@ -1,25 +1,20 @@
 <template>
   <div class="app-layout">
-    <!-- TOP BAR (fixed) -->
     <TopBar />
     <Notification />
     <ItemTooltip />
     <ItemActionsMenu />
 
-    <!-- SIDEBAR (fixed left) -->
     <Sidebar :items="tabs" v-model="activeTab" />
 
-    <!-- MAIN CONTENT -->
     <div class="content">
       <OfflinePopup ref="offlinePopup" />
-      <!-- NORMAL TABS MODE -->
       <router-view />
     </div>
   </div>
 </template>
 
 <script setup>
-/* EXACT zoals jij het had — NIETS aangepast */
 import { computed, ref, onMounted } from "vue";
 
 import Sidebar from "./components/Sidebar.vue";
@@ -71,18 +66,15 @@ onMounted(async () => {
   display: flex;
 }
 
-/* TOP BAR ruimte vrijhouden boven content */
 .content {
   position: relative;
   margin-top: 52px;
-  /* hoogte topbar */
   margin-left: var(--sidebar-width);
   padding: 20px;
   width: calc(100% - var(--sidebar-width));
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* Dynamische CSS variabelen — sidebar stuurt dit aan */
 :root {
   --sidebar-width: 240px;
 }

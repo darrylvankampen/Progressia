@@ -11,6 +11,5 @@ export function getItem(key) {
 }
 
 export function getAllItems() {
-  console.log(itemDB)
   return itemDB;
 }

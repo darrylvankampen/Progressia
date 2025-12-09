@@ -1,6 +1,5 @@
 import { ref } from "vue";
 
-/* CONTEXT MENU (jouw huidige systeem) */
 const actionState = ref({
   visible: false,
   item: null,
@@ -8,7 +7,6 @@ const actionState = ref({
   y: 0,
 });
 
-/* INSPECT MODAL (nieuw systeem) */
 const inspectState = ref({
   visible: false,
   item: null,

@@ -3,9 +3,6 @@ import { getGame, saveGame, getSkillDefs, addItem, applyPermanentBonus, unequipT
 import { startAction, stopSkill } from "./skillEngine";
 import { addTitle, getActionById, getItems, getPlayerTitles } from "./helpers/gameHelpers";
 
-// OPTIONAL: if equipTool exists in gameState, import it
-import { equipTool } from "./state/gameState";
-
 export const debug = {
   help() {
     console.log("%cAvailable Debug Commands:", "color: #4af; font-weight: bold");

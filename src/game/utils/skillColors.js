@@ -5,7 +5,6 @@ export const SKILL_COLORS = {
   combat: "#f87171"        // warm red
 };
 
-// Koppel skillnamen aan categorie
 export const SKILL_CATEGORY = {
   woodcutting: "gathering",
   mining: "gathering",

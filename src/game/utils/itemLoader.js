@@ -11,7 +11,6 @@ export function loadAllItems() {
       continue;
     }
 
-    // Gebruik id uit JSON als key
     items[data.id] = data;
   }
 

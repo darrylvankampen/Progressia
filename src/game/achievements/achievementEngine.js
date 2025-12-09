@@ -96,12 +96,10 @@ function applyReward(reward) {
   saveGame();
 }
 
-// Geeft ALLE achievements terug
 export function getAllAchievements() {
   return data.achievements;
 }
 
-// Geeft alleen de achievement-ID's die unlocked zijn
 export function getPlayerAchievements() {
   return getGame().achievementsUnlocked ?? [];
 }

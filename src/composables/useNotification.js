@@ -6,8 +6,6 @@ const notifications = ref([]);
 export function useNotifications() {
   function pushNotification(key, payload, duration = 2500) {
     // payload = { message, type, icon, color, amount, item }
-
-    // Maak een nette message automatisch:
     const message =
       payload.message ??
       (payload.amount && payload.item
