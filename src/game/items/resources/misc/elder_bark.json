@@ -1,0 +1,10 @@
+{
+    "id": "elder_bark",
+    "name": "Elder Bark",
+    "category": "resources",
+    "description": "A thick, magically resistant bark from elder trees.",
+    "icon": "/icons/items/resources/wood/elder_bark.png",
+    "rarity": "rare",
+    "value": 60,
+    "stats": {}
+}

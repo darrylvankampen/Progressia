@@ -1,0 +1,10 @@
+{
+    "id": "druidic_root",
+    "name": "Druidic Root",
+    "category": "resources",
+    "description": "A magically infused root prized by druids.",
+    "icon": "/icons/items/resources/wood/druidic_root.png",
+    "rarity": "rare",
+    "value": 140,
+    "stats": {}
+}

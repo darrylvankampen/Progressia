@@ -1,0 +1,10 @@
+{
+    "id": "redwood_log",
+    "name": "Redwood Log",
+    "category": "resources",
+    "description": "A heavy log from towering redwood trees.",
+    "icon": "/icons/items/resources/wood/redwood_log.png",
+    "rarity": "uncommon",
+    "value": 50,
+    "stats": {}
+}

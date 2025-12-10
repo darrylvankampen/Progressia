@@ -1,0 +1,10 @@
+{
+    "id": "celestial_shard",
+    "name": "Celestial Shard",
+    "category": "resources",
+    "description": "A fragment of starlight crystallized within the tree.",
+    "icon": "/icons/items/resources/wood/celestial_shard.png",
+    "rarity": "epic",
+    "value": 300,
+    "stats": {}
+}

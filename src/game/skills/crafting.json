@@ -1,7 +1,7 @@
 {
   "id": "crafting",
   "name": "Crafting",
-  "icon": "/icons/skills/crafting.svg",
+  "icon": "/icons/skills/crafting.png",
   "level": 1,
   "skillType": "utility",
   "maxLevel": 120,

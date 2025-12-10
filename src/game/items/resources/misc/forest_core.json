@@ -1,0 +1,10 @@
+{
+    "id": "forest_core",
+    "name": "Forest Core",
+    "category": "resources",
+    "description": "A powerful heart of pure forest energy.",
+    "icon": "/icons/items/resources/wood/forest_core.png",
+    "rarity": "epic",
+    "value": 220,
+    "stats": {}
+}

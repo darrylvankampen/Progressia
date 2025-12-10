@@ -1,0 +1,10 @@
+{
+    "id": "spiritsap",
+    "name": "Spirit Sap",
+    "category": "resources",
+    "description": "A glowing sap said to contain gentle forest spirits.",
+    "icon": "/icons/items/resources/wood/spiritsap.png",
+    "rarity": "rare",
+    "value": 100,
+    "stats": {}
+}

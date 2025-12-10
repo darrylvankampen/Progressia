@@ -62,7 +62,7 @@
 
       <!-- ACTION BUTTONS -->
       <div class="actions">
-        <button v-if="isTool && !isEquipped" class="btn equip" @click="equip">
+        <button v-if="(isTool || isEquipable) && !isEquipped" class="btn equip" @click="equip">
           Equip
         </button>
 
@@ -92,7 +92,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { getRarityColor, getRarityLabel } from "../../game/utils/rarity";
-import { getGame, removeItem, equipTool, openItem, } from "../../game/state/gameState";
+import { getGame, removeItem, equipTool, openItem, equipItem, } from "../../game/state/gameState";
 import LootModal from "./LootModal.vue";
 
 const lootVisible = ref(false);
@@ -113,13 +113,29 @@ const item = computed(() => props.item);
 
 /* Tool checks */
 const isTool = computed(() => item.value?.category === "tools");
+const isEquipable = computed(() => item.value?.category === "weapon" || item.value?.category === "armor");
 const skillId = computed(() => item.value?.skill);
 
 /* Equipped? */
 const isEquipped = computed(() => {
-  if (!isTool.value) return false;
-  return game.player.equippedTools?.[skillId.value] === item.value.id;
+  const player = game.player;
+  const item = props.item;
+
+  if (!item) return false;
+
+  // 1) Tools
+  if (isTool.value) {
+    return player.equippedTools?.[skillId.value] === item.id;
+  }
+
+  // 2) Equipment (armor / weapon / offhand / misc)
+  if (item.slot) {
+    return player.equipment?.[item.slot] === item.id;
+  }
+
+  return false;
 });
+
 
 /* Rarity */
 const rarityColor = computed(() => getRarityColor(item.value?.rarity));
@@ -176,7 +192,11 @@ function close() {
 }
 
 function equip() {
-  equipTool(skillId.value, item.value.id);
+  if (item.value.category === "tools") {
+    equipTool(skillId.value, item.value.id);
+  } else {
+    equipItem(item.value.id);
+  }
   close();
 }
 
@@ -187,7 +207,7 @@ function unequip() {
 
 function destroyItem() {
   if (confirm(`Destroy ${item.value.name}?`)) {
-    removeItem(item.value.id, 1);
+    removeItem(item.value.id, 1, "destroy");
     close();
   }
 }

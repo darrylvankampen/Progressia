@@ -1,0 +1,10 @@
+{
+    "id": "sacred_log",
+    "name": "Sacred Log",
+    "category": "resources",
+    "description": "A log imbued with natural blessings from sacred trees.",
+    "icon": "/icons/items/resources/wood/sacred_log.png",
+    "rarity": "rare",
+    "value": 75,
+    "stats": {}
+}

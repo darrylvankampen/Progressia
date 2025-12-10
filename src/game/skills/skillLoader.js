@@ -1,5 +1,3 @@
-import {fetchSvg} from "../utils/svgLoader";
-
 export async function loadAllSkills() {
   const modules = import.meta.glob("./*.json", { eager: true });
   const skills = {};
@@ -10,16 +8,13 @@ export async function loadAllSkills() {
     // Vite JSON modules: mod.default = parsed JSON
     const data = mod.default;
 
-    const svg = await fetchSvg(data.icon);
-
     if (!data.id) {
       console.warn("Skill JSON mist 'id':", path);
       continue;
     }
 
     skills[data.id] = {
-        ...data,
-        iconSvg: svg
+      ...data,
     }; // Save pure JSON only
   }
 

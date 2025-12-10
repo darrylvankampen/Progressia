@@ -1,0 +1,10 @@
+{
+    "id": "starlight_sap",
+    "name": "Starlight Sap",
+    "category": "resources",
+    "description": "Glowing sap that mimics the shimmer of distant stars.",
+    "icon": "/icons/items/resources/wood/starlight_sap.png",
+    "rarity": "rare",
+    "value": 160,
+    "stats": {}
+}

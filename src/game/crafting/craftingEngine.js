@@ -1,113 +1,173 @@
-import { getGame } from "../state/gameState";
-import { addItem, removeItem, addXp } from "../state/gameState";
+import { getGame, addItem, removeItem, addXp } from "../state/gameState";
 import { useNotifications } from "../../composables/useNotification";
+import { getEffectiveToolStats, getFinalStats } from "../modifierEngine";
 
 const { pushNotification } = useNotifications();
 
-export function canCraft(recipe, quantity = 1) {
+export let currentCraft = null;
+
+// ============================================================================
+// QUEUE MANAGEMENT
+// ============================================================================
+
+export function addToQueue(recipe, quantity = 1) {
   const game = getGame();
 
-  for (const input of recipe.inputs) {
-    const required = input.amount * quantity;
-    const have = game.inventory[input.item] || 0;
+  game.craftingQueue.push({ recipe, quantity });
 
-    if (have < required) {
-      return false;
-    }
+  // Als er niets bezig is → start direct
+  if (!game.isCrafting) {
+    startNextInQueue();
   }
-
-  return true;
 }
 
-export function maxCraftAmount(recipe) {
+function startNextInQueue() {
   const game = getGame();
 
-  let max = Infinity;
-
-  for (const input of recipe.inputs) {
-    const have = game.inventory[input.item] || 0;
-    const possible = Math.floor(have / input.amount);
-
-    max = Math.min(max, possible);
+  if (game.craftingQueue.length === 0) {
+    currentCraft = null;
+    game.isCrafting = false;
+    return;
   }
 
-  return max === Infinity ? 0 : max;
+  // Pak het eerstvolgende item
+  const job = game.craftingQueue[0];
+
+  craft(job.recipe, job.quantity);
 }
+
+// ============================================================================
+// CORE CRAFT EXECUTION
+// ============================================================================
 
 export async function craft(recipe, quantity = 1) {
   const game = getGame();
 
+  if (currentCraft) return; // dubbele crafts voorkomen
+
   if (!canCraft(recipe, quantity)) return false;
 
-  const totalTime = recipe.time * quantity; // ms
+  const { speed } = getFinalStats(recipe.skill);
+  const totalTime = (recipe.time * quantity) / speed;
   const start = performance.now();
 
-  game.craftingProgress = 0;
-  game.craftingTimeRemaining = totalTime;
+  const session = {
+    recipe,
+    quantity,
+    totalTime,
+    start,
+    interval: null,
+  };
+
+  currentCraft = session;
+  game.isCrafting = true;
 
   return new Promise((resolve) => {
+    session.interval = setInterval(() => {
+      // Als de session vervangen/gestopt is → exit stilletjes
+      if (currentCraft !== session) {
+        clearInterval(session.interval);
+        return resolve(false);
+      }
 
-    function tick() {
       const now = performance.now();
-      const elapsed = now - start;
+      const elapsed = now - session.start;
+      const remaining = Math.max(session.totalTime - elapsed, 0);
 
-      const remaining = Math.max(totalTime - elapsed, 0);
-
-      game.craftingProgress = Math.min((elapsed / totalTime) * 100, 100);
+      game.craftingProgress = Math.min((elapsed / session.totalTime) * 100, 100);
       game.craftingTimeRemaining = remaining;
 
-      if (elapsed >= totalTime) {
-        finishCraft(recipe, quantity);
-        resolve(true);
-      } else {
-        requestAnimationFrame(tick);
-      }
-    }
+      if (remaining <= 0) {
+        clearInterval(session.interval);
 
-    requestAnimationFrame(tick);
+        finishCraft(session);
+        resolve(true);
+      }
+    }, 100);
   });
 }
 
-function finishCraft(recipe, quantity) {
+// ============================================================================
+// FINISH CRAFT
+// ============================================================================
+
+function finishCraft(session) {
+  const { recipe, quantity } = session;
   const game = getGame();
 
-  // Remove inputs
+  // Verwijder inputs
   for (const input of recipe.inputs) {
-    removeItem(input.item, input.amount * quantity, 'use');
+    removeItem(input.item, input.amount * quantity);
   }
 
-  // Add outputs
+  // Voeg outputs toe
   for (const output of recipe.outputs) {
     addItem(output.item, output.amount * quantity);
   }
-
+  const { xp } = getFinalStats(recipe.skill);
   // XP
   if (recipe.skill && recipe.xp) {
-    addXp(recipe.skill, recipe.xp * quantity);
+    addXp(recipe.skill, recipe.xp * quantity * xp);
   }
 
-  // Notify
-  pushNotification(
-    "craft-" + recipe.id,
-    `Crafted ${quantity} × ${recipe.name}`
-  );
+  pushNotification("craft-" + recipe.id, { type: "success", message: `Crafted ${quantity}× ${recipe.name}` })
 
-  // Reset progress
+  // Verwijder deze job uit queue
+  game.craftingQueue.shift();
+
+  // Reset craft state
+  resetCraftState();
+
+  // Start volgende job
+  startNextInQueue();
+}
+
+// ============================================================================
+// CANCEL
+// ============================================================================
+
+export function cancelCraft() {
+  const game = getGame();
+
+  if (!currentCraft) return;
+
+  clearInterval(currentCraft.interval);
+
+  // verwijder de actieve job
+  game.craftingQueue.shift();
+
+  resetCraftState();
+}
+
+function resetCraftState() {
+  const game = getGame();
+  currentCraft = null;
+  game.isCrafting = false;
   game.craftingProgress = 0;
+  game.craftingTimeRemaining = 0;
 }
 
+// ============================================================================
+// HELPERS
+// ============================================================================
 
-
-export function craftOnce(recipe) {
-  return craft(recipe, 1);
+export function canCraft(recipe, qty = 1) {
+  const game = getGame();
+  return recipe.inputs.every((input) => {
+    const have = game.inventory[input.item] || 0;
+    return have >= input.amount * qty;
+  });
 }
 
-export function craftX(recipe, amount) {
-  return craft(recipe, amount);
+export function craftOnce(r) {
+  return addToQueue(r, 1);
 }
 
-export function craftMax(recipe) {
-  const max = maxCraftAmount(recipe);
-  if (max > 0) return craft(recipe, max);
-  return false;
+export function craftX(r, x) {
+  return addToQueue(r, x);
+}
+
+export function craftMax(r) {
+  const max = maxCraftAmount(r);
+  if (max > 0) return addToQueue(r, max);
 }

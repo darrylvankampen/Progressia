@@ -19,7 +19,7 @@
         <div class="xp-bar">
           <div class="xp-fill" :style="{ width: xpPercent + '%' }"></div>
         </div>
-        <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP</div>
+        <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP (total: {{ skill.totalXP }} XP)</div>
       </div>
     </div>
 
@@ -72,150 +72,151 @@ const xpPercent = computed(() => {
 </script>
 
 <style scoped>
-/* --- GLOBAL LAYOUT -------------------------------------------------- */
+/* ========================================= */
+/* SKILL PAGE — OSRS-HD Modern Theme */
+/* ========================================= */
+
 .skill-page {
   max-width: 1100px;
   margin: 0 auto;
   padding: 20px;
+
   color: white;
   animation: fadeIn 0.25s ease-out;
 }
 
-.actions-section {
-  margin-top: 28px;
-}
+/* ========================================= */
+/* HEADER PANEL */
+/* ========================================= */
 
-/* --- HEADER --------------------------------------------------------- */
 .skill-header {
   display: flex;
   align-items: center;
-  padding: 22px;
-  gap: 22px;
+  gap: 28px;
 
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+  padding: 26px 30px;
+  border-radius: 14px;
+
+  background: linear-gradient(145deg, #2f2f2f, #1c1c1c);
+  border: 1px solid #6c6c6c44;
+
   box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.35),
-    inset 0 0 14px rgba(255, 255, 255, 0.03);
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 0 12px rgba(255, 255, 255, 0.05);
 }
 
-.icon-wrapper {
-  min-width: 72px;
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* ICON RING */
 .icon-ring {
-  width: 90px;
-  height: 90px;
+  width: 95px;
+  height: 95px;
   border-radius: 999px;
 
-  background: radial-gradient(circle at 30% 30%, #ffffff25, #00000020);
+  background: linear-gradient(145deg, #2d2d2d, #1b1b1b);
   border: 2px solid var(--accent);
   box-shadow:
     0 0 12px var(--accent),
-    inset 0 0 8px rgba(255, 255, 255, 0.06);
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .skill-icon {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.skill-info {
-  flex: 1;
-}
-
+/* TITLE + LEVEL */
 .skill-title {
-  font-size: 2rem;
-  font-weight: 700;
   margin: 0;
+  font-size: 2rem;
   letter-spacing: 0.5px;
+  font-weight: 700;
   color: var(--accent);
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
 }
 
 .skill-level {
   font-size: 1.2rem;
-  opacity: 0.9;
-  margin-bottom: 8px;
+  opacity: 0.85;
+  margin-bottom: 10px;
 }
 
-.divider {
-  opacity: 0.35;
-  padding: 0 4px;
-}
-
+/* XP BAR */
 .xp-bar {
+  height: 16px;
   width: 100%;
-  height: 14px;
-  background: rgba(255, 255, 255, 0.1);
   border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
 }
 
 .xp-fill {
   height: 100%;
-  background: linear-gradient(90deg,
-      var(--accent),
-      #ffffff);
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, var(--accent), #ffffffaa);
+  box-shadow: 0 0 10px var(--accent);
   border-radius: 999px;
+  transition: width 0.3s ease-out;
 }
 
 .xp-text {
+  margin-top: 6px;
   font-size: 0.9rem;
   opacity: 0.85;
-  margin-top: 4px;
 }
 
-/* --- STOP BUTTON ---------------------------------------------------- */
-/* STOP BUTTON --------------------------------------------------------- */
+/* STOP BUTTON */
 .fancy-btn {
-  margin-top: 24px;
   width: 100%;
   padding: 14px;
+  margin-top: 26px;
 
-  background: linear-gradient(145deg, #ff6b6b, #d63031);
-  border-radius: 14px;
-  border: none;
+  background: linear-gradient(145deg, #ff5a5a, #c63b3b);
+  border-radius: 12px;
+
+  border: 1px solid #ff7b7b55;
   color: white;
-  font-weight: 800;
   font-size: 1.15rem;
+  font-weight: 700;
 
   cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 4px 14px rgba(255, 0, 0, 0.25);
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 10px #ff6b6b55;
+
+  transition: 0.15s ease;
 }
 
 .fancy-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(255, 0, 0, 0.35);
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 14px #ff6b6b88,
+    inset 0 0 12px rgba(255, 255, 255, 0.1);
 }
 
-/* LOADING ------------------------------------------------------------- */
-.loading-container {
-  padding: 40px;
-  display: flex;
-  justify-content: center;
+/* SHARED PANEL STYLE */
+.card-style {
+  background: linear-gradient(145deg, #2b2b2b, #1c1c1c);
+  border: 1px solid #6c6c6c44;
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.35),
+    inset 0 0 8px rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(8px);
+  margin-bottom: 20px;
 }
 
-.loading-card {
-  padding: 20px 28px;
-  font-size: 1.2rem;
-  opacity: 0.9;
-}
-
-/* ANIMATIONS ---------------------------------------------------------- */
+/* FADE IN */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -225,41 +226,5 @@ const xpPercent = computed(() => {
   to {
     opacity: 1;
   }
-}
-
-/* --- CARD STYLE SHARED ------------------------------------------------ */
-.card-style {
-  background: rgba(25, 25, 40, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-}
-
-/* MULTI HIT ------------------------------------------------- */
-.hit-progress-box {
-  margin-top: 12px;
-}
-
-.hit-label {
-  font-size: 0.9rem;
-  opacity: 0.85;
-  margin-bottom: 6px;
-}
-
-.hit-bar {
-  width: 100%;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.hit-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), #ffffffaa);
-  transition: width 0.2s ease-out;
-  border-radius: 999px;
 }
 </style>

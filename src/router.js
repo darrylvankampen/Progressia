@@ -30,6 +30,14 @@ const routes = [
   {
     path: "/debug",
     component: () => import("../src/pages/Debug/DebugPage.vue")
+  },
+  {
+    path: "/combat",
+    component: () => import("../src/pages/CombatPage.vue")
+  },
+  {
+    path: "/equipment",
+    component: () => import("../src/pages/EquipmentPage.vue")
   }
 ];
 

@@ -1,0 +1,10 @@
+{
+    "id": "spirit_log",
+    "name": "Spirit Log",
+    "category": "resources",
+    "description": "A spectral log from trees deeply connected to the spirit world.",
+    "icon": "/icons/items/resources/wood/spirit_log.png",
+    "rarity": "rare",
+    "value": 90,
+    "stats": {}
+}

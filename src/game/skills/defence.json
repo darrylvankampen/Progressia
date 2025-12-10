@@ -1,0 +1,8 @@
+{
+  "id": "defence",
+  "name": "Defence",
+  "icon": "/icons/skills/woodcutting.png",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": []
+}

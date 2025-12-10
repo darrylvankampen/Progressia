@@ -1,32 +1,35 @@
 <template>
   <div class="skills-grid">
-    <div
-      v-for="(skill, key) in skillsList"
-      :key="key"
-      class="skill-card"
-      @click="$emit('openSkill', skill.name.toLowerCase())"
-      :style="{ '--accent': skill.accent }"
-    >
-      <!-- Icon badge -->
-      <div class="icon-ring">
+    <div v-for="(skill, key) in skillsList" :key="key" class="skill-card" @click="$emit('openSkill', skill.key)"
+      :style="{ '--accent': skill.accent }">
+      <!-- ICON RING -->
+      <div class="icon-ring small">
         <img :src="skill.icon" class="skill-icon" />
       </div>
 
+      <!-- NAME -->
       <h3 class="skill-name">{{ skill.name }}</h3>
 
+      <!-- LEVEL -->
       <div class="skill-level">
-        Lv {{ skill.level }} <span class="divider">/</span> {{ skill.maxLevel }}
+        Lv {{ skill.level }}
+        <span class="divider">/</span>
+        {{ skill.maxLevel }}
       </div>
 
-      <!-- XP bar -->
+      <!-- XP BAR -->
       <div class="xp-bar">
         <div class="xp-fill" :style="{ width: skill.xpPercent + '%' }"></div>
       </div>
 
-      <div class="xp-text">{{ skill.xp }} / {{ skill.xpToNext }} XP</div>
+      <div class="xp-text">
+        {{ skill.xp }} / {{ skill.xpToNext }} XP
+        <span class="total">(Total: {{ skill.totalXP }})</span>
+      </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { computed } from "vue";
@@ -51,102 +54,132 @@ const skillsList = computed(() => {
       xpToNextLevel: s.xpToNextLevel,
       xpPercent,
       accent: getSkillColor(def.name.toLowerCase()),
+      totalXP: s.totalXP,
     };
   });
 });
 </script>
 
 <style scoped>
+/* GRID ----------------------------------------------------------- */
 .skills-grid {
   display: grid;
-  gap: 22px;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 26px;
   padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
+/* SKILL CARD ----------------------------------------------------- */
 .skill-card {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 20px;
-  padding: 22px 18px;
+  background: linear-gradient(145deg, #2c2c2c, #1b1b1b);
+  border: 1px solid #5a5a5a55;
+  border-radius: 16px;
+
+  padding: 24px 18px;
   text-align: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(6px);
+
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 8px rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(10px);
+
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: 0.18s ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Hover glow */
 .skill-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 12px var(--accent);
+  transform: translateY(-5px);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.6),
+    0 0 14px var(--accent);
 }
 
-/* ICON RING ---------------------------------------------------- */
-.icon-ring {
-  width: 70px;
-  height: 70px;
+/* ICON RING ------------------------------------------------------ */
+.icon-ring.small {
+  width: 76px;
+  height: 76px;
+
   border-radius: 999px;
-  background: radial-gradient(circle at 30% 30%, #ffffff25, #00000020);
+  border: 2px solid var(--accent);
+
+  background: linear-gradient(145deg, #303030, #1f1f1f);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 14px;
 
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 8px calc(var(--accent) + '33');
+  box-shadow:
+    0 0 10px var(--accent),
+    inset 0 0 8px rgba(255, 255, 255, 0.06);
+
+  margin-bottom: 14px;
 }
 
 .skill-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
-/* NAME -------------------------------------------------------- */
+/* NAME ----------------------------------------------------------- */
 .skill-name {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin: 0;
+  margin: 6px 0 4px 0;
+
+  color: #eaeaea;
   letter-spacing: 0.4px;
-  color: #e6e6e6;
 }
 
-/* LEVEL ------------------------------------------------------- */
+/* LEVEL ---------------------------------------------------------- */
 .skill-level {
-  margin-top: 4px;
   font-size: 0.95rem;
   opacity: 0.9;
 }
 
 .divider {
   opacity: 0.35;
-  padding: 0 4px;
 }
 
-/* XP BAR ------------------------------------------------------ */
+/* XP BAR --------------------------------------------------------- */
 .xp-bar {
-  background: #1a1a1a;
-  height: 9px;
-  border-radius: 999px;
+  width: 100%;
+  height: 12px;
   margin: 12px 0 6px;
+
+  border-radius: 999px;
   overflow: hidden;
-  border: 1px solid #00000060;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .xp-fill {
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    white
-  );
   height: 100%;
-  transition: width 0.35s ease;
+  border-radius: 999px;
+  transition: width 0.25s ease-out;
+
+  background: linear-gradient(90deg, var(--accent), #ffffff);
+  box-shadow: 0 0 10px var(--accent);
 }
 
-/* XP TEXT ----------------------------------------------------- */
+/* XP TEXT -------------------------------------------------------- */
 .xp-text {
-  font-size: 0.85rem;
   opacity: 0.85;
-  letter-spacing: 0.3px;
+  font-size: 0.85rem;
+}
+
+.total {
+  opacity: 0.55;
+  font-size: 0.75rem;
 }
 </style>

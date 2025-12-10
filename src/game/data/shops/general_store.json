@@ -1,0 +1,64 @@
+{
+    "id": "general_store",
+    "name": "General Store",
+    "icon": "/icons/ui/shop.png",
+    "rotation": {
+        "enabled": false,
+        "type": "daily",
+        "itemsPerCategory": 3
+    },
+    "categories": [
+        {
+            "id": "tools",
+            "label": "Tools",
+            "icon": "/icons/ui/shop.png",
+            "items": [
+                {
+                    "itemId": "bronze_axe",
+                    "price": 150,
+                    "currency": "gold",
+                    "limit": 1,
+                    "requiresLevel": 1,
+                    "skill": "woodcutting",
+                    "stock": -1,
+                    "salePercent": 0,
+                    "requiresFaction": null
+                },
+                {
+                    "itemId": "steel_axe",
+                    "price": 1800,
+                    "currency": "gold",
+                    "limit": 1,
+                    "requiresLevel": 20,
+                    "skill": "woodcutting",
+                    "stock": -1,
+                    "salePercent": 10,
+                    "saleText": "Limited Sale!",
+                    "requiresFaction": null
+                }
+            ]
+        },
+        {
+            "id": "resources",
+            "label": "Resources",
+            "icon": "/icons/ui/shop.png",
+            "items": [
+                {
+                    "itemId": "wooden_log",
+                    "price": 3,
+                    "currency": "gold",
+                    "stock": -1
+                },
+                {
+                    "itemId": "magic_log",
+                    "price": 35,
+                    "currency": "gold",
+                    "requiresLevel": 25,
+                    "skill": "woodcutting",
+                    "stock": -1,
+                    "rare": true
+                }
+            ]
+        }
+    ]
+}

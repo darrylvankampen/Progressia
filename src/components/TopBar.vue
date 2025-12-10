@@ -1,42 +1,40 @@
 <template>
-  <div class="topbar shadow">
-    <!-- LEFT: Player Info -->
+  <div class="topbar">
+
+    <!-- LEFT: PLAYER STATS -->
     <div class="left">
-
-      <div class="stat">
-        <span class="icon">⭐</span>
-        <span>{{ totalLevel }}</span>
+      <div class="stat-badge">
+        ⭐ {{ totalLevel }}
       </div>
 
-      <div class="stat">
-        <span class="icon">❤️</span>
-        <span>{{ game.player.hp }}/{{ game.player.maxHp }}</span>
+      <div class="stat-badge hp">
+        ❤️ {{ game.player.hp }}/{{ game.player.maxHp }}
       </div>
 
-      <div class="stat">
-        <span class="icon">🪙</span>
-        <span>{{ game.player.gold }}</span>
+      <div class="stat-badge gold">
+        🪙 {{ game.player.gold }}
       </div>
-
     </div>
 
-    <!-- CENTER: Active XP (Melvor style) -->
+    <!-- CENTER: ACTIVE XP -->
     <div class="center" v-if="activeSkill">
       <div class="xp-label">
-        {{ activeSkill.name }} (Lvl {{ activeSkill.level }})
+        {{ activeSkill.name }} (Lv {{ activeSkill.level }})
       </div>
+
       <div class="xp-bar">
         <div class="xp-fill" :style="{ width: xpPercent + '%' }"></div>
       </div>
     </div>
 
-    <!-- RIGHT: Clock -->
+    <!-- RIGHT: CLOCK -->
     <div class="right">
-      <span>{{ time }}</span>
+      <div class="clock">{{ time }}</div>
     </div>
 
   </div>
 </template>
+
 
 <script setup>
 import { computed, ref, onMounted } from "vue";
@@ -82,62 +80,122 @@ const xpPercent = computed(() => {
 
 <style scoped>
 .topbar {
-  height: 52px;
-  background: rgba(20, 20, 20, 0.6);
-  border-bottom: 2px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+  height: 56px;
+
+  /* OSRS HD translucent dark slate */
+  background: linear-gradient(145deg, #272727ee, #1a1a1add);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 18px;
-  color: white;
+
+  padding: 0 22px;
+  color: #f5f5f5;
+
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 50;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 -2px 6px rgba(255, 255, 255, 0.04);
 }
 
+/* LEFT & RIGHT GROUPS ------------------------------------------------ */
 .left,
 .right {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
 }
 
-.stat {
+/* STAT BADGES -------------------------------------------------------- */
+.stat-badge {
+  padding: 6px 12px;
+  border-radius: 10px;
+
+  background: linear-gradient(145deg, #363636, #1f1f1f);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 0 6px rgba(255, 255, 255, 0.05);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 1rem;
+
+  color: #eee;
 }
 
-.icon {
-  font-size: 1.2rem;
+.stat-badge.hp {
+  border-color: #ff6b6b99;
+  box-shadow: 0 0 10px #ff6b6b55;
 }
 
+.stat-badge.gold {
+  border-color: #e0c36d99;
+  box-shadow: 0 0 10px #e0c36d55;
+}
+
+/* CENTER XP SECTION -------------------------------------------------- */
 .center {
-  width: 30%;
   text-align: center;
+  width: 32%;
 }
 
 .xp-label {
   font-size: 0.85rem;
   opacity: 0.9;
+  margin-bottom: 4px;
+  letter-spacing: 0.4px;
 }
 
+/* XP BAR (OSRS HD Style) */
 .xp-bar {
-  margin-top: 4px;
   width: 100%;
-  height: 6px;
-  border-radius: 4px;
-  background: rgba(255,255,255,0.2);
+  height: 9px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 999px;
   overflow: hidden;
+
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
 }
 
 .xp-fill {
   height: 100%;
-  background: linear-gradient(90deg, #6cf, #9ef);
-  transition: width 0.3s ease;
+  background: linear-gradient(90deg, #4fc3ff, #9be7ff);
+  box-shadow: 0 0 10px #6fcaff;
+
+  transition: width 0.25s ease-out;
+}
+
+/* CLOCK --------------------------------------------------------------- */
+.clock {
+  font-weight: 600;
+  opacity: 0.9;
+  letter-spacing: 0.4px;
+
+  padding: 6px 12px;
+  border-radius: 10px;
+
+  background: linear-gradient(145deg, #303030, #202020);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 0 6px rgba(255, 255, 255, 0.05);
 }
 </style>

@@ -256,3 +256,83 @@ export function getEffectiveToolStats(skillId) {
     doubleChance,
   };
 }
+
+/**
+ * =============================================================================
+ *  UNIVERSAL FINAL STAT CALCULATOR
+ * =============================================================================
+ *
+ * Combines:
+ *   - Base tool stats
+ *   - Skill-specific percent modifiers
+ *   - Prestige modifiers
+ *   - Global percent modifiers
+ *   - Flat modifiers (doubleChance, amount, etc.)
+ *
+ * Returns a unified stat object:
+ *   {
+ *     speed: multiplier,
+ *     xp: multiplier,
+ *     doubleChance: number,
+ *     amount: multiplier,
+ *     rareChance: number,
+ *   }
+ */
+export function getFinalStats(skillId) {
+  const game = getGame();
+
+  // ---------------------------------------------------------------
+  // 1. Base stats from equipped tool
+  // ---------------------------------------------------------------
+  const equipped = game.player?.equippedTools || {};
+  const toolId = equipped[skillId];
+  const tool = toolId ? getItem(toolId) : null;
+
+  let stats = {
+    speed: tool?.stats?.speedMultiplier ?? 1.0,
+    xp: tool?.stats?.xpMultiplier ?? 1.0,
+    doubleChance: tool?.stats?.doubleChance ?? 0.0,
+    amount: tool?.stats?.amountMultiplier ?? 1.0,
+    rareChance: tool?.stats?.rareChance ?? 0.0,
+  };
+
+  // ---------------------------------------------------------------
+  // 2. SKILL-SPECIFIC MODIFIERS
+  // ---------------------------------------------------------------
+  const speedPercent = getPercentModifier(`${skillId}_speed_percent`);
+  const xpPercent = getPercentModifier(`${skillId}_xp_percent`);
+  const amountPercent = getPercentModifier(`${skillId}_amount_percent`);
+  const rarePercent = getPercentModifier(`${skillId}_rare_percent`);
+  const doubleFlat = getFlatModifier(`${skillId}_doubleChance`);
+
+  // ---------------------------------------------------------------
+  // 3. GLOBAL MODIFIERS
+  // ---------------------------------------------------------------
+  const globalSpeedPercent = getPercentModifier("speed_global_percent") || 0;
+  const globalXpPercent = getPercentModifier("xp_global_percent") || 0;
+  const globalAmountPercent = getPercentModifier("amount_global_percent") || 0;
+  const globalRarePercent = getPercentModifier("rare_drop_percent") || 0;
+
+  // ---------------------------------------------------------------
+  // 4. PRESTIGE MODIFIERS (via prestigeEngine)
+  // ---------------------------------------------------------------
+  const prestige = getPrestigeModifiers();
+  const prestigeSpeed = prestige.speed_global_percent || 0;
+  const prestigeXp = prestige.xp_global_percent || 0;
+  const prestigeRare = prestige.rare_drop_percent || 0;
+  const prestigeAmount = prestige.amount_global_percent || 0;
+
+  // ---------------------------------------------------------------
+  // 5. APPLY COMBINED MULTIPLIERS
+  // ---------------------------------------------------------------
+  stats.speed *= 1 + (speedPercent + globalSpeedPercent + prestigeSpeed) / 100;
+  stats.xp *= 1 + (xpPercent + globalXpPercent + prestigeXp) / 100;
+  stats.amount *= 1 + (amountPercent + globalAmountPercent + prestigeAmount) / 100;
+
+  // Rare is additive rather than multiplicative
+  stats.rareChance += (rarePercent + globalRarePercent + prestigeRare) / 100;
+
+  // Double chance is flat + tool base
+  stats.doubleChance += doubleFlat;
+  return stats;
+}

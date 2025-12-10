@@ -154,6 +154,7 @@ function extractSkillProgress(savedSkill) {
       timeLeft: 0,
       isActive: false,
       wasActive: false,
+      totalXP: 0,
     };
   }
 
@@ -165,6 +166,7 @@ function extractSkillProgress(savedSkill) {
     timeLeft: savedSkill.timeLeft ?? 0,
     isActive: false, // runtime-only field; never restored
     wasActive: savedSkill.wasActive ?? false,
+    totalXP: savedSkill.totalXP ?? 0,
   };
 }
 
@@ -209,6 +211,7 @@ export async function resetGame() {
       timeLeft: 0,
       isActive: false,
       wasActive: false,
+      totalXP: 0,
     };
   }
 
@@ -292,7 +295,9 @@ export function saveGame() {
         activeTitle: game.player.activeTitle,
         achievementPoints: game.player.achievementPoints,
         factions: deepClone(game.player.factions),
-        prestige: deepClone(game.player.prestige)
+        prestige: deepClone(game.player.prestige),
+        equipment: deepClone(game.player.equipment),
+        stats: deepClone(game.player.stats),
       };
       continue;
     }
@@ -310,6 +315,7 @@ export function saveGame() {
           timeLeft: s.timeLeft,
           isActive: s.isActive,
           wasActive: s.wasActive,
+          totalXP: s.totalXP,
         };
       }
       save.skills = skills;
@@ -359,6 +365,7 @@ export function addXp(skillKey, amount) {
 
   // Update totals
   skill.xp += amount;
+  skill.totalXP += amount;
   game.player.totalXP += amount;
 
   // Achievement checks triggered by XP changes
@@ -370,6 +377,10 @@ export function addXp(skillKey, amount) {
   while (skill.xp >= skill.xpToNext && skill.level < skill.maxLevel) {
     skill.xp -= skill.xpToNext;
     skill.level++;
+
+    if (skill.id === "hp") {
+      game.player.maxHp += 10;
+    }
 
     if (skill.level < skill.maxLevel) {
       skill.xpToNext = Math.floor(50 * Math.pow(skill.level, 1.8));
@@ -393,7 +404,7 @@ export function addXp(skillKey, amount) {
       skill.justLeveled = false;
     }, 1500);
   }
-
+  console.log("XP added to", skillKey, "by", amount);
   saveGame();
 }
 
@@ -440,6 +451,8 @@ export function addItem(itemKey, amount = 1) {
   // Add item(s)
   game.inventory[itemKey] += amount;
 
+  incrementPlayerStat("resourcesCollected", amount)
+
   checkAchievements();
 
   // Notify UI
@@ -473,6 +486,7 @@ export function removeItem(itemKey, amount = 1, type = "use") {
 
   if (type === "use") {
     game.resourceStats[itemKey].used += amount;
+    incrementPlayerStat("itemsCrafted", 1);
   }
 
   if (type === "sell") {
@@ -480,6 +494,14 @@ export function removeItem(itemKey, amount = 1, type = "use") {
     if (item) {
       game.player.gold += item.value;
     }
+    playSound("sell");
+    incrementPlayerStat("itemsSold", 1);
+    incrementPlayerStat("goldEarned", item.value)
+  }
+
+  if (type === "destroy") {
+    playSound("destroy");
+    incrementPlayerStat("itemsDestroyed", 1);
   }
 
   // Modify inventory count
@@ -639,7 +661,7 @@ export function equipTool(skillId, toolId) {
 
   // Equip tool
   game.player.equippedTools[skillId] = toolId;
-
+  playSound("equip");
   recalculateModifiers();
   saveGame();
   return true;
@@ -669,6 +691,72 @@ export function unequipTool(skillId) {
   return true;
 }
 
+export function equipItem(itemId) {
+  const game = getGame();
+  const item = getItem(itemId);
+
+  if (!item) return { success: false, reason: "Item not found" };
+
+  const slot = item.slot;
+  const equip = game.player.equipment;
+
+  if (!slot) {
+    return { success: false, reason: "Item is not equipable" };
+  }
+
+  // ------------------------
+  // Weapon validation
+  // ------------------------
+  if (slot === "weapon") {
+    const hands = item.hands ?? 1;
+
+    if (hands === 2) {
+      // 2H weapon blocks offhand
+      equip.weapon = itemId;
+      equip.offhand = null;
+    } else {
+      // 1H weapon
+      equip.weapon = itemId;
+    }
+  }
+
+  // ------------------------
+  // Offhand validation
+  // ------------------------
+  else if (slot === "offhand") {
+    const weapon = getItem(equip.weapon);
+
+    if (weapon?.hands === 2) {
+      return { success: false, reason: "Cannot equip shield with a 2H weapon" };
+    }
+
+    equip.offhand = itemId;
+  }
+
+  // ------------------------
+  // Armor & misc slots
+  // ------------------------
+  else {
+    equip[slot] = itemId;
+  }
+
+  playSound("equip");
+
+  saveGame(game);
+
+  return { success: true };
+}
+
+export function unequipItem(slot) {
+  const game = getGame();
+  const equip = game.player.equipment;
+
+  if (!equip[slot]) return;
+
+  equip[slot] = null;
+  saveGame(game);
+}
+
 /* ============================================================================
  * LOOT / OPENABLES
  * ============================================================================
@@ -685,6 +773,8 @@ export function openItem(itemId) {
   const item = getItem(itemId);
   if (!item || !item.openable) return null;
 
+  playSound("itemOpen");
+
   // Consume 1 openable
   removeItem(itemId, 1);
 
@@ -693,6 +783,9 @@ export function openItem(itemId) {
 
   // Add rewards
   results.forEach(r => addItem(r.item, r.amount));
+
+  // Add to stats
+  incrementPlayerStat("itemsOpened", 1);
 
   return results;
 }
@@ -883,4 +976,59 @@ export function cleanupExpiredBuffs() {
  */
 export function getActiveBuffs() {
   return game.activeBuffs;
+}
+
+/**
+ * Sets the player's name.
+ */
+export function setPlayerName(name) {
+  const game = getGame();
+  game.player.name = name;
+}
+
+export function getPlayerName() {
+  const game = getGame();
+  return game.player.name;
+}
+
+export function getPlayerStats() {
+  const game = getGame();
+
+  if (!game.player.stats || typeof game.player.stats !== "object") {
+    game.player.stats = {};
+    saveGame();
+  }
+
+  return game.player.stats;
+}
+
+export function getPlayerStatById(statId) {
+  const stats = getPlayerStats();
+
+  if (!Object.prototype.hasOwnProperty.call(stats, statId)) {
+    return 0;
+  }
+
+  const value = Number(stats[statId]);
+  return isNaN(value) ? 0 : value;
+}
+
+export function incrementPlayerStat(statId, amount = 1) {
+  const game = getGame();
+  const stats = getPlayerStats();
+
+  if (typeof amount !== "number") {
+    amount = Number(amount) || 0;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(stats, statId)) {
+    stats[statId] = 0;
+  }
+
+  const current = Number(stats[statId]) || 0;
+
+  stats[statId] = current + amount;
+
+  saveGame();
+  return stats[statId];
 }

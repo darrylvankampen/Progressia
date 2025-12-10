@@ -1,5 +1,9 @@
 const sounds = {
   levelup: new Audio("/sounds/levelup.mp3"),
+  equip: new Audio("/sounds/equip.mp3"),
+  itemOpen: new Audio("/sounds/itemOpen.mp3"),
+  sell: new Audio("/sounds/sell.mp3"),
+  destroy: new Audio("/sounds/destroy.mp3")
 };
 
 export function playSound(name) {
