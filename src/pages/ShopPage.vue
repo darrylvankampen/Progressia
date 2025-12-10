@@ -1,7 +1,6 @@
 <template>
   <div class="shop-page">
-    <SectionHeader title="General Store" icon="/icons/ui/shop.png" />
-
+    <h2>General Shop</h2>
     <div class="shop-layout">
       <!-- CATEGORY SIDEBAR -->
       <div class="shop-categories card-style">
@@ -69,7 +68,6 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import SectionHeader from "../components/ui/SectionHeader.vue";
 import { getShop, canBuy, buyFromShop } from "../game/ShopEngine";
 import { getGame } from "../game/state/gameState";
 import { useNotifications } from "../composables/useNotification";
@@ -121,63 +119,72 @@ function tryBuy(entry) {
 </script>
 
 <style scoped>
-/* LAYOUT ------------------------------------------------------------------ */
+/* ========================================= */
+/* SHOP LAYOUT (OSRS-HD PANEL) */
+/* ========================================= */
+
 .shop-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 28px;
   padding: 24px;
+
+  background: radial-gradient(circle at center, #2c2c2c 0%, #1b1b1b 100%);
+  border-radius: 12px;
+  border: 1px solid #4f4f4f55;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 0 12px rgba(255, 255, 255, 0.03);
 }
 
-/* SIDEBAR ----------------------------------------------------------------- */
+/* ========================================= */
+/* CATEGORY SIDEBAR — Modern OSRS-HD Buttons */
+/* ========================================= */
+
 .shop-categories {
-  background: #181818;
-  padding: 18px;
-  border-radius: 20px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  background: linear-gradient(145deg, #343434, #1e1e1e);
+  border-radius: 12px;
+  border: 1px solid #6c6c6c44;
+  box-shadow:
+    inset 0 0 8px rgba(255, 255, 255, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.45);
 }
 
 .category-title {
   font-size: 1.2rem;
-  margin-bottom: 14px;
-  opacity: 0.8;
-  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
 }
 
 .category-item {
-  position: relative;
-  background: #222;
-  border-radius: 14px;
   padding: 12px 14px;
-  cursor: pointer;
-  transition: 0.25s ease;
   margin-bottom: 10px;
-  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+
+  background: linear-gradient(145deg, #2b2b2b, #1c1c1c);
+  border: 1px solid #5a5a5a33;
+
+  transition:
+    transform .15s ease,
+    border-color .15s ease,
+    box-shadow .15s ease;
 }
 
 .category-item:hover {
-  background: #2a2a2a;
-  transform: translateX(3px);
-}
-
-/* Accent bar (animated) */
-.category-item.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 5px;
-  height: 100%;
-  background: #6bd66e;
-  border-radius: 5px;
-  box-shadow: 0 0 6px #6bd66e;
+  transform: translateX(4px);
+  border-color: #8ab5ff66;
+  box-shadow: 0 0 10px #8ab5ff33;
 }
 
 .category-item.active {
-  background: #2e2e2e;
-  color: white;
-  transform: translateX(4px);
+  border-color: #8ab5ff;
+  background: linear-gradient(145deg, #3c3c3c, #242424);
+  box-shadow:
+    0 0 12px #8ab5ff55,
+    inset 0 0 6px rgba(255, 255, 255, 0.05);
 }
 
 .category-inner {
@@ -188,90 +195,119 @@ function tryBuy(entry) {
 
 .category-icon {
   width: 28px;
-  opacity: 0.9;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
 }
 
-/* SHOP GRID --------------------------------------------------------------- */
+/* ========================================= */
+/* SHOP ITEM GRID */
+/* ========================================= */
+
 .shop-items {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   gap: 26px;
 }
 
-/* ITEM CARD --------------------------------------------------------------- */
+/* ========================================= */
+/* SHOP CARD (Modern OSRS-HD Panel Card) */
+/* ========================================= */
+
 .shop-card {
   display: flex;
-  align-items: center;
   gap: 20px;
-  padding: 20px;
-  border-radius: 20px;
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-  transition: 0.25s ease;
+  padding: 22px;
+  border-radius: 14px;
+
+  background: linear-gradient(145deg, #323232, #1a1a1a);
+  border: 1px solid #6c6c6c44;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.04),
+    inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .shop-card:hover {
-  transform: translateY(-4px);
-  border-color: #6bd66e;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+  border-color: #8ab5ff88;
+  box-shadow:
+    0 0 18px #8ab5ff44,
+    inset 0 0 12px rgba(255, 255, 255, 0.06);
 }
 
+/* Icon ring → OSRS-HD glow version */
 .icon-ring.medium.glow {
-  background: #252525;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  width: 64px;
-  height: 64px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #6bd66e;
-  box-shadow: 0 0 10px rgba(107, 214, 110, 0.4);
+
+  background: linear-gradient(145deg, #2f2f2f, #1c1c1c);
+  border: 2px solid #8ab5ff55;
+
+  box-shadow:
+    0 0 10px #8ab5ff44,
+    inset 0 0 8px rgba(255, 255, 255, 0.05);
 }
 
 .item-icon {
   width: 48px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
 }
 
-/* TEXT -------------------------------------------------------------------- */
+/* ========================================= */
+/* ITEM TEXT */
+/* ========================================= */
+
 .info {
   flex: 1;
 }
 
 .item-name {
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  opacity: 0.95;
+  letter-spacing: 0.3px;
 }
 
 .description {
   opacity: 0.75;
-  font-size: 0.9rem;
   margin-top: 4px;
+  font-size: 0.92rem;
 }
 
 .extra {
-  margin-top: 8px;
+  margin-top: 10px;
   display: flex;
   gap: 16px;
   font-size: 0.82rem;
-  opacity: 0.9;
 }
 
 .req {
-  color: #ffb347;
+  color: #ffdf85;
 }
 
 .stock {
-  color: #6bd66e;
+  color: #8aff9e;
 }
 
-/* PRICE & BUY ------------------------------------------------------------- */
+/* ========================================= */
+/* PRICE & BUY AREA */
+/* ========================================= */
+
 .price-box {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
+  gap: 12px;
 }
 
 .price-wrapper {
@@ -282,49 +318,63 @@ function tryBuy(entry) {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 1.1rem;
+
+  font-size: 1.15rem;
   font-weight: 600;
+  opacity: 0.95;
 }
 
 .gold-icon {
   width: 20px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
 .sale-badge {
-  background: #6bd66e;
-  padding: 4px 10px;
-  border-radius: 10px;
+  background: #8aff9e;
+  padding: 5px 12px;
+  border-radius: 8px;
   font-size: 0.85rem;
-  margin-top: 4px;
-  color: #111;
   font-weight: 700;
-  box-shadow: 0 0 6px rgba(107, 214, 110, 0.5);
+  color: #111;
+  box-shadow: 0 0 6px #8aff9e77;
 }
 
-/* BUY BUTTON -------------------------------------------------------------- */
+/* ========================================= */
+/* BUY BUTTON — OSRS-HD BUTTON */
+/* ========================================= */
+
 .buy-btn {
-  background: linear-gradient(135deg, #6bd66e, #4dbd50);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 14px;
+  background: linear-gradient(145deg, #3a71ff, #295bcc);
+  border: 1px solid #7ea9ff55;
+
+  padding: 10px 22px;
+  border-radius: 10px;
+
   cursor: pointer;
   font-weight: 700;
-  color: #1a1a1a;
+  color: white;
+  letter-spacing: 0.4px;
+
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.25),
-    0 0 8px #6bd66e;
-  transition: 0.25s ease;
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 0 10px #87b7ff44;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
 }
 
 .buy-btn:hover:not(:disabled) {
   transform: translateY(-3px) scale(1.03);
-  filter: brightness(1.12);
+  box-shadow:
+    0 0 12px #8ab5ff66,
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .buy-btn:disabled {
-  background: #555;
-  opacity: 0.4;
-  cursor: not-allowed;
+  opacity: 0.35;
   box-shadow: none;
+  cursor: not-allowed;
 }
 </style>

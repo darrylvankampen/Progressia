@@ -68,37 +68,60 @@ function stopCrafting() {
 </script>
 
 <style scoped>
-/* ---- STOP BUTTON ---- */
-.stop-btn {
-  background: #ff4f4f;
-  border: none;
+/* ===================================================== */
+/* CRAFTING QUEUE — OSRS HD STYLE                        */
+/* ===================================================== */
+
+.queue-box {
+  margin-top: 18px;
+  padding: 20px;
+
+  border-radius: 12px;
+  background: linear-gradient(145deg, #2c2c2c, #1b1b1b);
+  border: 1px solid #6c6c6c44;
+
   color: white;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 0 10px rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(8px);
+}
+
+h5 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Stop button */
+.stop-btn {
   padding: 4px 10px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  box-shadow: 0 2px 6px #00000040;
-  transition: 0.2s;
+  border-radius: 8px;
+
+  border: 1px solid rgba(255, 90, 90, 0.5);
+  background: linear-gradient(145deg, #ff4e4e, #c93737);
+  color: white;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 0 10px rgba(255, 70, 70, 0.4);
+  transition: 0.15s;
 }
 
 .stop-btn:hover {
-  background: #ff2f2f;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(255, 70, 70, 0.6);
 }
 
-/* (rest van jouw styling blijft exact hetzelfde) */
-
-.queue-box {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.08);
-}
-
+/* Queue items */
 .queue-item {
-  padding: 10px 0;
+  padding: 12px 4px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -106,51 +129,52 @@ function stopCrafting() {
   border-bottom: none;
 }
 
-.left {
-  display: flex;
-  flex-direction: column;
-}
-
 .job-name {
-  font-weight: 600;
   font-size: 1rem;
+  font-weight: 600;
 }
 
 .job-qty {
   opacity: 0.7;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .right {
-  min-width: 150px;
+  min-width: 160px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
+/* Progress bar */
 .progress-wrapper {
-  width: 140px;
-  height: 8px;
+  width: 150px;
+  height: 10px;
+
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
   overflow: hidden;
-  margin-bottom: 4px;
+  backdrop-filter: blur(5px);
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #6cc4ff, #4fa8ff);
-  transition: width 0.1s linear;
+  background: linear-gradient(90deg, #4fa8ff, #87c8ff);
+  box-shadow: 0 0 8px #4fa8ff;
+  transition: width 0.12s linear;
 }
 
 .time-text {
-  font-size: 0.85rem;
-  opacity: 0.9;
+  margin-top: 6px;
+  opacity: 0.85;
+  font-size: 0.9rem;
 }
 
 .waiting-text {
-  font-size: 0.85rem;
-  opacity: 0.6;
+  opacity: 0.7;
   font-style: italic;
+  font-size: 0.85rem;
 }
 </style>

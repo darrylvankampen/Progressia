@@ -66,22 +66,34 @@ const outputItems = computed(() =>
 </script>
 
 <style scoped>
+/* ===================================================== */
+/* CRAFT CARD — OSRS HD STYLE                            */
+/* ===================================================== */
+
 .craft-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
   padding: 20px;
+  border-radius: 14px;
+
+  background: linear-gradient(145deg, #323232, #1a1a1a);
+  border: 1px solid #6c6c6c44;
+  color: white;
+
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 10px rgba(255, 255, 255, 0.04);
+
   backdrop-filter: blur(6px);
-  box-shadow: 0 4px 18px #0003;
-  transition: 0.25s ease;
+  transition: 0.2s;
 }
 
 .craft-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 24px #0005;
+  transform: translateY(-4px);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(110, 160, 255, 0.25);
 }
 
-/* HEADER ------------------------------------------------------ */
+/* Header */
 .craft-header {
   display: flex;
   justify-content: space-between;
@@ -92,36 +104,41 @@ const outputItems = computed(() =>
 .craft-title {
   font-size: 1.3rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  color: #d7e7ff;
+  text-shadow: 0 0 10px rgba(100, 150, 255, 0.4);
 }
 
+/* XP badge */
 .xp-badge {
-  background: linear-gradient(135deg, #4fc3a1, #3c9b7e);
   padding: 6px 12px;
   border-radius: 8px;
-  font-weight: 700;
+
+  background: linear-gradient(145deg, #4fc3a1, #3b9c7f);
+  border: 1px solid rgba(110, 255, 200, 0.4);
   color: white;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 6px #0004;
+  font-weight: 700;
+
+  box-shadow: 0 0 10px rgba(100, 255, 180, 0.35);
 }
 
-/* SECTIONS ---------------------------------------------------- */
+/* Sections */
 .section {
   margin-bottom: 18px;
 }
 
 .section-title {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   opacity: 0.75;
-  margin-bottom: 6px;
-  border-left: 4px solid #8884;
-  padding-left: 8px;
   text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+
+  border-left: 4px solid #4fa8ff77;
+  padding-left: 8px;
+
+  margin-bottom: 6px;
+  letter-spacing: 0.4px;
 }
 
-/* ITEMS ------------------------------------------------------- */
+/* Item Chips */
 .item-list {
   display: flex;
   flex-wrap: wrap;
@@ -129,20 +146,32 @@ const outputItems = computed(() =>
 }
 
 .item-chip {
+  padding: 8px 12px;
+  border-radius: 10px;
+
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
-  border-radius: 10px;
+
   border: 2px solid var(--rarity);
   background: rgba(255, 255, 255, 0.07);
-  box-shadow: 0 2px 5px #0003;
-  transition: 0.2s;
+
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 0 8px var(--rarity);
+
+  transition: 0.15s;
 }
 
 .item-chip:hover {
   transform: translateY(-2px);
-  box-shadow: 0 3px 8px #0005;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 0 10px var(--rarity);
 }
 
 .item-chip.output {
@@ -152,41 +181,46 @@ const outputItems = computed(() =>
 .chip-icon {
   width: 28px;
   height: 28px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.4));
 }
 
-.item-chip span {
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-/* BUTTONS ----------------------------------------------------- */
+/* Buttons */
 .button-row {
-  margin-top: 6px;
+  margin-top: 10px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .craft-btn {
   flex: 1;
   padding: 10px 0;
-  border-radius: 8px;
-  border: none;
-  background: linear-gradient(135deg, #444, #333);
+
+  border-radius: 10px;
+  border: 1px solid #4fa8ff66;
+
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
   color: white;
   font-weight: 700;
-  font-size: 0.95rem;
-  transition: 0.2s ease;
-  box-shadow: 0 2px 8px #0003;
+
+  cursor: pointer;
+  transition: 0.2s;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    inset 0 0 6px rgba(255, 255, 255, 0.06);
 }
 
 .craft-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #555, #3a3a3a);
+  background: linear-gradient(145deg, #4a4a4a, #343434);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px #0005;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    0 0 10px #4fa8ff66;
 }
 
 .craft-btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 </style>

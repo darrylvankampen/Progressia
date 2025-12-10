@@ -295,7 +295,8 @@ export function saveGame() {
         activeTitle: game.player.activeTitle,
         achievementPoints: game.player.achievementPoints,
         factions: deepClone(game.player.factions),
-        prestige: deepClone(game.player.prestige)
+        prestige: deepClone(game.player.prestige),
+        equipment: deepClone(game.player.equipment)
       };
       continue;
     }
@@ -375,6 +376,10 @@ export function addXp(skillKey, amount) {
   while (skill.xp >= skill.xpToNext && skill.level < skill.maxLevel) {
     skill.xp -= skill.xpToNext;
     skill.level++;
+
+    if (skill.id === "hp") {
+      game.player.maxHp += 10;
+    }
 
     if (skill.level < skill.maxLevel) {
       skill.xpToNext = Math.floor(50 * Math.pow(skill.level, 1.8));
@@ -674,6 +679,70 @@ export function unequipTool(skillId) {
   return true;
 }
 
+export function equipItem(itemId) {
+  const game = getGame();
+  const item = getItem(itemId);
+
+  if (!item) return { success: false, reason: "Item not found" };
+
+  const slot = item.slot;
+  const equip = game.player.equipment;
+
+  if (!slot) {
+    return { success: false, reason: "Item is not equipable" };
+  }
+
+  // ------------------------
+  // Weapon validation
+  // ------------------------
+  if (slot === "weapon") {
+    const hands = item.hands ?? 1;
+
+    if (hands === 2) {
+      // 2H weapon blocks offhand
+      equip.weapon = itemId;
+      equip.offhand = null;
+    } else {
+      // 1H weapon
+      equip.weapon = itemId;
+    }
+  }
+
+  // ------------------------
+  // Offhand validation
+  // ------------------------
+  else if (slot === "offhand") {
+    const weapon = getItem(equip.weapon);
+
+    if (weapon?.hands === 2) {
+      return { success: false, reason: "Cannot equip shield with a 2H weapon" };
+    }
+
+    equip.offhand = itemId;
+  }
+
+  // ------------------------
+  // Armor & misc slots
+  // ------------------------
+  else {
+    equip[slot] = itemId;
+  }
+
+  saveGame(game);
+
+  return { success: true };
+}
+
+export function unequipItem(slot) {
+  const game = getGame();
+  const equip = game.player.equipment;
+
+  if (!equip[slot]) return;
+
+  equip[slot] = null;
+  saveGame(game);
+}
+
 /* ============================================================================
  * LOOT / OPENABLES
  * ============================================================================
@@ -888,4 +957,17 @@ export function cleanupExpiredBuffs() {
  */
 export function getActiveBuffs() {
   return game.activeBuffs;
+}
+
+/**
+ * Sets the player's name.
+ */
+export function setPlayerName(name) {
+  const game = getGame();
+  game.player.name = name;
+}
+
+export function getPlayerName() {
+  const game = getGame();
+  return game.player.name;
 }

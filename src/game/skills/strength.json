@@ -1,0 +1,8 @@
+{
+  "id": "strength",
+  "name": "Strength",
+  "icon": "/icons/skills/woodcutting.png",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": []
+}

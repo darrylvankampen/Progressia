@@ -118,82 +118,67 @@ function handleClick(action) {
 </script>
 
 <style scoped>
-/* GRID -------------------------------------------------------------- */
+/* ========================================= */
+/* GRID OF ACTION CARDS */
+/* ========================================= */
+
 .actions-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px;
+  gap: 24px;
 }
 
-/* CARD -------------------------------------------------------------- */
+/* ========================================= */
+/* ACTION CARD — Modern OSRS-HD Panel */
+/* ========================================= */
+
 .action-card {
   position: relative;
-  padding: 18px;
-  border-radius: 20px;
+  padding: 22px;
+  border-radius: 14px;
 
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  backdrop-filter: blur(10px) brightness(0.85);
-  -webkit-backdrop-filter: blur(10px) brightness(0.85);
+  background: linear-gradient(145deg, #2f2f2f, #1c1c1c);
+  border: 1px solid #6c6c6c44;
 
   box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.35),
-    inset 0 0 14px rgba(255, 255, 255, 0.03);
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 0 12px rgba(255, 255, 255, 0.05);
 
   cursor: pointer;
   transition: 0.18s ease;
-  color: #fff;
 }
 
-
+/* Hover highlight */
 .action-card:hover {
   transform: translateY(-6px);
   border-color: var(--accent);
   box-shadow:
-    0 6px 25px rgba(0, 0, 0, 0.4),
-    0 0 12px var(--accent);
+    0 0 14px var(--accent),
+    inset 0 0 10px rgba(255, 255, 255, 0.08);
 }
 
+/* Active card glow */
 .action-card.active {
   border-color: var(--accent);
   box-shadow:
     0 0 18px var(--accent),
-    0 0 8px rgba(255, 255, 255, 0.15) inset;
+    inset 0 0 12px rgba(255, 255, 255, 0.1);
 }
 
-/* LOCKED ------------------------------------------------------------ */
+/* Locked card */
 .action-card.locked {
   opacity: 0.45;
   cursor: not-allowed;
-  filter: grayscale(0.6);
+  filter: grayscale(70%);
 }
 
-.lock-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(3px);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* ========================================= */
+/* HEADER */
+/* ========================================= */
 
-.lock-text {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #eee;
-}
-
-/* HEADER ------------------------------------------------------------ */
 .action-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 12px;
 }
 
@@ -206,13 +191,15 @@ function handleClick(action) {
 .lvl-chip {
   background: rgba(255, 255, 255, 0.12);
   padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 0.8rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #ddd;
 }
 
-/* STATS ------------------------------------------------------------- */
+/* ========================================= */
+/* STATS */
+/* ========================================= */
+
 .stats {
   margin-bottom: 16px;
 }
@@ -220,16 +207,16 @@ function handleClick(action) {
 .stat-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.95rem;
   margin-bottom: 6px;
-  opacity: 0.92;
+  font-size: 0.95rem;
+  opacity: 0.9;
 }
 
 .stat-label {
   opacity: 0.75;
 }
 
-/* RARE DROPS -------------------------------------------------------- */
+/* Rare drops */
 .rare-section {
   margin-top: 12px;
 }
@@ -237,7 +224,7 @@ function handleClick(action) {
 .rare-label {
   font-weight: 600;
   opacity: 0.85;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .rare-list {
@@ -247,69 +234,90 @@ function handleClick(action) {
 }
 
 .rare-chip {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
   padding: 3px 8px;
   border-radius: 10px;
   font-size: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  color: #eee;
-  display: flex;
-  gap: 5px;
 }
 
-.percent {
-  opacity: 0.65;
-}
+/* ========================================= */
+/* START BUTTON */
+/* ========================================= */
 
-/* BUTTON ------------------------------------------------------------ */
 .start-btn {
   width: 100%;
-  padding: 10px;
-  background: var(--accent);
+  padding: 10px 14px;
+
+  background: linear-gradient(145deg, var(--accent), #ffffff55);
   border-radius: 12px;
-  border: none;
+  border: 1px solid var(--accent);
+
   color: white;
   font-weight: 700;
+  font-size: 1rem;
+
   cursor: pointer;
   transition: 0.15s ease;
-  margin-top: 6px;
-  font-size: 1rem;
 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .start-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--accent);
+  box-shadow: 0 0 10px var(--accent);
 }
 
 .start-btn.active {
-  background: linear-gradient(145deg, var(--accent), #ffffff55);
   box-shadow: 0 0 14px var(--accent);
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
-.start-btn.active:hover {
-  transform: translateY(-2px);
-}
+/* ========================================= */
+/* PROGRESS BAR */
+/* ========================================= */
 
-/* PROGRESS BAR ----------------------------------------------------- */
 .progress-wrapper {
   width: 100%;
   height: 10px;
+
   background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   overflow: hidden;
-  margin-top: 10px;
 
-  backdrop-filter: blur(4px);
+  margin-top: 10px;
 }
 
 .progress-fill {
   height: 100%;
   background: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
-  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--accent);
+  transition: width .1s linear;
+}
+
+/* ========================================= */
+/* LOCK OVERLAY */
+/* ========================================= */
+
+.lock-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lock-text {
+  font-size: 0.9rem;
+  padding: 6px 12px;
+
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 </style>

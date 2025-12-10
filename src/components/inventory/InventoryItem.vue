@@ -1,15 +1,9 @@
 <template>
-  <div
-    class="inv-card"
-    :class="{
-      locked: isLocked,
-      equipped: isEquipped
-    }"
-    :style="{ '--rarity': rarityColor }"
-    @mouseenter="showTooltip(item, $event)"
-    @mouseleave="hideTooltip()"
-    @mousemove="showTooltip(item, $event)"
-  >
+  <div class="inv-card" :class="{
+    locked: isLocked,
+    equipped: isEquipped
+  }" :style="{ '--rarity': rarityColor }" @mouseenter="showTooltip(item, $event)" @mouseleave="hideTooltip()"
+    @mousemove="showTooltip(item, $event)">
     <!-- AMOUNT BADGE -->
     <span class="amount-badge">{{ item.amount }}</span>
 
@@ -28,12 +22,12 @@
 
     <!-- NAME + CATEGORY -->
     <div class="info">
-      <span class="name">{{ item.name }}</span>
-      <span class="rarity">{{ rarityLabel }}</span>
+      <span class="name">{{ item.name }}</span><br>
+      <span class="rarity">{{ rarityLabel }}</span><br>
       <span class="category">{{ item.category }}</span>
     </div>
 
-    <!-- ACTION BUTTON (appears on hover) -->
+    <!-- ACTION BUTTON (appears on hover)-->
     <button class="action-btn" @click.stop="openInspect(item)">
       ⋮
     </button>
@@ -64,9 +58,24 @@ const playerSkill = computed(() => {
 });
 
 const isEquipped = computed(() => {
-  if (!isTool.value) return false;
-  return game.player.equippedTools?.[skillId.value] === props.item.id;
+  const player = game.player;
+  const item = props.item;
+
+  if (!item) return false;
+
+  // 1) Tools
+  if (isTool.value) {
+    return player.equippedTools?.[skillId.value] === item.id;
+  }
+
+  // 2) Equipment (armor / weapon / offhand / misc)
+  if (item.slot) {
+    return player.equipment?.[item.slot] === item.id;
+  }
+
+  return false;
 });
+
 
 const isLocked = computed(() => {
   if (!isTool.value) return false;
@@ -79,77 +88,109 @@ const rarityLabel = computed(() => getRarityLabel(props.item.rarity));
 </script>
 
 <style scoped>
-/* CARD BASE */
+/* ========================================= */
+/* INVENTORY ITEM — OSRS-HD SLOT CARD */
+/* ========================================= */
+
 .inv-card {
-  --rarity: #fff;
+  --rarity: #ffffff;
 
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid var(--rarity);
-  border-radius: 14px;
   padding: 14px;
+  border-radius: 12px;
+
+  background: linear-gradient(145deg, #303030, #1a1a1a);
+  border: 1px solid #6c6c6c44;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-
-  box-shadow: 0 0 12px var(--rarity);
   backdrop-filter: blur(6px);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    border-color .15s ease,
+    filter .15s ease;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    inset 0 0 10px rgba(255, 255, 255, 0.03);
 }
 
-/* HOVER EFFECT */
+/* Hover glow (RuneLite HD style) */
 .inv-card:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 0 18px var(--rarity);
+  border-color: var(--rarity);
+  box-shadow:
+    0 0 14px var(--rarity),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
-/* ICON */
-.icon-box {
-  width: 72px;
-  height: 72px;
+/* EQUIPPED STATUS */
+.inv-card.equipped {
+  border-color: #8affb2;
+  box-shadow: 0 0 16px rgba(120, 255, 180, 0.7);
+}
 
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.inv-card.locked {
+  opacity: 0.5;
+  filter: grayscale(80%);
+}
+
+/* ICON BOX */
+.icon-box {
+  width: 80px;
+  height: 80px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin-bottom: 8px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #2d2d2d, #1b1b1b);
+  border: 1px solid #6c6c6c44;
+
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.04),
+    inset 0 0 4px rgba(0, 0, 0, 0.5);
+
+  margin-bottom: 10px;
 }
 
 .item-icon {
   width: 56px;
   height: 56px;
+  object-fit: contain;
+
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
 }
 
 /* TEXT */
 .name {
-  font-weight: 700;
   font-size: 1rem;
-  color: var(--rarity);
+  font-weight: 700;
+  opacity: 0.95;
 }
 
 .rarity {
-  font-size: 0.8rem;
-  font-weight: 600;
-  background: var(--rarity);
-  color: #000;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+
   padding: 2px 8px;
   border-radius: 6px;
-  margin-top: 4px;
-  display: inline-block;
-  box-shadow: 0 0 6px var(--rarity);
+  background: var(--rarity);
+  color: #111;
+
+  box-shadow:
+    0 0 6px var(--rarity);
 }
 
 .category {
-  opacity: 0.7;
   font-size: 0.75rem;
-  margin-top: 2px;
+  opacity: 0.6;
 }
 
 /* AMOUNT BADGE */
@@ -158,13 +199,13 @@ const rarityLabel = computed(() => getRarityLabel(props.item.rarity));
   bottom: 6px;
   right: 8px;
 
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
   padding: 2px 10px;
-  font-size: 0.75rem;
+  border-radius: 8px;
   font-weight: 600;
+  font-size: 0.75rem;
 
-  backdrop-filter: blur(6px);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 /* TOP BADGES */
@@ -181,62 +222,41 @@ const rarityLabel = computed(() => getRarityLabel(props.item.rarity));
 .badge {
   font-size: 0.65rem;
   padding: 2px 6px;
-
   border-radius: 6px;
   font-weight: 700;
 }
 
 .badge.equipped {
-  background: rgba(80, 255, 120, 0.2);
-  border: 1px solid rgba(80, 255, 120, 0.5);
-  color: #3cff89;
+  background: rgba(100, 255, 180, 0.2);
+  border: 1px solid rgba(100, 255, 180, 0.5);
+  color: #6affb2;
 }
 
 .badge.locked {
-  background: rgba(255, 80, 80, 0.2);
-  border: 1px solid rgba(255, 80, 80, 0.4);
-  color: #ff6d6d;
+  background: rgba(255, 100, 100, 0.2);
+  border: 1px solid rgba(255, 120, 120, 0.4);
+  color: #ff7979;
 }
 
-/* LOCKED LOOK */
-.inv-card.locked {
-  opacity: 0.55;
-  filter: grayscale(80%);
-}
-
-/* EQUIPPED LOOK */
-.inv-card.equipped {
-  box-shadow: 0 0 20px rgba(80, 255, 120, 0.6);
-  border-color: #3cff89;
-}
-
-/* ACTION BTN */
+/* ACTION BUTTON (⋮ menu) */
 .action-btn {
   position: absolute;
   top: 8px;
   left: 8px;
 
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-
   width: 26px;
   height: 26px;
   border-radius: 50%;
 
+  border: 1px solid #6c6c6c55;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+
   opacity: 0;
-  transition: 0.2s;
+  transition: 0.15s ease;
 }
 
 .inv-card:hover .action-btn {
   opacity: 1;
-}
-
-.info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin-top: 4px;
 }
 </style>

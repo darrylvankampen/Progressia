@@ -15,6 +15,7 @@ import {
   getFlatModifier,
   getFinalStats,
 } from "./modifierEngine";
+import { combatTick } from "./combat/combatEngine";
 
 const TICK_MS = 100;
 
@@ -257,6 +258,7 @@ function gameTick() {
 
 // Start ticking globally
 setInterval(gameTick, TICK_MS);
+setInterval(combatTick, 150);
 
 /* ============================================================================
  * START AN ACTION

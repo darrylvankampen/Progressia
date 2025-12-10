@@ -1,0 +1,17 @@
+{
+    "id": "bronze_sword",
+    "name": "Bronze Sword",
+    "description": "A basic bronze sword. Weak, but reliable for beginners.",
+    "category": "weapon",
+    "slot": "weapon",
+    "hands": 1,
+    "icon": "/icons/items/weapons/bronze_sword.png",
+    "rarity": "common",
+    "value": 15,
+    "stats": {
+        "attackPower": 3,
+        "accuracy": 2,
+        "speedMultiplier": 1.0,
+        "element": null
+    }
+}

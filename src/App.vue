@@ -35,13 +35,19 @@ import TopBar from "./components/TopBar.vue";
 import Notification from "./components/Notification.vue";
 import ItemTooltip from "./components/inventory/ItemTooltip.vue";
 import ItemActionsMenu from "./components/inventory/ItemActionsMenu.vue";
+import { combatTick } from "./game/combat/combatEngine";
 const offlinePopup = ref(null);
 
 const tabs = [
   { id: "player", label: "Overview", icon: "/icons/ui/player_overview.png", to: "/player", category: "player" },
+  { id: "equipment", label: "Equipment", icon: "/icons/ui/equipment.png", to: "/equipment", category: "player" },
+  { id: "inventory", label: "Inventory", icon: "/icons/ui/backpack.png", to: "/inventory", category: "player" },
   { id: "skills", label: "Overview", icon: "/icons/ui/skills_overview.png", to: "/skills", category: "skills" },
   { id: "woodcutting", label: "Woodcutting", icon: "/icons/skills/woodcutting.png", to: "/skill/woodcutting", category: "skills" },
-  { id: "inventory", label: "Inventory", icon: "/icons/ui/backpack.png", to: "/inventory", category: "resources" },
+  { id: "combat", label: "Combat", icon: "/icons/items/placeholder.png", to: "/combat", category: "skills" },
+  { id: "shop", label: "Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "resources" },
+  { id: "shop", label: "Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "resources" },
+  { id: "shop", label: "Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "resources" },
   { id: "shop", label: "Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "resources" },
 
   { id: "debug", label: "Debug", icon: "/icons/ui/settings.png", to: "/debug/", category: "debug" },
@@ -76,10 +82,10 @@ onMounted(async () => {
 }
 
 :root {
-  --sidebar-width: 240px;
+  --sidebar-width: 260px;
 }
 
 .sidebar-collapsed+.content {
-  --sidebar-width: 80px !important;
+  --sidebar-width: 84px !important;
 }
 </style>

@@ -25,6 +25,7 @@
             <div v-if="currentTab === 'Player'">
                 <h2>Player Data</h2>
                 <pre>{{ game.player }}</pre>
+                <button @click="game.player.hp = game.player.maxHp">Full HP</button>
             </div>
 
             <!-- ITEMS TAB -->

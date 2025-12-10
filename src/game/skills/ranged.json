@@ -1,0 +1,8 @@
+{
+  "id": "ranged",
+  "name": "Ranged",
+  "icon": "/icons/skills/woodcutting.png",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": []
+}

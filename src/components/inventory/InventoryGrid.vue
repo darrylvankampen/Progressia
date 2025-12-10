@@ -2,31 +2,21 @@
   <div class="inventory-panel">
     <div class="inventory-inner">
       <div class="filter-bar">
-        <Dropdown
-          v-model="selectedType"
-          :options="[
-            { label: 'All Types', value: 'all' },
-            { label: 'Resources', value: 'resources' },
-            { label: 'Tools', value: 'tools' }
-          ]"
-        />
+        <Dropdown v-model="selectedType" :options="[
+          { label: 'All Types', value: 'all' },
+          { label: 'Resources', value: 'resources' },
+          { label: 'Tools', value: 'tools' }
+        ]" />
 
-        <Dropdown
-          v-model="sortBy"
-          :options="[
-            { label: 'Name (A–Z)', value: 'name' },
-            { label: 'Rarity', value: 'rarity' },
-            { label: 'Amount', value: 'amount' }
-          ]"
-        />
+        <Dropdown v-model="sortBy" :options="[
+          { label: 'Name (A–Z)', value: 'name' },
+          { label: 'Rarity', value: 'rarity' },
+          { label: 'Amount', value: 'amount' }
+        ]" />
       </div>
 
       <div class="inventory-grid">
-        <InventoryItem
-          v-for="item in sortedAndFiltered"
-          :key="item.itemKey"
-          :item="item"
-        />
+        <InventoryItem v-for="item in sortedAndFiltered" :key="item.itemKey" :item="item" />
       </div>
     </div>
   </div>
@@ -91,78 +81,66 @@ const sortedAndFiltered = computed(() => {
 </script>
 
 <style scoped>
+/* ========================================= */
+/* OUTER PANEL */
+/* ========================================= */
+
 .inventory-panel {
   width: 100%;
   padding: 28px 32px;
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+  border: 1px solid #4f4f4f55;
+  border-radius: 12px;
 
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 12px rgba(255, 255, 255, 0.04);
 
-  margin-top: 20px;
+  backdrop-filter: blur(8px);
 }
 
-.inventory-panel,
-.inventory-inner,
-.filter-bar {
-  overflow: visible;
-}
+/* ========================================= */
+/* FILTER BAR — OSRS HD top bar */
+/* ========================================= */
 
-/* HEADER */
-.inventory-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.inv-icon {
-  width: 28px;
-  height: 28px;
-  opacity: 0.9;
-}
-
-.inv-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin: 0;
-}
-
-/* FILTER BAR */
 .filter-bar {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.filter-select {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 12px;
+.filter-bar :deep(.dropdown) {
+  background: linear-gradient(145deg, #2d2d2d, #1b1b1b);
+  border: 1px solid #6c6c6c44;
   border-radius: 8px;
-  color: #fff;
 
-  backdrop-filter: blur(6px);
-  font-size: 0.9rem;
+  color: white;
 
-  cursor: pointer;
-  transition: 0.2s;
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.35);
+
+  transition: box-shadow .15s ease, border-color .15s ease;
 }
 
-.filter-select:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+.filter-bar :deep(.dropdown:hover) {
+  border-color: #8ab5ff66;
+  box-shadow: 0 0 8px #8ab5ff33;
 }
 
+/* ========================================= */
 /* GRID */
+/* ========================================= */
+
 .inventory-grid {
   display: grid;
-  gap: 18px;
+  gap: 22px;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  margin-top: 10px;
 }
 </style>

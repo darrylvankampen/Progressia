@@ -207,5 +207,11 @@ export const debug = {
   unequip(skillId) {
     unequipTool(skillId);
     console.log('[DEBUG] unequiped item for ' + skillId)
+  },
+
+  setHealth(health) {
+    const game = getGame();
+    game.player.hp = health;
+    console.log('[DEBUG] Set health to ' + health)
   }
 };

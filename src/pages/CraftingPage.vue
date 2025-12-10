@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow text-light">
+  <div class="osrs-panel">
     <div class="card-body">
       <h3 class="mb-3">Crafting</h3>
 
@@ -32,3 +32,34 @@ const craftOptions = [
   { label: "Max", class: "btn-success", action: (recipe) => addToQueue(recipe, craftMax(recipe)) },
 ];
 </script>
+
+<style scoped>
+/* ===================================================== */
+/* CRAFTING PAGE — OSRS HD PANEL                         */
+/* ===================================================== */
+
+.osrs-panel,
+.card {
+  padding: 26px 28px;
+  border-radius: 14px;
+
+  background: linear-gradient(145deg, #2f2f2f, #1a1a1a);
+  border: 1px solid #6c6c6c44;
+  color: white;
+
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    inset 0 0 12px rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(8px);
+}
+
+.card-body>h3 {
+  margin-bottom: 18px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #d8e7ff;
+  text-shadow: 0 0 10px rgba(110, 160, 255, 0.4);
+}
+</style>
