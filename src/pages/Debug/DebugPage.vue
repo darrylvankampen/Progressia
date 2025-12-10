@@ -79,6 +79,17 @@
                 <pre>{{ factionDB }}</pre>
             </div>
 
+            <div v-if="currentTab === 'Achievements'">
+                <h2>Achievements</h2>
+                <div class="item-grid">
+                    <div class="item-card">
+                        <div class="name">Total achievements</div>
+                        <div class="id">{{ allAchievements.length }}</div </div>
+                    </div>
+                </div>
+                <pre>{{ allAchievements }}</pre>
+            </div>
+
             <!-- PRESTIGE TAB -->
             <div v-if="currentTab === 'Prestiges' && allPrestiges">
                 <h2>Prestige Upgrades</h2>
@@ -113,15 +124,17 @@ import { addItem, getGame } from "../../game/state/gameState";
 import { getAllItems } from "../../game/utils/itemDB";
 import { getPrestigeDefs } from "../../game/prestiges/prestigeDB";
 import { getPrestigeLevel, purchasePrestigeUpgrade, getPrestigeCost } from "../../game/prestiges/prestigesEngine";
+import { getAllAchievements } from "../../game/achievements/achievementEngine";
 
 const game = getGame();
 
 // TABS
-const tabs = ["General", "Player", "Items", "Skills", "Factions", "Systems", "Prestiges"];
+const tabs = ["General", "Player", "Items", "Skills", "Factions", "Prestiges", "Achievements"];
 const currentTab = ref("General");
 
 const allItems = computed(() => getAllItems());
 const allPrestiges = computed(() => getPrestigeDefs());
+const allAchievements = computed(() => getAllAchievements());
 
 const buyPrestige = id => {
     const success = purchasePrestigeUpgrade(id);
@@ -258,6 +271,7 @@ const addSkillXp = key => {
     backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     transition: 0.2s;
+    margin-bottom: 12px;
 }
 
 .item-card:hover {

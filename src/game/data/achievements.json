@@ -10,7 +10,6 @@
         "skill": "woodcutting",
         "level": 10
       },
-
       "points": 10,
       "reward": [
         "bonus:woodcutting_speed_percent:2"
@@ -47,6 +46,37 @@
       ]
     },
     {
+      "id": "woodcut_75",
+      "name": "Warden of the Woods",
+      "description": "Reach Level 75 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 75
+      },
+      "points": 60,
+      "reward": [
+        "bonus:woodcutting_speed_percent:8"
+      ]
+    },
+    {
+      "id": "woodcut_99",
+      "name": "Tree Sentinel",
+      "description": "Reach Level 99 in Woodcutting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "woodcutting",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Tree Sentinel"
+      ],
+      "rarity": "epic"
+    },
+    {
       "id": "woodcut_120",
       "name": "Master of the Axe",
       "description": "Reach Level 120 in Woodcutting.",
@@ -63,6 +93,234 @@
       "rarity": "legendary"
     },
     {
+      "id": "mining_10",
+      "name": "Novice Miner",
+      "description": "Reach Level 10 in Mining.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "mining",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:mining_speed_percent:2"
+      ]
+    },
+    {
+      "id": "mining_25",
+      "name": "Skilled Miner",
+      "description": "Reach Level 25 in Mining.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "mining",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:mining_speed_percent:4"
+      ]
+    },
+    {
+      "id": "mining_50",
+      "name": "Expert Prospector",
+      "description": "Reach Level 50 in Mining.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "mining",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:mining_speed_percent:6"
+      ]
+    },
+    {
+      "id": "mining_75",
+      "name": "Ironheart Surveyor",
+      "description": "Reach Level 75 in Mining.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "mining",
+        "level": 75
+      },
+      "points": 60,
+      "reward": [
+        "bonus:mining_speed_percent:8"
+      ]
+    },
+    {
+      "id": "mining_120",
+      "name": "Master of Stone",
+      "description": "Reach Level 120 in Mining.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "mining",
+        "level": 120
+      },
+      "points": 100,
+      "reward": [
+        "title:Master Miner"
+      ],
+      "rarity": "legendary"
+    },
+    {
+      "id": "smithing_10",
+      "name": "Novice Smith",
+      "description": "Reach Level 10 in Smithing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "smithing",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:smithing_speed_percent:2"
+      ]
+    },
+    {
+      "id": "smithing_25",
+      "name": "Forge Adept",
+      "description": "Reach Level 25 in Smithing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "smithing",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:smithing_speed_percent:4"
+      ]
+    },
+    {
+      "id": "smithing_50",
+      "name": "Expert Blacksmith",
+      "description": "Reach Level 50 in Smithing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "smithing",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:smithing_speed_percent:6"
+      ]
+    },
+    {
+      "id": "smithing_99",
+      "name": "Anvil Master",
+      "description": "Reach Level 99 in Smithing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "smithing",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Forge Master"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "combat_10",
+      "name": "Aspiring Fighter",
+      "description": "Reach Level 10 in Combat.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "combat",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:combat_accuracy_percent:2"
+      ]
+    },
+    {
+      "id": "combat_50",
+      "name": "Seasoned Warrior",
+      "description": "Reach Level 50 in Combat.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "combat",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:combat_damage_percent:4"
+      ]
+    },
+    {
+      "id": "combat_99",
+      "name": "Champion of Progressia",
+      "description": "Reach Level 99 in Combat.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "combat",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Champion"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "collect_100_logs",
+      "name": "Wood Gatherer",
+      "description": "Collect 100 Regular Logs.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "wood_log",
+        "amount": 100
+      },
+      "points": 10,
+      "reward": [
+        "bonus:rare_drop_percent:1"
+      ]
+    },
+    {
+      "id": "collect_1000_logs",
+      "name": "Forest Harvester",
+      "description": "Collect 1,000 Regular Logs.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "wood_log",
+        "amount": 1000
+      },
+      "points": 25,
+      "reward": [
+        "bonus:woodcutting_amount_flat:1"
+      ]
+    },
+    {
+      "id": "use_100_iron",
+      "name": "Iron Spender",
+      "description": "Use 100 Iron Bars in crafting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_used",
+        "item": "iron_bar",
+        "amount": 100
+      },
+      "points": 20,
+      "reward": [
+        "bonus:smithing_xp_percent:2"
+      ]
+    },
+    {
       "id": "total_level_100",
       "name": "Progressian",
       "description": "Reach a total combined level of 100.",
@@ -72,7 +330,875 @@
         "value": 100
       },
       "points": 50,
-      "reward": ["title:Progressian"]
+      "reward": [
+        "title:Progressian"
+      ]
+    },
+    {
+      "id": "stat_test",
+      "name": "Stat Test",
+      "description": "Test - 10 resources collected",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "resourcesCollected",
+        "value": 10
+      },
+      "points": 1,
+      "reward": [
+        "title:Stat Test"
+      ],
+      "rarity": "legendary"
+    },
+    {
+      "id": "total_level_250",
+      "name": "Journeyman of Progressia",
+      "description": "Reach total level 250.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "total_level",
+        "value": 250
+      },
+      "points": 70,
+      "reward": [
+        "title:Journeyman"
+      ]
+    },
+    {
+      "id": "total_level_500",
+      "name": "Veteran of Progressia",
+      "description": "Reach total level 500.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "total_level",
+        "value": 500
+      },
+      "points": 120,
+      "reward": [
+        "title:Veteran"
+      ]
+    },
+    {
+      "id": "total_level_750",
+      "name": "Realm Pillar",
+      "description": "Reach a total combined level of 750.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "total_level",
+        "value": 750
+      },
+      "points": 150,
+      "reward": [
+        "title:Realm Pillar"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "total_level_1000",
+      "name": "Legend of Progressia",
+      "description": "Reach a total combined level of 1000.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "total_level",
+        "value": 1000
+      },
+      "points": 250,
+      "reward": [
+        "title:Legend of Progressia"
+      ],
+      "rarity": "legendary"
+    },
+    {
+      "id": "gold_earned_1k",
+      "name": "Copper Collector",
+      "description": "Earn 1,000 gold total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "goldEarned",
+        "value": 1000
+      },
+      "points": 10,
+      "reward": [
+        "bonus:gold_gain_percent:1"
+      ]
+    },
+    {
+      "id": "gold_earned_100k",
+      "name": "Treasure Hunter",
+      "description": "Earn 100,000 gold total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "goldEarned",
+        "value": 100000
+      },
+      "points": 80,
+      "reward": [
+        "bonus:gold_gain_percent:5"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "gold_spent_10k",
+      "name": "Big Spender",
+      "description": "Spend 10,000 gold total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "goldSpent",
+        "value": 10000
+      },
+      "points": 20,
+      "reward": [
+        "bonus:shop_discount_percent:1"
+      ]
+    },
+    {
+      "id": "gold_spent_100k",
+      "name": "Wealth Redistributor",
+      "description": "Spend 100,000 gold total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "goldSpent",
+        "value": 100000
+      },
+      "points": 60,
+      "reward": [
+        "bonus:shop_discount_percent:3"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "crafted_100",
+      "name": "Apprentice Crafter",
+      "description": "Craft 100 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsCrafted",
+        "value": 100
+      },
+      "points": 15,
+      "reward": [
+        "bonus:crafting_speed_percent:1"
+      ]
+    },
+    {
+      "id": "crafted_1000",
+      "name": "Expert Artificer",
+      "description": "Craft 1,000 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsCrafted",
+        "value": 1000
+      },
+      "points": 60,
+      "reward": [
+        "title:Artificer"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "items_sold_500",
+      "name": "Merchant's Apprentice",
+      "description": "Sell 500 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsSold",
+        "value": 500
+      },
+      "points": 20,
+      "reward": [
+        "bonus:shop_sell_percent:1"
+      ]
+    },
+    {
+      "id": "items_sold_2000",
+      "name": "Market Shark",
+      "description": "Sell 2,000 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsSold",
+        "value": 2000
+      },
+      "points": 50,
+      "reward": [
+        "bonus:shop_sell_percent:3"
+      ]
+    },
+    {
+      "id": "items_bought_100",
+      "name": "Busy Shopper",
+      "description": "Buy 100 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsBought",
+        "value": 100
+      },
+      "points": 15,
+      "reward": [
+        "bonus:shop_discount_percent:1"
+      ]
+    },
+    {
+      "id": "items_bought_500",
+      "name": "Vendor's Favorite",
+      "description": "Buy 500 items total.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsBought",
+        "value": 500
+      },
+      "points": 40,
+      "reward": [
+        "bonus:shop_discount_percent:2"
+      ]
+    },
+    {
+      "id": "items_destroyed_50",
+      "name": "Reckless Breaker",
+      "description": "Destroy 50 items.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsDestroyed",
+        "value": 50
+      },
+      "points": 10,
+      "reward": [
+        "bonus:rare_drop_percent:1"
+      ]
+    },
+    {
+      "id": "enemies_killed_100",
+      "name": "Slayer Initiate",
+      "description": "Defeat 100 enemies.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "enemiesKilled",
+        "value": 100
+      },
+      "points": 15,
+      "reward": [
+        "bonus:combat_xp_percent:2"
+      ]
+    },
+    {
+      "id": "enemies_killed_1000",
+      "name": "Slayer Veteran",
+      "description": "Defeat 1,000 enemies.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "enemiesKilled",
+        "value": 1000
+      },
+      "points": 60,
+      "reward": [
+        "title:Slayer"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "enemies_killed_5000",
+      "name": "Endless Slayer",
+      "description": "Defeat 5,000 enemies.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "enemiesKilled",
+        "value": 5000
+      },
+      "points": 100,
+      "reward": [
+        "title:Endless Slayer"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "resources_collected_10k",
+      "name": "Resource Master",
+      "description": "Collect 10,000 total resources.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "resourcesCollected",
+        "value": 10000
+      },
+      "points": 50,
+      "reward": [
+        "bonus:rare_drop_percent:2"
+      ]
+    },
+    {
+      "id": "items_opened_100",
+      "name": "Chest Digger",
+      "description": "Open 100 containers or chests.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsOpened",
+        "value": 100
+      },
+      "points": 20,
+      "reward": [
+        "bonus:loot_quality_percent:1"
+      ]
+    },
+    {
+      "id": "items_opened_500",
+      "name": "Loot Goblin",
+      "description": "Open 500 containers or chests.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "itemsOpened",
+        "value": 500
+      },
+      "points": 50,
+      "reward": [
+        "bonus:loot_quality_percent:3"
+      ],
+      "rarity": "rare"
+    },
+    {
+      "id": "secret_luck",
+      "name": "Unlucky but Determined",
+      "description": "Collect 500 resources without a single rare drop.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "stat",
+        "stat": "resourcesCollected",
+        "value": 500
+      },
+      "points": 5,
+      "reward": [
+        "title:Unlucky"
+      ],
+      "rarity": "secret"
+    },
+    {
+      "id": "hoarder",
+      "name": "The Hoarder",
+      "description": "Collect 999 of any resource.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "wood_log",
+        "amount": 999
+      },
+      "points": 10,
+      "reward": [
+        "title:Hoarder"
+      ]
+    },
+    {
+      "id": "fishing_10",
+      "name": "Novice Angler",
+      "description": "Reach Level 10 in Fishing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "fishing",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:fishing_speed_percent:2"
+      ]
+    },
+    {
+      "id": "fishing_25",
+      "name": "River Regular",
+      "description": "Reach Level 25 in Fishing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "fishing",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:fishing_xp_percent:3"
+      ]
+    },
+    {
+      "id": "fishing_50",
+      "name": "Seasoned Fisher",
+      "description": "Reach Level 50 in Fishing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "fishing",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:fishing_speed_percent:5"
+      ]
+    },
+    {
+      "id": "fishing_75",
+      "name": "Tide Tamer",
+      "description": "Reach Level 75 in Fishing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "fishing",
+        "level": 75
+      },
+      "points": 60,
+      "reward": [
+        "bonus:fishing_xp_percent:6"
+      ]
+    },
+    {
+      "id": "fishing_99",
+      "name": "Master Angler",
+      "description": "Reach Level 99 in Fishing.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "fishing",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Master Angler"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "cooking_10",
+      "name": "Kitchen Novice",
+      "description": "Reach Level 10 in Cooking.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "cooking",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:cooking_speed_percent:2"
+      ]
+    },
+    {
+      "id": "cooking_25",
+      "name": "Campfire Cook",
+      "description": "Reach Level 25 in Cooking.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "cooking",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:cooking_xp_percent:3"
+      ]
+    },
+    {
+      "id": "cooking_50",
+      "name": "Seasoned Chef",
+      "description": "Reach Level 50 in Cooking.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "cooking",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:cooking_speed_percent:5"
+      ]
+    },
+    {
+      "id": "cooking_99",
+      "name": "Banquet Master",
+      "description": "Reach Level 99 in Cooking.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "cooking",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Banquet Master"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "magic_10",
+      "name": "Spark Initiate",
+      "description": "Reach Level 10 in Magic.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "magic",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:magic_xp_percent:2"
+      ]
+    },
+    {
+      "id": "magic_25",
+      "name": "Arcane Student",
+      "description": "Reach Level 25 in Magic.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "magic",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:magic_damage_percent:3"
+      ]
+    },
+    {
+      "id": "magic_50",
+      "name": "Runic Channeler",
+      "description": "Reach Level 50 in Magic.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "magic",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:magic_xp_percent:5"
+      ]
+    },
+    {
+      "id": "magic_75",
+      "name": "Spellweaver",
+      "description": "Reach Level 75 in Magic.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "magic",
+        "level": 75
+      },
+      "points": 60,
+      "reward": [
+        "bonus:magic_damage_percent:6"
+      ]
+    },
+    {
+      "id": "crafting_10",
+      "name": "Tinkerer",
+      "description": "Reach Level 10 in Crafting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "crafting",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:crafting_speed_percent:2"
+      ]
+    },
+    {
+      "id": "crafting_25",
+      "name": "Workshop Apprentice",
+      "description": "Reach Level 25 in Crafting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "crafting",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:crafting_xp_percent:3"
+      ]
+    },
+    {
+      "id": "crafting_50",
+      "name": "Skilled Craftsman",
+      "description": "Reach Level 50 in Crafting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "crafting",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:crafting_speed_percent:5"
+      ]
+    },
+    {
+      "id": "crafting_99",
+      "name": "Master Artisan",
+      "description": "Reach Level 99 in Crafting.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "crafting",
+        "level": 99
+      },
+      "points": 80,
+      "reward": [
+        "title:Master Artisan"
+      ],
+      "rarity": "epic"
+    },
+    {
+      "id": "farming_10",
+      "name": "Soil Student",
+      "description": "Reach Level 10 in Farming.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "farming",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:farming_xp_percent:2"
+      ]
+    },
+    {
+      "id": "farming_25",
+      "name": "Field Tender",
+      "description": "Reach Level 25 in Farming.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "farming",
+        "level": 25
+      },
+      "points": 20,
+      "reward": [
+        "bonus:farming_speed_percent:3"
+      ]
+    },
+    {
+      "id": "farming_50",
+      "name": "Seasoned Farmer",
+      "description": "Reach Level 50 in Farming.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "farming",
+        "level": 50
+      },
+      "points": 40,
+      "reward": [
+        "bonus:farming_xp_percent:5"
+      ]
+    },
+    {
+      "id": "farming_75",
+      "name": "Harvest Warden",
+      "description": "Reach Level 75 in Farming.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "farming",
+        "level": 75
+      },
+      "points": 60,
+      "reward": [
+        "bonus:farming_speed_percent:6"
+      ]
+    },
+    {
+      "id": "agility_10",
+      "name": "Trail Runner",
+      "description": "Reach Level 10 in Agility.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "agility",
+        "level": 10
+      },
+      "points": 10,
+      "reward": [
+        "bonus:agility_xp_percent:2"
+      ]
+    },
+    {
+      "id": "agility_30",
+      "name": "Cliff Climber",
+      "description": "Reach Level 30 in Agility.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "agility",
+        "level": 30
+      },
+      "points": 25,
+      "reward": [
+        "bonus:agility_speed_percent:4"
+      ]
+    },
+    {
+      "id": "agility_60",
+      "name": "Windstep",
+      "description": "Reach Level 60 in Agility.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "skill_level",
+        "skill": "agility",
+        "level": 60
+      },
+      "points": 50,
+      "reward": [
+        "bonus:agility_speed_percent:6"
+      ]
+    },
+    {
+      "id": "collect_100_fish",
+      "name": "Net Filler",
+      "description": "Collect 100 raw fish.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "fish_raw",
+        "amount": 100
+      },
+      "points": 10,
+      "reward": [
+        "bonus:fishing_xp_percent:2"
+      ]
+    },
+    {
+      "id": "collect_500_fish",
+      "name": "Harbor Hauler",
+      "description": "Collect 500 raw fish.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "fish_raw",
+        "amount": 500
+      },
+      "points": 25,
+      "reward": [
+        "bonus:cooking_xp_percent:3"
+      ]
+    },
+    {
+      "id": "collect_200_wheat",
+      "name": "Grain Gatherer",
+      "description": "Collect 200 wheat.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "wheat",
+        "amount": 200
+      },
+      "points": 15,
+      "reward": [
+        "bonus:farming_xp_percent:3"
+      ]
+    },
+    {
+      "id": "collect_100_herbs",
+      "name": "Herb Forager",
+      "description": "Collect 100 basic herbs.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "herb_basic",
+        "amount": 100
+      },
+      "points": 15,
+      "reward": [
+        "bonus:rare_drop_percent:1"
+      ]
+    },
+    {
+      "id": "collect_50_magic_logs",
+      "name": "Arcane Lumberjack",
+      "description": "Collect 50 Magic Logs.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_amount",
+        "item": "magic_log",
+        "amount": 50
+      },
+      "points": 25,
+      "reward": [
+        "bonus:woodcutting_xp_percent:4"
+      ],
+      "rarity": "rare"
+    },
+    {
+      "id": "use_200_fish",
+      "name": "Fish Feaster",
+      "description": "Use 200 raw fish in Cooking.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_used",
+        "item": "fish_raw",
+        "amount": 200
+      },
+      "points": 20,
+      "reward": [
+        "bonus:cooking_speed_percent:3"
+      ]
+    },
+    {
+      "id": "use_500_iron_ore",
+      "name": "Smelter of Steel",
+      "description": "Use 500 Iron Ore in smithing-related actions.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_used",
+        "item": "iron_ore",
+        "amount": 500
+      },
+      "points": 30,
+      "reward": [
+        "bonus:smithing_xp_percent:4"
+      ]
+    },
+    {
+      "id": "use_300_herbs",
+      "name": "Potion Preparer",
+      "description": "Use 300 basic herbs.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_used",
+        "item": "herb_basic",
+        "amount": 300
+      },
+      "points": 30,
+      "reward": [
+        "bonus:rare_drop_percent:2"
+      ]
+    },
+    {
+      "id": "use_50_magic_essence",
+      "name": "Essence Channeler",
+      "description": "Use 50 Magic Essence.",
+      "icon": "/icons/achievements/achievement.png",
+      "conditions": {
+        "type": "resource_used",
+        "item": "magic_essence",
+        "amount": 50
+      },
+      "points": 35,
+      "reward": [
+        "bonus:magic_xp_percent:5"
+      ],
+      "rarity": "rare"
     }
   ]
 }

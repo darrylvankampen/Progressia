@@ -7,7 +7,7 @@ export function checkAchievements() {
   const game = getGame();
 
   data.achievements.forEach((achievement) => {
-    if (game.achievementsUnlocked.includes(achievement.id)) return; // already unlocked
+    if (game.achievementsUnlocked.includes(achievement.id)) return;
 
     if (isAchievementMet(achievement, game)) {
       unlockAchievement(achievement, game);
@@ -20,19 +20,30 @@ export function checkAchievements() {
 function isAchievementMet(a, game) {
   const c = a.conditions;
   switch (c.type) {
-    case "skill_level":
-      return game.skills[c.skill].level >= c.level;
+    case "skill_level": return game.skills[c.skill].level >= c.level;
 
-    case "resource_amount":
+    case "resource_amount": {
       const stat = game.resourceStats[c.item];
       return stat && stat.collected >= c.amount;
+    }
 
-    case "total_level":
+    case "resource_used": {
+      const stat = game.resourceStats[c.item];
+      return stat && stat.used >= c.amount;
+    }
+
+    case "total_level": {
       const total = Object.values(game.skills).reduce(
         (sum, s) => sum + s.level,
         0
       );
       return total >= c.value;
+    }
+
+    case "stat": {
+      const stat = game.player.stats[c.stat];
+      return stat >= c.value;
+    }
 
     default:
       return false;
@@ -55,8 +66,6 @@ function parseReward(rewardString) {
   const [type, ...rest] = rewardString.split(":");
 
   const value = rest.join(":").trim(); // ← Alles samenvoegen en trimmen
-
-  console.log(type)
 
   switch (type) {
     case "title":

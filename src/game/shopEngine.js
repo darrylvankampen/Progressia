@@ -1,6 +1,5 @@
-import { useNotifications } from "../composables/useNotification";
 import generalStore from "./data/shops/general_store.json";
-import { addItem, getGame, saveGame } from "./state/gameState";
+import { addItem, getGame, saveGame, incrementPlayerStat } from "./state/gameState";
 import { getItem } from "./utils/itemDB";
 
 const shops = {
@@ -84,6 +83,8 @@ export function buyFromShop(shopId, categoryId, itemId) {
     }
 
     addItem(itemId, 1);
+    incrementPlayerStat("itemsBought", 1);
+    incrementPlayerStat("goldSpent", cost);
     saveGame();
     return { bought: true, itemId };
 }

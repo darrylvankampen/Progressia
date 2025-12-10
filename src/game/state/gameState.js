@@ -296,7 +296,8 @@ export function saveGame() {
         achievementPoints: game.player.achievementPoints,
         factions: deepClone(game.player.factions),
         prestige: deepClone(game.player.prestige),
-        equipment: deepClone(game.player.equipment)
+        equipment: deepClone(game.player.equipment),
+        stats: deepClone(game.player.stats),
       };
       continue;
     }
@@ -450,6 +451,8 @@ export function addItem(itemKey, amount = 1) {
   // Add item(s)
   game.inventory[itemKey] += amount;
 
+  incrementPlayerStat("resourcesCollected", amount)
+
   checkAchievements();
 
   // Notify UI
@@ -483,6 +486,7 @@ export function removeItem(itemKey, amount = 1, type = "use") {
 
   if (type === "use") {
     game.resourceStats[itemKey].used += amount;
+    incrementPlayerStat("itemsCrafted", 1);
   }
 
   if (type === "sell") {
@@ -491,10 +495,13 @@ export function removeItem(itemKey, amount = 1, type = "use") {
       game.player.gold += item.value;
     }
     playSound("sell");
+    incrementPlayerStat("itemsSold", 1);
+    incrementPlayerStat("goldEarned", item.value)
   }
 
   if (type === "destroy") {
     playSound("destroy");
+    incrementPlayerStat("itemsDestroyed", 1);
   }
 
   // Modify inventory count
@@ -777,6 +784,9 @@ export function openItem(itemId) {
   // Add rewards
   results.forEach(r => addItem(r.item, r.amount));
 
+  // Add to stats
+  incrementPlayerStat("itemsOpened", 1);
+
   return results;
 }
 
@@ -979,4 +989,46 @@ export function setPlayerName(name) {
 export function getPlayerName() {
   const game = getGame();
   return game.player.name;
+}
+
+export function getPlayerStats() {
+  const game = getGame();
+
+  if (!game.player.stats || typeof game.player.stats !== "object") {
+    game.player.stats = {};
+    saveGame();
+  }
+
+  return game.player.stats;
+}
+
+export function getPlayerStatById(statId) {
+  const stats = getPlayerStats();
+
+  if (!Object.prototype.hasOwnProperty.call(stats, statId)) {
+    return 0;
+  }
+
+  const value = Number(stats[statId]);
+  return isNaN(value) ? 0 : value;
+}
+
+export function incrementPlayerStat(statId, amount = 1) {
+  const game = getGame();
+  const stats = getPlayerStats();
+
+  if (typeof amount !== "number") {
+    amount = Number(amount) || 0;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(stats, statId)) {
+    stats[statId] = 0;
+  }
+
+  const current = Number(stats[statId]) || 0;
+
+  stats[statId] = current + amount;
+
+  saveGame();
+  return stats[statId];
 }

@@ -27,6 +27,18 @@ export const defaultGame = {
       weapon: null,
       offhand: null,
       ring: null
+    },
+    stats: {
+      goldEarned: 0,
+      goldSpent: 0,
+      itemsCrafted: 0,
+      itemsSold: 0,
+      itemsBought: 0,
+      itemsDestroyed: 0,
+      enemiesKilled: 0,
+      resourcesCollected: 0,
+      resourcesUsed: 0,
+      itemsOpened: 0,
     }
   },
   skills: {},
