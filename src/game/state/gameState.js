@@ -490,6 +490,11 @@ export function removeItem(itemKey, amount = 1, type = "use") {
     if (item) {
       game.player.gold += item.value;
     }
+    playSound("sell");
+  }
+
+  if (type === "destroy") {
+    playSound("destroy");
   }
 
   // Modify inventory count
@@ -649,7 +654,7 @@ export function equipTool(skillId, toolId) {
 
   // Equip tool
   game.player.equippedTools[skillId] = toolId;
-
+  playSound("equip");
   recalculateModifiers();
   saveGame();
   return true;
@@ -728,6 +733,8 @@ export function equipItem(itemId) {
     equip[slot] = itemId;
   }
 
+  playSound("equip");
+
   saveGame(game);
 
   return { success: true };
@@ -758,6 +765,8 @@ export function unequipItem(slot) {
 export function openItem(itemId) {
   const item = getItem(itemId);
   if (!item || !item.openable) return null;
+
+  playSound("itemOpen");
 
   // Consume 1 openable
   removeItem(itemId, 1);

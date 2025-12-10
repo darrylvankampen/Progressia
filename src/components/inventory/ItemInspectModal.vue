@@ -207,7 +207,7 @@ function unequip() {
 
 function destroyItem() {
   if (confirm(`Destroy ${item.value.name}?`)) {
-    removeItem(item.value.id, 1);
+    removeItem(item.value.id, 1, "destroy");
     close();
   }
 }
