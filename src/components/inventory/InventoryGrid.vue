@@ -5,11 +5,14 @@
         <Dropdown v-model="selectedType" :options="[
           { label: 'All Types', value: 'all' },
           { label: 'Resources', value: 'resources' },
-          { label: 'Tools', value: 'tools' }
+          { label: 'Tools', value: 'tools' },
+          { label: 'Weapons', value: 'weapon' },
+          { label: 'Armor', value: 'armor' },
+          { label: 'Accessories', value: 'accessory' }
         ]" />
 
         <Dropdown v-model="sortBy" :options="[
-          { label: 'Name (A–Z)', value: 'name' },
+          { label: 'Name', value: 'name' },
           { label: 'Rarity', value: 'rarity' },
           { label: 'Amount', value: 'amount' }
         ]" />

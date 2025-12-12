@@ -1,0 +1,10 @@
+{
+    "id": "void_fragment",
+    "name": "Void Fragment",
+    "category": "resources",
+    "description": "A fragment of pure void energy extracted from eldritch ore.",
+    "icon": "/icons/items/resources/misc/void_fragment.png",
+    "rarity": "legendary",
+    "value": 140,
+    "stats": {}
+}

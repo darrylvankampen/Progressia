@@ -20,8 +20,13 @@ export function checkAchievements() {
 function isAchievementMet(a, game) {
   const c = a.conditions;
   switch (c.type) {
-    case "skill_level": return game.skills[c.skill].level >= c.level;
-
+    case "skill_level": {
+      const selectedSkill = game.skills[c.skill];
+      if (selectedSkill && selectedSkill.level) {
+        return game.skills[c.skill].level >= c.level;
+      }
+      return false;
+    }
     case "resource_amount": {
       const stat = game.resourceStats[c.item];
       return stat && stat.collected >= c.amount;

@@ -1,0 +1,10 @@
+{
+    "id": "dragon_essence",
+    "name": "Dragon Essence",
+    "category": "resources",
+    "description": "A rare essence harvested from dragonstone deposits.",
+    "icon": "/icons/items/resources/misc/dragon_essence.png",
+    "rarity": "epic",
+    "value": 100,
+    "stats": {}
+}

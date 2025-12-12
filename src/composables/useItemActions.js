@@ -29,9 +29,10 @@ export function useItemActions() {
   }
 
   // ---------- INSPECT MODAL ----------
-  function openInspect(item) {
+  function openInspect(item, locked) {
     inspectState.value = {
       visible: true,
+      locked,
       item,
     };
   }
@@ -39,6 +40,7 @@ export function useItemActions() {
   function closeInspect() {
     inspectState.value.visible = false;
     inspectState.value.item = null;
+    inspectState.value.locked = false;
   }
 
   return {

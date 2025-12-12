@@ -1,0 +1,22 @@
+{
+    "id": "fletch_arrow_shafts",
+    "name": "Fletch Arrow Shafts",
+    "icon": "/icons/items/fletching/arrow_shafts.png",
+    "category": "fletching",
+    "time": 1500,
+    "inputs": [
+        {
+            "item": "wooden_log",
+            "amount": 1
+        }
+    ],
+    "outputs": [
+        {
+            "item": "arrow_shaft",
+            "amount": 10
+        }
+    ],
+    "xp": 8,
+    "skill": "fletching",
+    "requiredLevel": 1
+}

@@ -11,8 +11,7 @@
 
     <ul class="list-unstyled m-0">
       <li v-for="(job, i) in queue" :key="i" class="queue-item">
-
-        <!-- LEFT SIDE: JOB NAME -->
+        <!-- LEFT SIDE -->
         <div class="left">
           <span class="job-name">{{ job.recipe.name }}</span>
           <span class="job-qty">× {{ job.quantity }}</span>
@@ -20,9 +19,8 @@
 
         <!-- RIGHT SIDE -->
         <div class="right">
-
-          <!-- Active craft (first) -->
-          <template v-if="i === 0">
+          <!-- Active craft -->
+          <template v-if="i === 0 && isCrafting">
             <div class="progress-wrapper">
               <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             </div>
@@ -30,12 +28,11 @@
             <div class="time-text">⏳ {{ timeLeft }}</div>
           </template>
 
-          <!-- Waiting queue items -->
+          <!-- Waiting -->
           <template v-else>
             <div class="waiting-text">Waiting…</div>
           </template>
         </div>
-
       </li>
     </ul>
   </div>
@@ -45,25 +42,29 @@
 import { computed } from "vue";
 import { getGame } from "../../game/state/gameState";
 import { formatTime } from "../../game/utils/formatTime";
-import { cancelCraft } from "../../game/crafting/craftingEngine";
+import { cancelCraft, getCraftingStatus } from "../../game/crafting/craftingEngine";
 
 const game = getGame();
 
-const queue = computed(() => game.craftingQueue);
-const timeLeft = computed(() => formatTime(game.craftingTimeRemaining));
-const progress = computed(() => game.craftingProgress);
+console.log("ACTIVE", game.crafting.active);
+console.log("QUEUE", game.crafting.queue);
+console.log("IS", game.isCrafting);
 
+const queue = computed(() => game.crafting?.queue ?? []);
+
+const status = computed(() => getCraftingStatus());
+
+const isCrafting = computed(() => status.value.isCrafting);
+const progress = computed(() => status.value.progress);
+const timeLeft = computed(() =>
+  formatTime(status.value.remaining)
+);
+
+/**
+ * Stop = engine laten beslissen
+ */
 function stopCrafting() {
   cancelCraft();
-
-  // verwijder alleen het actieve craft item
-  if (game.craftingQueue.length > 0) {
-    game.craftingQueue.shift();
-  }
-
-  // reset UI values
-  game.craftingProgress = 0;
-  game.craftingTimeRemaining = 0;
 }
 </script>
 

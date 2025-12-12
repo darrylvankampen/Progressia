@@ -1,0 +1,21 @@
+{
+    "id": "steel_pickaxe",
+    "name": "Steel Pickaxe",
+    "category": "tools",
+    "description": "A refined pickaxe crafted from high-quality steel.",
+    "icon": "/icons/items/tools/steel_pickaxe.png",
+    "skill": "mining",
+    "rarity": "uncommon",
+    "value": 12,
+    "stats": {
+        "speedMultiplier": 1.10,
+        "xpMultiplier": 1.01,
+        "doubleChance": 0.07,
+        "requiresLevel": 10
+    },
+    "modifiers": {
+        "mining_speed_percent": 2,
+        "mining_xp_percent": 1,
+        "mining_doubleChance": 0
+    }
+}

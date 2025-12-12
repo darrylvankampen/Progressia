@@ -1,0 +1,10 @@
+{
+    "id": "shadow_crystal",
+    "name": "Shadow Crystal",
+    "category": "resources",
+    "description": "A crystalline formation resonating with shadow energy.",
+    "icon": "/icons/items/resources/gems/shadow_crystal.png",
+    "rarity": "legendary",
+    "value": 160,
+    "stats": {}
+}

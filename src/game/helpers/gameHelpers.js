@@ -119,3 +119,32 @@ export function validateAmount(input) {
   if (!isFinite(amount)) return { valid: false, error: "Amount must be finite." };
   return { valid: true, amount };
 }
+
+export function isLocked(item) {
+  const game = getGame();
+  if (!item) return false;
+  const required = item.stats?.requiresLevel ?? 1;
+  const skillKey = item.skill;
+  if (!skillKey) {
+    return false;
+  }
+  const playerLevel = game.skills?.[skillKey]?.level ?? 1;
+  return playerLevel < required;
+}
+
+export function isEquiped(item) {
+  const game = getGame();
+  const player = game.player;
+  if (!item) return false;
+  // 1) Tools
+  if (item.category === "tools") {
+    return player.equippedTools?.[item.skill] === item.id;
+  }
+
+  // 2) Equipment (armor / weapon / offhand / misc)
+  if (item.slot) {
+    return player.equipment?.[item.slot] === item.id;
+  }
+
+  return false;
+}

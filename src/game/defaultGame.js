@@ -26,7 +26,8 @@ export const defaultGame = {
       cape: null,
       weapon: null,
       offhand: null,
-      ring: null
+      ring: null,
+      ammo: null
     },
     stats: {
       goldEarned: 0,
@@ -39,16 +40,19 @@ export const defaultGame = {
       resourcesCollected: 0,
       resourcesUsed: 0,
       itemsOpened: 0,
+      ammoUsed: 0,
     }
   },
   skills: {},
   inventory: {},
-  craftingQueue: [],
-  craftingTimeRemaining: 0,
   activeSkill: null,
   activeBuffs: [],
   pets: [],
   completedQuests: [],
   achievementsUnlocked: [],
-  resourceStats: {}
+  resourceStats: {},
+  crafting: {
+    active: null,
+    queue: []
+  }
 };

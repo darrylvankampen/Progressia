@@ -1,0 +1,10 @@
+{
+    "id": "astral_ore",
+    "name": "Astral Ore",
+    "category": "resources",
+    "description": "A celestial ore containing light from distant stars.",
+    "icon": "/icons/items/resources/ores/astral_ore.png",
+    "rarity": "legendary",
+    "value": 150,
+    "stats": {}
+}

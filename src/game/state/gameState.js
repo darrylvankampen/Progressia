@@ -37,6 +37,7 @@ import { checkAchievements } from "../achievements/achievementEngine";
 import { rollFromLootTable } from "../utils/lootTables";
 import { validateAmount } from "../helpers/gameHelpers";
 import { resetPrestige } from "../prestiges/prestigesEngine";
+import { startNextInQueue, tickCrafting } from "../crafting/craftingEngine";
 
 const { pushNotification } = useNotifications();
 
@@ -601,6 +602,8 @@ async function loadGameFromStorage() {
       }
     }
   }
+  startNextInQueue();
+  tickCrafting();
 
   return base;
 }
@@ -651,10 +654,10 @@ export function equipTool(skillId, toolId) {
 
   // Level requirement check
   const skill = game.skills[skillId];
-  if (skill.level < tool.stats.requiredLevel) {
+  if (skill.level < tool.stats.requiresLevel) {
     console.warn(
       `[equipTool] Player level too low for ${toolId}. ` +
-      `Required: ${tool.stats.requiredLevel}, Current: ${skill.level}`
+      `Required: ${tool.stats.requiresLevel}, Current: ${skill.level}`
     );
     return false;
   }
@@ -702,6 +705,29 @@ export function equipItem(itemId) {
 
   if (!slot) {
     return { success: false, reason: "Item is not equipable" };
+  }
+
+  if (item.stats?.requiresLevel) {
+    const required = item.stats.requiresLevel;
+
+    // Skill used for requirement (e.g. attack, magic, ranged)
+    const skillKey = item.skill || null;
+
+    if (!skillKey || !game.skills[skillKey]) {
+      return {
+        success: false,
+        reason: `Invalid skill requirement for item (${skillKey})`
+      };
+    }
+
+    const playerLevel = game.skills[skillKey].level;
+
+    if (playerLevel < required) {
+      return {
+        success: false,
+        reason: `Requires ${skillKey} level ${required}`
+      };
+    }
   }
 
   // ------------------------

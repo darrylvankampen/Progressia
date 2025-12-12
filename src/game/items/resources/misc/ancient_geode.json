@@ -1,0 +1,39 @@
+{
+    "id": "ancient_geode",
+    "name": "Ancient Geode",
+    "category": "resources",
+    "description": "An ancient geode brimming with magical ores and old-world crystals.",
+    "icon": "/icons/items/resources/misc/geode.png",
+    "rarity": "epic",
+    "value": 60,
+    "stats": {},
+    "openable": {
+        "rolls": 4,
+        "loot": [
+            {
+                "item": "runite_ore",
+                "weight": 5,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "mystic_fragment",
+                "weight": 4,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "rune_core",
+                "weight": 2,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "diamond",
+                "weight": 1,
+                "min": 1,
+                "max": 1
+            }
+        ]
+    }
+}

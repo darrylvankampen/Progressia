@@ -11,7 +11,7 @@
     "speedMultiplier": 1.00,
     "xpMultiplier": 1.00,
     "doubleChance": 0.05,
-    "requiredLevel": 1
+    "requiresLevel": 1
   },
   "modifiers": {
     "woodcutting_speed_percent": 0,

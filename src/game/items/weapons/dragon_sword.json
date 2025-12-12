@@ -1,0 +1,19 @@
+{
+    "id": "dragon_sword",
+    "name": "Dragon Sword",
+    "description": "A legendary blade filled with draconic energy. Lightweight and exceptionally sharp.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/dragon_sword.png",
+    "rarity": "epic",
+    "value": 5000,
+    "stats": {
+        "attackPower": 32,
+        "accuracy": 24,
+        "speedMultiplier": 1.06,
+        "element": "fire",
+        "requiresLevel": 60
+    }
+}

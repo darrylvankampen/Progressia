@@ -1,0 +1,21 @@
+{
+    "id": "dragonstone_pickaxe",
+    "name": "Dragonstone Pickaxe",
+    "category": "tools",
+    "description": "A pickaxe infused with dragonstone essence, humming with power.",
+    "icon": "/icons/items/tools/dragonstone_pickaxe.png",
+    "skill": "mining",
+    "rarity": "epic",
+    "value": 260,
+    "stats": {
+        "speedMultiplier": 1.45,
+        "xpMultiplier": 1.10,
+        "doubleChance": 0.18,
+        "requiresLevel": 70
+    },
+    "modifiers": {
+        "mining_speed_percent": 12,
+        "mining_xp_percent": 6,
+        "mining_doubleChance": 3
+    }
+}

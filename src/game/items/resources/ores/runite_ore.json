@@ -1,0 +1,10 @@
+{
+    "id": "runite_ore",
+    "name": "Runite Ore",
+    "category": "resources",
+    "description": "A powerful rare ore infused with magical properties.",
+    "icon": "/icons/items/resources/ores/runite_ore.png",
+    "rarity": "rare",
+    "value": 35,
+    "stats": {}
+}

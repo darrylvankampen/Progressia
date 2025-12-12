@@ -1,0 +1,10 @@
+{
+    "id": "stellar_fragment",
+    "name": "Stellar Fragment",
+    "category": "resources",
+    "description": "A radiant fragment of pure starfire.",
+    "icon": "/icons/items/resources/misc/stellar_fragment.png",
+    "rarity": "mythic",
+    "value": 300,
+    "stats": {}
+}

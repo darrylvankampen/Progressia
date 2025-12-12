@@ -1,0 +1,10 @@
+{
+    "id": "eldritch_ore",
+    "name": "Eldritch Ore",
+    "category": "resources",
+    "description": "An unstable ore seeping with void-touched corruption.",
+    "icon": "/icons/items/resources/ores/eldritch_ore.png",
+    "rarity": "legendary",
+    "value": 120,
+    "stats": {}
+}

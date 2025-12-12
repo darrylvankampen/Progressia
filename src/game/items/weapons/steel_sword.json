@@ -1,0 +1,19 @@
+{
+    "id": "steel_sword",
+    "name": "Steel Sword",
+    "description": "A well-crafted steel blade, reliable and sharper than basic weaponry.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/steel_sword.png",
+    "rarity": "common",
+    "value": 120,
+    "stats": {
+        "attackPower": 10,
+        "accuracy": 7,
+        "speedMultiplier": 1.03,
+        "element": null,
+        "requiresLevel": 10
+    }
+}

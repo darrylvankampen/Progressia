@@ -1,0 +1,10 @@
+{
+    "id": "orichalcite_ore",
+    "name": "Orichalcite Ore",
+    "category": "resources",
+    "description": "A mythical metal ore known for its natural energy conductivity.",
+    "icon": "/icons/items/resources/ores/orichalcite_ore.png",
+    "rarity": "epic",
+    "value": 55,
+    "stats": {}
+}

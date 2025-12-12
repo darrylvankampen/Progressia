@@ -1,0 +1,19 @@
+{
+    "id": "mithril_sword",
+    "name": "Mithril Sword",
+    "description": "A lightweight blade forged from mithril. Swift, accurate, and dependable.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/mithril_sword.png",
+    "rarity": "uncommon",
+    "value": 350,
+    "stats": {
+        "attackPower": 15,
+        "accuracy": 12,
+        "speedMultiplier": 1.05,
+        "element": null,
+        "requiresLevel": 20
+    }
+}

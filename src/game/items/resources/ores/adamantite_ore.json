@@ -1,0 +1,10 @@
+{
+    "id": "adamantite_ore",
+    "name": "Adamantite Ore",
+    "category": "resources",
+    "description": "A strong and resilient metal ore used in high-tier bars and equipment.",
+    "icon": "/icons/items/resources/ores/adamantite_ore.png",
+    "rarity": "rare",
+    "value": 18,
+    "stats": {}
+}

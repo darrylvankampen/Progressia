@@ -1,0 +1,21 @@
+{
+    "id": "adamant_pickaxe",
+    "name": "Adamant Pickaxe",
+    "category": "tools",
+    "description": "A pickaxe forged from durable adamantite alloy.",
+    "icon": "/icons/items/tools/adamant_pickaxe.png",
+    "skill": "mining",
+    "rarity": "rare",
+    "value": 55,
+    "stats": {
+        "speedMultiplier": 1.20,
+        "xpMultiplier": 1.03,
+        "doubleChance": 0.10,
+        "requiresLevel": 30
+    },
+    "modifiers": {
+        "mining_speed_percent": 5,
+        "mining_xp_percent": 2,
+        "mining_doubleChance": 0
+    }
+}

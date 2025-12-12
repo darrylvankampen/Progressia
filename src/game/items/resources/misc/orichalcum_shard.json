@@ -1,0 +1,10 @@
+{
+    "id": "orichalcum_shard",
+    "name": "Orichalcum Shard",
+    "category": "resources",
+    "description": "A shimmering shard cut from pure orichalcite ore.",
+    "icon": "/icons/items/resources/misc/orichalcum_shard.png",
+    "rarity": "epic",
+    "value": 75,
+    "stats": {}
+}

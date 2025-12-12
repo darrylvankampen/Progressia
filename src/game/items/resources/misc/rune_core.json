@@ -1,0 +1,10 @@
+{
+    "id": "rune_core",
+    "name": "Rune Core",
+    "category": "resources",
+    "description": "A concentrated essence extracted from runite deposits.",
+    "icon": "/icons/items/resources/misc/rune_core.png",
+    "rarity": "epic",
+    "value": 60,
+    "stats": {}
+}

@@ -1,0 +1,21 @@
+{
+    "id": "rune_pickaxe",
+    "name": "Rune Pickaxe",
+    "category": "tools",
+    "description": "A powerful rune-forged pickaxe used by master miners.",
+    "icon": "/icons/items/tools/rune_pickaxe.png",
+    "skill": "mining",
+    "rarity": "rare",
+    "value": 110,
+    "stats": {
+        "speedMultiplier": 1.28,
+        "xpMultiplier": 1.05,
+        "doubleChance": 0.12,
+        "requiresLevel": 40
+    },
+    "modifiers": {
+        "mining_speed_percent": 7,
+        "mining_xp_percent": 3,
+        "mining_doubleChance": 1
+    }
+}

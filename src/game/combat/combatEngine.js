@@ -1,6 +1,6 @@
 // src/game/CombatEngine.js
 
-import { getGame, saveGame, addItem, addXp } from "../state/gameState";
+import { getGame, saveGame, addItem, addXp, incrementPlayerStat } from "../state/gameState";
 import { getItem } from "../utils/itemDB";
 import { getEnemy } from "../utils/enemyDB";
 import { useNotifications } from "../../composables/useNotification";
@@ -165,8 +165,13 @@ function getPlayerDamage(game, style, weapon, enemy) {
     }
     else if (style === "ranged") {
         const power = weapon?.stats?.rangedPower ?? weapon?.stats?.attackPower ?? 0;
+
+        const ammo = getEquippedAmmo();
+        const ammoPower = ammo?.stats?.rangedPower ?? ammo?.stats?.attackPower ?? 0;
+
         const min = 1 + Math.floor(ranged * 0.4);
-        const max = 3 + Math.floor(ranged * 0.7 + power * 1.5);
+        const max = 3 + Math.floor(ranged * 0.7 + power * 1.5 + ammoPower * 1.2);
+
         base = randomInt(min, max);
     }
     else if (style === "magic") {
@@ -432,6 +437,32 @@ export function combatTick() {
 
     // ---------------- PLAYER TURN ------------------------
     if (combat.playerAttackTimer <= 0) {
+        const weapon = getEquippedWeapon(game);
+
+        // ---------------------------------------------------
+        // RANGED CHECK – vereist ammo
+        // ---------------------------------------------------
+        if (weapon?.stats?.combatType === "ranged") {
+            const ammoId = game.player?.equipment?.ammo;
+
+            if (!canFireRanged(weapon)) {
+                notifyCombat({
+                    type: "warning",
+                    message: "You are out of ammo!"
+                });
+
+                combat.active = false;
+                combat.result = "fled";
+                saveGame(game);
+                return;
+            }
+
+            consumeAmmo(ammoId);
+        }
+
+        // ---------------------------------------------------
+        // HIT / MISS berekening
+        // ---------------------------------------------------
         const hitChance = getPlayerAccuracy(game, style, weapon, enemy);
         const hitRoll = Math.random();
 
@@ -461,7 +492,6 @@ export function combatTick() {
             combat.active = false;
             combat.result = "win";
 
-            // HP terug syncen naar player
             game.player.hp = Math.max(0, combat.playerHp);
 
             notifyCombat({
@@ -470,6 +500,8 @@ export function combatTick() {
                 icon: enemy.icon
             });
 
+            incrementPlayerStat("enemiesKilled", 1);
+
             grantCombatXpForKill(style, enemy);
             handleEnemyLoot(enemy);
 
@@ -477,6 +509,7 @@ export function combatTick() {
             return;
         }
     }
+
 
     // ---------------- ENEMY TURN -------------------------
     if (combat.enemyAttackTimer <= 0) {
@@ -597,4 +630,43 @@ export function getTotalStats() {
     }
 
     return base;
+}
+
+function getEquippedAmmo() {
+    const game = getGame();
+    const ammoId = game.player?.equipment?.ammo;
+    return ammoId ? getItem(ammoId) : null;
+}
+
+function canFireRanged(weapon) {
+    const game = getGame();
+    if (weapon?.stats?.combatType !== "ranged") return true;
+
+    const ammoId = game.player?.equipment?.ammo;
+    if (!ammoId) return false;
+
+    const count = game.inventory[ammoId] ?? 0;
+    return count > 0;
+}
+
+function consumeAmmo(ammoId) {
+    const game = getGame();
+    if (!ammoId) return;
+
+    const current = game.inventory[ammoId] ?? 0;
+    game.inventory[ammoId] = Math.max(0, current - 1);
+
+    incrementPlayerStat("ammoUsed", 1);
+
+    if (game.inventory[ammoId] <= 5) {
+        notifyCombat({
+            type: "warning",
+            message: `Your ammo is running low (${game.inventory[ammoId]} left).`
+        });
+    }
+
+    notifyCombat({
+        type: "info",
+        message: "You used 1 ammo."
+    });
 }

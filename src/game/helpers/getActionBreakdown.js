@@ -17,10 +17,14 @@ export function getActionBreakdown(skillKey, action) {
 
   // 4. RARE DROPS (each scaled by rareChance multiplier)
   const rareDrops = (action.rareDrops || []).map(drop => {
+    let finalChance = drop.chance;
+    if (stats.rareChance > 0) {
+      finalChance = drop.chance * stats.rareChance;
+    }
     return {
       item: drop.item,
       baseChance: drop.chance,
-      finalChance: drop.chance * stats.rareChance,
+      finalChance,
     };
   });
 

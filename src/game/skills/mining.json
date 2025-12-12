@@ -9,15 +9,14 @@
       "id": "mine_copper",
       "name": "Mine Copper Ore",
       "requiredLevel": 1,
-      "baseTime": 3000,
-      "strength": 3,
-      "xpPerHit": 4,
+      "baseTime": 2000,
+      "xpGain": 3,
       "resource": "copper_ore",
       "amountBase": 1,
       "rareDrops": [
         {
           "item": "small_geode",
-          "chance": 0.003
+          "chance": 0.002
         }
       ]
     },
@@ -25,15 +24,14 @@
       "id": "mine_tin",
       "name": "Mine Tin Ore",
       "requiredLevel": 5,
-      "baseTime": 3000,
-      "strength": 3,
-      "xpPerHit": 5,
+      "baseTime": 2500,
+      "xpGain": 4,
       "resource": "tin_ore",
       "amountBase": 1,
       "rareDrops": [
         {
           "item": "small_geode",
-          "chance": 0.003
+          "chance": 0.0025
         }
       ]
     },
@@ -42,18 +40,13 @@
       "name": "Mine Iron Ore",
       "requiredLevel": 15,
       "baseTime": 3500,
-      "strength": 5,
-      "xpPerHit": 7,
+      "xpGain": 7,
       "resource": "iron_ore",
       "amountBase": 1,
       "rareDrops": [
         {
-          "item": "geode",
-          "chance": 0.004
-        },
-        {
-          "item": "raw_gem_fragment",
-          "chance": 0.0005
+          "item": "medium_geode",
+          "chance": 0.003
         }
       ]
     },
@@ -61,39 +54,178 @@
       "id": "mine_coal",
       "name": "Mine Coal",
       "requiredLevel": 30,
-      "baseTime": 4000,
-      "strength": 6,
-      "xpPerHit": 9,
+      "baseTime": 4500,
+      "xpGain": 10,
       "resource": "coal",
       "amountBase": 2,
       "rareDrops": [
         {
-          "item": "geode",
-          "chance": 0.006
-        },
-        {
-          "item": "raw_gem_fragment",
-          "chance": 0.001
+          "item": "medium_geode",
+          "chance": 0.004
         }
       ]
     },
     {
       "id": "mine_mithril",
       "name": "Mine Mithril Ore",
-      "requiredLevel": 55,
-      "baseTime": 5000,
-      "strength": 8,
-      "xpPerHit": 12,
+      "requiredLevel": 45,
+      "baseTime": 5500,
+      "xpGain": 15,
       "resource": "mithril_ore",
-      "amountBase": 1,
+      "amountBase": 2,
       "rareDrops": [
         {
           "item": "large_geode",
-          "chance": 0.01
+          "chance": 0.005
         },
         {
-          "item": "raw_gem_fragment",
+          "item": "mystic_fragment",
+          "chance": 0.0008
+        }
+      ]
+    },
+    {
+      "id": "mine_adamantite",
+      "name": "Mine Adamantite Ore",
+      "requiredLevel": 60,
+      "baseTime": 7000,
+      "xpGain": 22,
+      "resource": "adamantite_ore",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "large_geode",
+          "chance": 0.006
+        },
+        {
+          "item": "mystic_fragment",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "mine_runite",
+      "name": "Mine Runite Ore",
+      "requiredLevel": 75,
+      "baseTime": 9000,
+      "xpGain": 32,
+      "resource": "runite_ore",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "ancient_geode",
+          "chance": 0.002
+        },
+        {
+          "item": "rune_core",
+          "chance": 0.0005
+        }
+      ]
+    },
+    {
+      "id": "mine_orichalcite",
+      "name": "Mine Orichalcite Ore",
+      "requiredLevel": 90,
+      "baseTime": 11000,
+      "xpGain": 45,
+      "resource": "orichalcite_ore",
+      "amountBase": 3,
+      "rareDrops": [
+        {
+          "item": "ancient_geode",
+          "chance": 0.003
+        },
+        {
+          "item": "orichalcum_shard",
+          "chance": 0.0008
+        }
+      ]
+    },
+    {
+      "id": "mine_dragonstone",
+      "name": "Mine Dragonstone Crystal",
+      "requiredLevel": 105,
+      "baseTime": 13500,
+      "xpGain": 60,
+      "resource": "dragonstone_crystal",
+      "amountBase": 1,
+      "rareDrops": [
+        {
+          "item": "dragon_geode",
+          "chance": 0.004
+        },
+        {
+          "item": "dragon_essence",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "mine_eldritch",
+      "name": "Mine Eldritch Ore",
+      "requiredLevel": 115,
+      "baseTime": 16000,
+      "xpGain": 85,
+      "resource": "eldritch_ore",
+      "amountBase": 2,
+      "rareDrops": [
+        {
+          "item": "eldritch_geode",
           "chance": 0.0015
+        },
+        {
+          "item": "void_fragment",
+          "chance": 0.0008
+        },
+        {
+          "item": "shadow_crystal",
+          "chance": 0.001
+        }
+      ]
+    },
+    {
+      "id": "mine_astral",
+      "name": "Mine Astral Ore",
+      "requiredLevel": 118,
+      "baseTime": 19000,
+      "xpGain": 110,
+      "resource": "astral_ore",
+      "amountBase": 3,
+      "rareDrops": [
+        {
+          "item": "astral_geode",
+          "chance": 0.0012
+        },
+        {
+          "item": "starlight_fragment",
+          "chance": 0.0007
+        },
+        {
+          "item": "cosmic_dust",
+          "chance": 0.002
+        }
+      ]
+    },
+    {
+      "id": "mine_celestial",
+      "name": "Mine Celestial Ore",
+      "requiredLevel": 120,
+      "baseTime": 22000,
+      "xpGain": 140,
+      "resource": "celestial_ore",
+      "amountBase": 4,
+      "rareDrops": [
+        {
+          "item": "celestial_core",
+          "chance": 0.002
+        },
+        {
+          "item": "stellar_fragment",
+          "chance": 0.001
+        },
+        {
+          "item": "cosmic_shard",
+          "chance": 0.0004
         }
       ]
     }

@@ -1,0 +1,39 @@
+{
+    "id": "dragon_geode",
+    "name": "Dragon Geode",
+    "category": "resources",
+    "description": "A geode infused with draconic energy and rare crystals.",
+    "icon": "/icons/items/resources/misc/geode.png",
+    "rarity": "legendary",
+    "value": 120,
+    "stats": {},
+    "openable": {
+        "rolls": 5,
+        "loot": [
+            {
+                "item": "dragonstone_crystal",
+                "weight": 5,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "dragon_essence",
+                "weight": 3,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "runite_ore",
+                "weight": 3,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "diamond",
+                "weight": 2,
+                "min": 1,
+                "max": 1
+            }
+        ]
+    }
+}

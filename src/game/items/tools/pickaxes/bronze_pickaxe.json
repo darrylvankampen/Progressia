@@ -1,0 +1,21 @@
+{
+    "id": "bronze_pickaxe",
+    "name": "Bronze Pickaxe",
+    "category": "tools",
+    "description": "A simple bronze pickaxe. Reliable for beginners.",
+    "icon": "/icons/items/tools/bronze_pickaxe.png",
+    "skill": "mining",
+    "rarity": "common",
+    "value": 1,
+    "stats": {
+        "speedMultiplier": 1.00,
+        "xpMultiplier": 1.00,
+        "doubleChance": 0.05,
+        "requiresLevel": 1
+    },
+    "modifiers": {
+        "mining_speed_percent": 0,
+        "mining_xp_percent": 0,
+        "mining_doubleChance": 0
+    }
+}

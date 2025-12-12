@@ -1,0 +1,10 @@
+{
+    "id": "celestial_core",
+    "name": "Celestial Core",
+    "category": "resources",
+    "description": "A mythical core overflowing with divine celestial energy.",
+    "icon": "/icons/items/resources/misc/celestial_core.png",
+    "rarity": "mythic",
+    "value": 250,
+    "stats": {}
+}

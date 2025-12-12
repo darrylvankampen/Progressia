@@ -30,7 +30,7 @@
 
     <!-- BUTTONS -->
     <div class="button-row">
-      <button v-for="opt in options" :key="opt.label" class="craft-btn" :disabled="!canCraft(recipe)"
+      <button v-for="opt in options" :key="opt.label" class="craft-btn" :disabled="isDisabled(opt)"
         @click="opt.action(recipe)">
         {{ opt.label }}
       </button>
@@ -43,6 +43,7 @@
 import { computed } from "vue";
 import { getItem } from "../../game/utils/itemDB";
 import { getRarityColor } from "../../game/utils/rarity";
+import { maxCraftAmount } from "../../game/crafting/craftingEngine";
 
 const props = defineProps({
   recipe: Object,
@@ -63,6 +64,13 @@ const outputItems = computed(() =>
     amount: o.amount,
   }))
 );
+
+const isDisabled = (opt) => {
+  if (opt.qty === "max") {
+    return maxCraftAmount(props.recipe) <= 0;
+  }
+  return !props.canCraft(props.recipe, opt.qty);
+};
 </script>
 
 <style scoped>

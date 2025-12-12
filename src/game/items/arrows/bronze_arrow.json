@@ -1,0 +1,16 @@
+{
+    "id": "bronze_arrow",
+    "name": "Bronze Arrow",
+    "category": "ammo",
+    "description": "Basic arrows with bronze tips. Required for bows.",
+    "icon": "/icons/items/ammo/bronze_arrow.png",
+    "rarity": "common",
+    "slot": "ammo",
+    "value": 1,
+    "stackable": true,
+    "stats": {
+        "ammo": true,
+        "rangedPower": 2,
+        "accuracy": 1
+    }
+}

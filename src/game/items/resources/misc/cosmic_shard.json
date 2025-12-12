@@ -1,0 +1,10 @@
+{
+    "id": "cosmic_shard",
+    "name": "Cosmic Shard",
+    "category": "resources",
+    "description": "A shard infused with primordial cosmic forces.",
+    "icon": "/icons/items/resources/misc/cosmic_shard.png",
+    "rarity": "mythic",
+    "value": 350,
+    "stats": {}
+}

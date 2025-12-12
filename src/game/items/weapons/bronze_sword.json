@@ -4,6 +4,7 @@
     "description": "A basic bronze sword. Weak, but reliable for beginners.",
     "category": "weapon",
     "slot": "weapon",
+    "skill": "attack",
     "hands": 1,
     "icon": "/icons/items/weapons/bronze_sword.png",
     "rarity": "common",
@@ -12,6 +13,7 @@
         "attackPower": 3,
         "accuracy": 2,
         "speedMultiplier": 1.0,
-        "element": null
+        "element": null,
+        "requiresLevel": 1
     }
 }

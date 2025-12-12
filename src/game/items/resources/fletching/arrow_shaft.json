@@ -1,0 +1,10 @@
+{
+    "id": "arrow_shaft",
+    "name": "Arrow Shafts",
+    "category": "materials",
+    "description": "Lightweight wooden shafts used for crafting arrows.",
+    "icon": "/icons/items/fletching/arrow_shafts.png",
+    "rarity": "common",
+    "value": 1,
+    "stats": {}
+}

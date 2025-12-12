@@ -1,0 +1,39 @@
+{
+    "id": "celestial_geode",
+    "name": "Celestial Geode",
+    "category": "resources",
+    "description": "A divine geode infused with cosmic and celestial matter.",
+    "icon": "/icons/items/resources/misc/geode.png",
+    "rarity": "mythic",
+    "value": 240,
+    "stats": {},
+    "openable": {
+        "rolls": 7,
+        "loot": [
+            {
+                "item": "celestial_ore",
+                "weight": 6,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "celestial_core",
+                "weight": 4,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "stellar_fragment",
+                "weight": 3,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "cosmic_shard",
+                "weight": 2,
+                "min": 1,
+                "max": 1
+            }
+        ]
+    }
+}

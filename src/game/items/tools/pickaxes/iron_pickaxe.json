@@ -1,0 +1,21 @@
+{
+    "id": "iron_pickaxe",
+    "name": "Iron Pickaxe",
+    "category": "tools",
+    "description": "A sturdy iron pickaxe suitable for novice miners.",
+    "icon": "/icons/items/tools/iron_pickaxe.png",
+    "skill": "mining",
+    "rarity": "common",
+    "value": 5,
+    "stats": {
+        "speedMultiplier": 1.05,
+        "xpMultiplier": 1.00,
+        "doubleChance": 0.06,
+        "requiresLevel": 5
+    },
+    "modifiers": {
+        "mining_speed_percent": 1,
+        "mining_xp_percent": 0,
+        "mining_doubleChance": 0
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "id": "adamant_sword",
+    "name": "Adamant Sword",
+    "description": "A strong adamant alloy blade. Hits hard and maintains excellent balance.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/adamant_sword.png",
+    "rarity": "rare",
+    "value": 900,
+    "stats": {
+        "attackPower": 21,
+        "accuracy": 16,
+        "speedMultiplier": 1.05,
+        "element": null,
+        "requiresLevel": 30
+    }
+}

@@ -20,7 +20,7 @@
         <!-- REQUIRED LEVEL -->
         <div class="stat-row">
           <div class="stat-label">Required Level</div>
-          <div class="stat-value">{{ legacy.requiredLevel }}</div>
+          <div class="stat-value">{{ legacy.requiresLevel }}</div>
         </div>
 
         <!-- SPEED -->
@@ -62,17 +62,9 @@
 
       <!-- ACTION BUTTONS -->
       <div class="actions">
-        <button v-if="(isTool || isEquipable) && !isEquipped" class="btn equip" @click="equip">
+        <button v-if="(isTool || isEquipable) && !isEquipped && !locked" class="btn equip" @click="equip">
           Equip
         </button>
-
-        <!-- <button
-          v-if="isTool && isEquipped"
-          class="btn unequip"
-          @click="unequip"
-        >
-          Unequip
-        </button> -->
 
         <button v-if="item.openable" class="btn open" @click="openThisItem" :disabled="!hasItemInInventory">
           Open
@@ -94,13 +86,14 @@ import { computed, ref } from "vue";
 import { getRarityColor, getRarityLabel } from "../../game/utils/rarity";
 import { getGame, removeItem, equipTool, openItem, equipItem, } from "../../game/state/gameState";
 import LootModal from "./LootModal.vue";
+import { isEquiped, isLocked } from "../../game/helpers/gameHelpers";
 
 const lootVisible = ref(false);
 const lootResults = ref([]);
 
-
 const props = defineProps({
   item: Object,
+  locked: Boolean,
   visible: Boolean,
 });
 
@@ -113,28 +106,50 @@ const item = computed(() => props.item);
 
 /* Tool checks */
 const isTool = computed(() => item.value?.category === "tools");
-const isEquipable = computed(() => item.value?.category === "weapon" || item.value?.category === "armor");
+const isEquipable = computed(() => item.value?.category === "weapon" || item.value?.category === "armor" || item.value?.category === "ammo");
 const skillId = computed(() => item.value?.skill);
 
-/* Equipped? */
-const isEquipped = computed(() => {
-  const player = game.player;
-  const item = props.item;
+const isEquipped = computed(() => isEquiped(item.value));
+const locked = computed(() => isLocked(item.value));
 
-  if (!item) return false;
+// /* Equipped? */
+// const isEquipped = computed(() => {
+//   const player = game.player;
+//   const item = props.item;
 
-  // 1) Tools
-  if (isTool.value) {
-    return player.equippedTools?.[skillId.value] === item.id;
-  }
+//   if (!item) return false;
 
-  // 2) Equipment (armor / weapon / offhand / misc)
-  if (item.slot) {
-    return player.equipment?.[item.slot] === item.id;
-  }
+//   // 1) Tools
+//   if (isTool.value) {
+//     return player.equippedTools?.[skillId.value] === item.id;
+//   }
 
-  return false;
-});
+//   // 2) Equipment (armor / weapon / offhand / misc)
+//   if (item.slot) {
+//     return player.equipment?.[item.slot] === item.id;
+//   }
+
+//   return false;
+// });
+
+// const isLocked = computed(() => {
+//   const item = props.item;
+//   if (!item) return false;
+
+//   const required = item.stats?.requiresLevel ?? 1;
+
+//   const skillKey = isTool.value
+//     ? skillId.value
+//     : item.skill;
+
+//   if (!skillKey) {
+//     return false;
+//   }
+
+//   const playerLevel = game.skills?.[skillKey]?.level ?? 1;
+
+//   return playerLevel < required;
+// });
 
 
 /* Rarity */

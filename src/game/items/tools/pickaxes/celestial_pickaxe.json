@@ -1,0 +1,21 @@
+{
+    "id": "celestial_pickaxe",
+    "name": "Celestial Pickaxe",
+    "category": "tools",
+    "description": "A divine pickaxe forged from celestial core fragments. Unmatched in power.",
+    "icon": "/icons/items/tools/celestial_pickaxe.png",
+    "skill": "mining",
+    "rarity": "mythic",
+    "value": 600,
+    "stats": {
+        "speedMultiplier": 1.80,
+        "xpMultiplier": 1.20,
+        "doubleChance": 0.32,
+        "requiresLevel": 115
+    },
+    "modifiers": {
+        "mining_speed_percent": 20,
+        "mining_xp_percent": 12,
+        "mining_doubleChance": 7
+    }
+}

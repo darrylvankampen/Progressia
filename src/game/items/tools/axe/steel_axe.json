@@ -11,6 +11,6 @@
         "speedMultiplier": 1.10,
         "xpMultiplier": 1.00,
         "doubleChance": 0.00,
-        "requiredLevel": 5
+        "requiresLevel": 5
     }
 }

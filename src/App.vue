@@ -3,7 +3,6 @@
     <TopBar />
     <Notification />
     <ItemTooltip />
-    <ItemActionsMenu />
 
     <Sidebar :items="tabs" v-model="activeTab" />
 
@@ -34,8 +33,6 @@ import { resumeAllActiveSkills } from "./game/skillEngine";
 import TopBar from "./components/TopBar.vue";
 import Notification from "./components/Notification.vue";
 import ItemTooltip from "./components/inventory/ItemTooltip.vue";
-import ItemActionsMenu from "./components/inventory/ItemActionsMenu.vue";
-import { combatTick } from "./game/combat/combatEngine";
 const offlinePopup = ref(null);
 
 const tabs = [
@@ -44,8 +41,12 @@ const tabs = [
   { id: "inventory", label: "Inventory", icon: "/icons/ui/backpack.png", to: "/inventory", category: "player" },
 
   { id: "skills", label: "Overview", icon: "/icons/ui/skills_overview.png", to: "/skills", category: "skills" },
+  { id: "combat", label: "Combat", icon: "/icons/ui/equipment.png", to: "/combat", category: "skills" },
   { id: "woodcutting", label: "Woodcutting", icon: "/icons/skills/woodcutting.png", to: "/skill/woodcutting", category: "skills" },
-  { id: "combat", label: "Combat", icon: "/icons/items/placeholder.png", to: "/combat", category: "skills" },
+  { id: "mining", label: "Mining", icon: "/icons/skills/mining.png", to: "/skill/mining", category: "skills" },
+  { id: "fletching", label: "Fletching", icon: "/icons/skills/fletching.png", to: "/skill/fletching", category: "skills" },
+  { id: "crafting", label: "Crafting", icon: "/icons/skills/crafting.png", to: "/skill/crafting", category: "skills" },
+
 
   { id: "shop", label: "General Shop", icon: "/icons/ui/shop.png", to: "/shop", category: "shops" },
 

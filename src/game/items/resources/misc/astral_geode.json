@@ -1,0 +1,39 @@
+{
+    "id": "astral_geode",
+    "name": "Astral Geode",
+    "category": "resources",
+    "description": "A radiant geode containing starlit ore and astral fragments.",
+    "icon": "/icons/items/resources/misc/geode.png",
+    "rarity": "legendary",
+    "value": 180,
+    "stats": {},
+    "openable": {
+        "rolls": 6,
+        "loot": [
+            {
+                "item": "astral_ore",
+                "weight": 6,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "starlight_fragment",
+                "weight": 4,
+                "min": 1,
+                "max": 1
+            },
+            {
+                "item": "cosmic_dust",
+                "weight": 3,
+                "min": 1,
+                "max": 2
+            },
+            {
+                "item": "diamond",
+                "weight": 1,
+                "min": 1,
+                "max": 1
+            }
+        ]
+    }
+}

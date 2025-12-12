@@ -1,0 +1,10 @@
+{
+    "id": "mystic_fragment",
+    "name": "Mystic Fragment",
+    "category": "resources",
+    "description": "A small fragment of concentrated magical ore.",
+    "icon": "/icons/items/resources/misc/mystic_fragment.png",
+    "rarity": "rare",
+    "value": 25,
+    "stats": {}
+}

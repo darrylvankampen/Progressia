@@ -7,17 +7,17 @@ import {
   saveGame,
   gameReady,
   cleanupExpiredBuffs,
-  addBuff,
 } from "./state/gameState";
 import {
-  getEffectiveToolStats,
-  getPercentModifier,
-  getFlatModifier,
   getFinalStats,
 } from "./modifierEngine";
 import { combatTick } from "./combat/combatEngine";
+import { tickCrafting } from "./crafting/craftingEngine";
 
-const TICK_MS = 100;
+const GAME_TICK = 350;
+const CRAFTING_TICK = 200;
+const COMBAT_TICK = 150;
+
 
 /**
  * =============================================================================
@@ -238,27 +238,28 @@ function gameTick() {
 
     // Ensure timeLeft is valid
     if (typeof skill.timeLeft !== "number" || skill.timeLeft <= 0) {
-      skill.timeLeft = action.actionTime ?? TICK_MS;
+      skill.timeLeft = action.actionTime ?? GAME_TICK;
     }
 
     // Decrement timer
-    skill.timeLeft -= TICK_MS;
+    skill.timeLeft -= GAME_TICK;
 
     // Action completed?
     if (skill.timeLeft <= 0) {
       performSkillAction(key, action);
 
       // Reset for next cycle
-      skill.timeLeft = action.actionTime ?? TICK_MS;
-
+      skill.timeLeft = action.actionTime ?? GAME_TICK;
       saveGame();
     }
   }
 }
 
 // Start ticking globally
-setInterval(gameTick, TICK_MS);
-setInterval(combatTick, 150);
+setInterval(combatTick, COMBAT_TICK);
+setInterval(gameTick, GAME_TICK);
+setInterval(tickCrafting, CRAFTING_TICK);
+
 
 /* ============================================================================
  * START AN ACTION

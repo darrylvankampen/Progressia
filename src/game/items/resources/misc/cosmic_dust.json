@@ -1,0 +1,10 @@
+{
+    "id": "cosmic_dust",
+    "name": "Cosmic Dust",
+    "category": "resources",
+    "description": "A fine dust containing pure cosmic radiance.",
+    "icon": "/icons/items/resources/misc/cosmic_dust.png",
+    "rarity": "epic",
+    "value": 130,
+    "stats": {}
+}

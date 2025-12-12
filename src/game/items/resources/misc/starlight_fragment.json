@@ -1,0 +1,10 @@
+{
+    "id": "starlight_fragment",
+    "name": "Starlight Fragment",
+    "category": "resources",
+    "description": "A glowing fragment formed from collapsed astral energy.",
+    "icon": "/icons/items/resources/misc/starlight_fragment.png",
+    "rarity": "legendary",
+    "value": 170,
+    "stats": {}
+}

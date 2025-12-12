@@ -1,0 +1,19 @@
+{
+    "id": "iron_sword",
+    "name": "Iron Sword",
+    "description": "A simple iron forged sword, sturdier than bronze but still basic in design.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/iron_sword.png",
+    "rarity": "common",
+    "value": 40,
+    "stats": {
+        "attackPower": 6,
+        "accuracy": 4,
+        "speedMultiplier": 1.02,
+        "element": null,
+        "requiresLevel": 5
+    }
+}

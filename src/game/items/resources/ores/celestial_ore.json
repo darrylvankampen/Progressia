@@ -1,0 +1,10 @@
+{
+    "id": "celestial_ore",
+    "name": "Celestial Ore",
+    "category": "resources",
+    "description": "A divine ore infused with cosmic energy.",
+    "icon": "/icons/items/resources/ores/celestial_ore.png",
+    "rarity": "mythic",
+    "value": 220,
+    "stats": {}
+}

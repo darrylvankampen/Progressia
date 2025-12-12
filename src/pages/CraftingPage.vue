@@ -1,9 +1,14 @@
 <template>
   <div class="osrs-panel">
     <div class="card-body">
-      <h3 class="mb-3">Crafting</h3>
+      <h3 class="mb-3">{{ title }}</h3>
 
-      <CraftingGrid :recipes="recipes" :options="craftOptions" :canCraft="canCraft" />
+      <div v-if="loading" class="text-muted mb-3">
+        Loading recipes…
+      </div>
+
+      <CraftingGrid v-else :recipes="recipes" :options="craftOptions" :canCraft="canCraft" />
+
       <CraftingQueue />
     </div>
   </div>
@@ -12,24 +17,60 @@
 <script setup>
 import { canCraft, craftMax, addToQueue }
   from "../game/crafting/craftingEngine";
-
 import CraftingGrid from "../components/crafting/CraftingGrid.vue";
-import { loadAllRecipes } from "../game/crafting/recipeLoader";
-import { ref, onMounted } from "vue";
+import { loadRecipesBySkill } from "../game/crafting/recipeLoader";
+import { ref, watch, computed } from "vue";
 import CraftingQueue from "../components/crafting/CraftingQueue.vue";
 
-const recipes = ref([]);
-
-onMounted(async () => {
-  recipes.value = await loadAllRecipes();
-  console.log("[Crafting] Loaded recipes:", recipes.value);
+const props = defineProps({
+  skill: {
+    type: String,
+    default: "crafting"   // Fallback
+  }
 });
+const title = computed(() =>
+  props.skill.charAt(0).toUpperCase() + props.skill.slice(1)
+);
+
+
+const recipes = ref([]);
+const loading = ref(false);
+
+watch(
+  () => props.skill,
+  async (skill) => {
+    loading.value = true;
+    recipes.value = await loadRecipesBySkill(skill);
+    loading.value = false;
+  },
+  { immediate: true }
+);
 
 const craftOptions = [
-  { label: "1x", class: "btn-primary", action: (recipe) => addToQueue(recipe, 1) },
-  { label: "5x", class: "btn-secondary", action: (recipe) => addToQueue(recipe, 5) },
-  { label: "10x", class: "btn-secondary", action: (recipe) => addToQueue(recipe, 10) },
-  { label: "Max", class: "btn-success", action: (recipe) => addToQueue(recipe, craftMax(recipe)) },
+  {
+    label: "1x",
+    class: "btn-primary",
+    qty: 1,
+    action: (recipe) => addToQueue(recipe, 1)
+  },
+  {
+    label: "5x",
+    class: "btn-secondary",
+    qty: 5,
+    action: (recipe) => addToQueue(recipe, 5)
+  },
+  {
+    label: "10x",
+    class: "btn-secondary",
+    qty: 10,
+    action: (recipe) => addToQueue(recipe, 10)
+  },
+  {
+    label: "Max",
+    class: "btn-success",
+    qty: "max",
+    action: (recipe) => craftMax(recipe)
+  }
 ];
 </script>
 

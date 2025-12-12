@@ -1,0 +1,8 @@
+{
+  "id": "fletching",
+  "name": "Fletching",
+  "icon": "/icons/skills/fletching.png",
+  "skillType": "idle",
+  "maxLevel": 120,
+  "actions": []
+}

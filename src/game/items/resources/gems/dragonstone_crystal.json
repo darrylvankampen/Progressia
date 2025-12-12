@@ -1,0 +1,10 @@
+{
+    "id": "dragonstone_crystal",
+    "name": "Dragonstone Crystal",
+    "category": "resources",
+    "description": "A rare crystal pulsing with draconic energy.",
+    "icon": "/icons/items/resources/gems/dragonstone_crystal.png",
+    "rarity": "epic",
+    "value": 80,
+    "stats": {}
+}

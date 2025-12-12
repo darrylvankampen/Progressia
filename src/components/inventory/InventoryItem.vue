@@ -1,6 +1,6 @@
 <template>
   <div class="inv-card" :class="{
-    locked: isLocked,
+    locked: locked,
     equipped: isEquipped
   }" :style="{ '--rarity': rarityColor }" @mouseenter="showTooltip(item, $event)" @mouseleave="hideTooltip()"
     @mousemove="showTooltip(item, $event)">
@@ -10,8 +10,8 @@
     <!-- TOP BADGES -->
     <div class="top-badges">
       <span v-if="isEquipped" class="badge equipped">Equipped</span>
-      <span v-if="isLocked" class="badge locked">
-        Lvl {{ item.stats.requiredLevel }}
+      <span v-if="locked" class="badge locked">
+        Lvl {{ item.stats.requiresLevel }}
       </span>
     </div>
 
@@ -40,47 +40,22 @@ import { getRarityColor, getRarityLabel } from "../../game/utils/rarity";
 import { useTooltip } from "../../composables/useTooltip";
 import { useItemActions } from "../../composables/useItemActions";
 import { getGame } from "../../game/state/gameState";
+import { isLocked, isEquiped } from "../../game/helpers/gameHelpers";
 
 const props = defineProps({
   item: Object
 });
 
 const { showTooltip, hideTooltip } = useTooltip();
-const { showActions, hideActions, openInspect } = useItemActions();
-const game = getGame();
-
-const isTool = computed(() => props.item.category === "tools");
-const skillId = computed(() => props.item.skill || null);
-
-const playerSkill = computed(() => {
-  if (!skillId.value) return null;
-  return game.skills[skillId.value];
-});
+const { openInspect } = useItemActions();
 
 const isEquipped = computed(() => {
-  const player = game.player;
-  const item = props.item;
-
-  if (!item) return false;
-
-  // 1) Tools
-  if (isTool.value) {
-    return player.equippedTools?.[skillId.value] === item.id;
-  }
-
-  // 2) Equipment (armor / weapon / offhand / misc)
-  if (item.slot) {
-    return player.equipment?.[item.slot] === item.id;
-  }
-
-  return false;
+  return isEquiped(props.item);
 });
 
 
-const isLocked = computed(() => {
-  if (!isTool.value) return false;
-  const req = props.item.stats?.requiredLevel ?? 1;
-  return playerSkill.value?.level < req;
+const locked = computed(() => {
+  return isLocked(props.item);
 });
 
 const rarityColor = computed(() => getRarityColor(props.item.rarity));

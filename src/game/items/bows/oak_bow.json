@@ -1,0 +1,16 @@
+{
+    "id": "oak_bow",
+    "name": "Oak Bow",
+    "category": "weapon",
+    "description": "A simple wooden bow used by novice archers.",
+    "icon": "/icons/items/weapons/ranged/oak_bow.png",
+    "slot": "weapon",
+    "rarity": "common",
+    "value": 40,
+    "stats": {
+        "combatType": "ranged",
+        "rangedPower": 6,
+        "accuracy": 4,
+        "speedMultiplier": 1.1
+    }
+}

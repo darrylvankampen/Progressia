@@ -1,0 +1,19 @@
+{
+    "id": "runite_sword",
+    "name": "Runite Sword",
+    "description": "A masterwork blade forged from runite. Heavy, durable, and deadly.",
+    "category": "weapon",
+    "slot": "weapon",
+    "skill": "attack",
+    "hands": 1,
+    "icon": "/icons/items/weapons/runite_sword.png",
+    "rarity": "rare",
+    "value": 2000,
+    "stats": {
+        "attackPower": 28,
+        "accuracy": 20,
+        "speedMultiplier": 1.04,
+        "element": null,
+        "requiresLevel": 40
+    }
+}
