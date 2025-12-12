@@ -1,9 +1,18 @@
+// ============================================================================
+// CRAFTING ENGINE
+// Handles queue-based crafting with offline-safe timing (timestamp driven)
+// ============================================================================
+
 import { getGame, saveGame, addItem, removeItem, addXp } from "../state/gameState";
 import { useNotifications } from "../../composables/useNotification";
 import { getFinalStats } from "../modifierEngine";
 
-// Runtime-only guard (voorkomt dubbele finish in dezelfde tick)
+// Guard to prevent finishing the same craft multiple times in one tick
 let finishing = false;
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
 
 function notify(payload) {
   const { pushNotification } = useNotifications();
@@ -11,34 +20,49 @@ function notify(payload) {
 }
 
 // ============================================================================
-// STATE HELPERS
+// STATE NORMALIZATION
+// Ensures crafting-related state always exists and is consistent
 // ============================================================================
 
 function ensureCraftingState(game) {
+  // Ensure crafting container exists
   if (!game.crafting) game.crafting = { active: null, queue: [] };
+
+  // Ensure queue is always an array
   if (!Array.isArray(game.crafting.queue)) game.crafting.queue = [];
+
+  // Explicitly normalize active state
   if (typeof game.crafting.active === "undefined") game.crafting.active = null;
 
+  // Derived flag used by UI
   game.isCrafting = !!game.crafting.active;
 
+  // UI-facing progress fields
   if (typeof game.craftingProgress !== "number") game.craftingProgress = 0;
   if (typeof game.craftingTimeRemaining !== "number") game.craftingTimeRemaining = 0;
 }
+
+// ---------------------------------------------------------------------------
+// Time helpers
+// ---------------------------------------------------------------------------
 
 function getNow() {
   return Date.now();
 }
 
+// Returns the active recipe snapshot (or null)
 function getActiveRecipe(game) {
   return game.crafting.active?.recipe ?? null;
 }
 
+// Computes total crafting duration, including speed modifiers
 function computeTotalTimeMs(recipe, quantity) {
   const { speed } = getFinalStats(recipe.skill);
-  const spd = Math.max(speed || 1, 0.0001);
-  return (recipe.time * quantity) / spd;
+  const effectiveSpeed = Math.max(speed || 1, 0.0001); // prevent division by zero
+  return (recipe.time * quantity) / effectiveSpeed;
 }
 
+// Resets UI progress state when no craft is active
 function resetCraftUI(game) {
   game.craftingProgress = 0;
   game.craftingTimeRemaining = 0;
@@ -52,50 +76,59 @@ export function addToQueue(recipe, quantity = 1) {
   const game = getGame();
   ensureCraftingState(game);
 
-  if (!recipe || !quantity || quantity <= 0) return false;
+  if (!recipe || quantity <= 0) return false;
 
-  game.crafting.queue.push({ recipe, quantity: Math.floor(quantity) });
+  // Push job into queue
+  game.crafting.queue.push({
+    recipe,
+    quantity: Math.floor(quantity),
+  });
 
+  // If nothing is currently crafting, immediately try to start
   if (!game.crafting.active) {
-    startNextInQueue(); // deze doet nu ook “skip invalid jobs”
+    startNextInQueue();
   }
+
   saveGame();
   return true;
 }
 
+/**
+ * Attempts to start the next valid craft in the queue.
+ * Automatically skips invalid / uncraftable jobs.
+ */
 export function startNextInQueue() {
   const game = getGame();
   ensureCraftingState(game);
 
-  // Als er al iets actief is, niets doen
+  // If a craft is already running, do nothing
   if (game.crafting.active) {
     game.isCrafting = true;
     return true;
   }
 
-  // Zolang er jobs staan en er niets actief is: probeer te starten
+  // Try jobs until one successfully starts or queue is empty
   while (game.crafting.queue.length > 0 && !game.crafting.active) {
     const job = game.crafting.queue[0];
+    const started = startCraft(job.recipe, job.quantity);
 
-    const ok = startCraft(job.recipe, job.quantity);
-
-    // Als startCraft faalt (meestal canCraft=false): verwijder job en ga door
-    if (!ok) {
+    // Failed start usually means missing materials or invalid recipe
+    if (!started) {
       notify({
         type: "warning",
-        message: `Removed from queue: cannot craft ${job?.recipe?.name ?? "item"} (missing materials / invalid recipe).`,
+        message: `Removed from queue: cannot craft ${job?.recipe?.name ?? "item"}.`,
       });
       game.crafting.queue.shift();
       saveGame();
       continue;
     }
 
-    // Gelukt → active is gezet
+    // Successfully started a craft
     saveGame();
     return true;
   }
 
-  // Geen queue meer
+  // Queue exhausted → idle state
   game.crafting.active = null;
   game.isCrafting = false;
   resetCraftUI(game);
@@ -104,33 +137,31 @@ export function startNextInQueue() {
 }
 
 // ============================================================================
-// CORE START
+// CRAFT INITIALIZATION
 // ============================================================================
 
 export function startCraft(recipe, quantity = 1) {
   const game = getGame();
   ensureCraftingState(game);
 
-  // Als er al iets actief is: niet opnieuw starten
+  // Prevent overlapping crafts
   if (game.crafting.active) return false;
 
   const qty = Math.floor(quantity);
   if (!canCraft(recipe, qty)) return false;
 
   const totalTime = computeTotalTimeMs(recipe, qty);
-  const startAt = getNow();
 
+  // Snapshot active craft (timestamp-based, offline-safe)
   game.crafting.active = {
     recipeId: recipe.id ?? null,
     recipe,
     quantity: qty,
-    startAt,
+    startAt: getNow(),
     totalTime,
   };
 
   game.isCrafting = true;
-
-  // UI init
   game.craftingProgress = 0;
   game.craftingTimeRemaining = totalTime;
 
@@ -139,13 +170,10 @@ export function startCraft(recipe, quantity = 1) {
 }
 
 // ============================================================================
-// TICK / PROGRESS (call from loop/UI interval)
+// TICK HANDLING
+// Advances active craft and finalizes when complete
 // ============================================================================
 
-/**
- * Tick function: houdt UI progress bij en rondt craft(s) af wanneer tijd verstreken is.
- * Aanroepen bijv. elke 100–250ms vanuit je main loop of een UI timer.
- */
 export function tickCrafting() {
   const game = getGame();
   ensureCraftingState(game);
@@ -157,16 +185,17 @@ export function tickCrafting() {
     return false;
   }
 
-  const now = getNow();
-  const elapsed = Math.max(now - active.startAt, 0);
+  const elapsed = Math.max(getNow() - active.startAt, 0);
   const remaining = Math.max(active.totalTime - elapsed, 0);
 
-  // UI velden
+  // Update UI-facing values
   game.craftingTimeRemaining = remaining;
   game.craftingProgress =
-    active.totalTime > 0 ? Math.min((elapsed / active.totalTime) * 100, 100) : 100;
+    active.totalTime > 0
+      ? Math.min((elapsed / active.totalTime) * 100, 100)
+      : 100;
 
-  // Klaar?
+  // Finalize craft exactly once
   if (remaining <= 0 && !finishing) {
     finishing = true;
     try {
@@ -180,10 +209,10 @@ export function tickCrafting() {
   return false;
 }
 
-/**
- * Helper voor UI: geeft progress state terug zonder side effects.
- * (Handig als je UI liever geen tick aanroept.)
- */
+// ============================================================================
+// READ-ONLY STATUS (UI helper)
+// ============================================================================
+
 export function getCraftingStatus() {
   const game = getGame();
   ensureCraftingState(game);
@@ -193,14 +222,12 @@ export function getCraftingStatus() {
     return { isCrafting: false, progress: 0, remaining: 0, recipe: null, quantity: 0 };
   }
 
-  const now = getNow();
-  const elapsed = Math.max(now - active.startAt, 0);
+  const elapsed = Math.max(getNow() - active.startAt, 0);
   const remaining = Math.max(active.totalTime - elapsed, 0);
-  const progress = active.totalTime > 0 ? Math.min((elapsed / active.totalTime) * 100, 100) : 100;
 
   return {
     isCrafting: true,
-    progress,
+    progress: Math.min((elapsed / active.totalTime) * 100, 100),
     remaining,
     recipe: active.recipe,
     quantity: active.quantity,
@@ -208,7 +235,8 @@ export function getCraftingStatus() {
 }
 
 // ============================================================================
-// FINISH
+// FINALIZATION
+// Applies results and advances the queue
 // ============================================================================
 
 export function finishActiveCraft() {
@@ -221,6 +249,7 @@ export function finishActiveCraft() {
   const recipe = getActiveRecipe(game);
   const quantity = active.quantity;
 
+  // Safety fallback (corrupt state)
   if (!recipe || !quantity) {
     game.crafting.active = null;
     game.isCrafting = false;
@@ -229,8 +258,12 @@ export function finishActiveCraft() {
     return false;
   }
 
+  // Validate materials again before consuming
   if (!canCraft(recipe, quantity)) {
-    notify({ type: "warning", message: `Craft cancelled: missing materials for ${recipe.name}.` });
+    notify({
+      type: "warning",
+      message: `Craft cancelled: missing materials for ${recipe.name}.`,
+    });
 
     game.crafting.queue.shift();
     game.crafting.active = null;
@@ -242,14 +275,17 @@ export function finishActiveCraft() {
     return false;
   }
 
+  // Consume inputs
   for (const input of recipe.inputs) {
     removeItem(input.item, input.amount * quantity);
   }
 
+  // Produce outputs
   for (const output of recipe.outputs) {
     addItem(output.item, output.amount * quantity);
   }
 
+  // Award XP
   if (recipe.skill && recipe.xp) {
     const { xp } = getFinalStats(recipe.skill);
     addXp(recipe.skill, recipe.xp * quantity * (xp ?? 1));
@@ -257,6 +293,7 @@ export function finishActiveCraft() {
 
   notify({ type: "success", message: `Crafted ${quantity}× ${recipe.name}` });
 
+  // Advance queue
   game.crafting.queue.shift();
   game.crafting.active = null;
   game.isCrafting = false;
@@ -290,14 +327,14 @@ export function cancelCraft() {
 }
 
 // ============================================================================
-// HELPERS
+// VALIDATION HELPERS
 // ============================================================================
 
 export function canCraft(recipe, qty = 1) {
   const game = getGame();
   ensureCraftingState(game);
 
-  const q = Math.max(Math.floor(qty || 0), 0);
+  const q = Math.max(Math.floor(qty), 0);
   if (!recipe || q <= 0) return false;
 
   return recipe.inputs.every((input) => {
@@ -313,29 +350,18 @@ export function maxCraftAmount(recipe) {
   if (!recipe?.inputs?.length) return 0;
 
   let max = Infinity;
-
   for (const input of recipe.inputs) {
     const have = game.inventory?.[input.item] || 0;
-    const possible = Math.floor(have / input.amount);
-    if (possible < max) max = possible;
+    max = Math.min(max, Math.floor(have / input.amount));
   }
 
   return Math.max(max, 0);
 }
 
-export function craftOnce(recipe) {
-  if (!canCraft(recipe, 1)) return false;
-  return addToQueue(recipe, 1);
-}
-
-export function craftX(recipe, x) {
-  const qty = Math.floor(x);
-  if (!canCraft(recipe, qty)) return false;
-  return addToQueue(recipe, qty);
-}
-
-export function craftMax(recipe) {
+// Convenience wrappers
+export const craftOnce = (recipe) => canCraft(recipe, 1) && addToQueue(recipe, 1);
+export const craftX = (recipe, x) => canCraft(recipe, x) && addToQueue(recipe, x);
+export const craftMax = (recipe) => {
   const max = maxCraftAmount(recipe);
-  if (max > 0) return addToQueue(recipe, max);
-  return false;
-}
+  return max > 0 && addToQueue(recipe, max);
+};
