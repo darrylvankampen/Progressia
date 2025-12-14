@@ -1,7 +1,25 @@
 // src/game/ItemUseEngine.js
-import { getGame, saveGame, removeItem, addItem } from "./state/gameState";
+import { getGame, saveGame, removeItem } from "./state/gameState";
 import { getItem } from "./utils/itemDB";
 import { useNotifications } from "../composables/useNotification";
+
+// USE HANDLERS
+const USE_HANDLERS = {
+    heal({ game, use }) {
+        const missing = game.player.maxHp - game.player.hp;
+        if (missing <= 0) {
+            return { ok: false, reason: "HP is already full." };
+        }
+
+        const heal = Math.min(use.amount ?? 0, missing);
+        game.player.hp += heal;
+
+        return {
+            ok: true,
+            message: `Healed ${heal} HP.`
+        };
+    }
+}
 
 // ---------------------------------------------------------------------------
 // Notifications
@@ -58,8 +76,14 @@ export function canUseItem(itemId) {
     const have = game.inventory?.[itemId] ?? 0;
     if (have <= 0) return { ok: false, reason: "Not in inventory." };
 
+    if (!item.use || !item.use.type) {
+        return { ok: false, reason: "Item cannot be used." };
+    }
+
+    if (!USE_HANDLERS[item.use.type]) {
+        return { ok: false, reason: "Item use is not implemented." };
+    }
     const stats = item.stats || {};
-    if (!stats.consumable) return { ok: false, reason: "Item is not usable." };
 
     // Cooldown (defaults)
     const cdKey = stats.cooldownKey || itemId; // per-item cooldown by default
@@ -67,13 +91,6 @@ export function canUseItem(itemId) {
 
     const remaining = getCooldownRemainingMs(game, cdKey);
     if (remaining > 0) return { ok: false, reason: `On cooldown (${Math.ceil(remaining / 1000)}s).` };
-
-    // If it heals, ensure not full HP (optional QoL)
-    if (typeof stats.healAmount === "number" && stats.healAmount > 0) {
-        if (game.player.hp >= game.player.maxHp) {
-            return { ok: false, reason: "HP is already full." };
-        }
-    }
 
     return { ok: true, reason: null, item, cdKey, cdMs };
 }
@@ -99,23 +116,32 @@ export function useItem(itemId, amount = 1) {
     const have = game.inventory?.[itemId] ?? 0;
     const actualAmount = Math.min(useAmount, have);
 
+    const handler = USE_HANDLERS[item.use.type];
+    if (!handler) {
+        notify({ type: "warning", message: "This item does nothing." });
+        return false;
+    }
+
     let used = 0;
 
-    // Use multiple items in one call, but respect cooldown as a single lock.
-    // (If you want per-item cooldown, call useItem repeatedly from UI.)
     for (let i = 0; i < actualAmount; i++) {
-        // Healing
-        if (typeof stats.healAmount === "number" && stats.healAmount > 0) {
-            const missing = game.player.maxHp - game.player.hp;
-            if (missing <= 0) break; // stop using if full
+        const result = handler({
+            game,
+            item,
+            use: item.use
+        });
 
-            const heal = Math.min(stats.healAmount, missing);
-            game.player.hp += heal;
+        if (!result?.ok) {
+            notify({ type: "warning", message: result?.reason });
+            break;
         }
 
-        // Consume
         removeItem(itemId, 1);
         used++;
+
+        if (result.message) {
+            notify({ type: "info", message: result.message });
+        }
     }
 
     if (used <= 0) {
@@ -128,12 +154,10 @@ export function useItem(itemId, amount = 1) {
 
     saveGame();
 
-    // Notification
-    if (stats.healAmount) {
-        notify({ type: "success", message: `Used ${used}× ${item.name}.` });
-    } else {
-        notify({ type: "success", message: `Used ${used}× ${item.name}.` });
-    }
+    notify({
+        type: "success",
+        message: `Used ${used}× ${item.name}.`
+    });
 
     return true;
 }

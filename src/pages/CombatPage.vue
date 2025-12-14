@@ -152,8 +152,7 @@ const foodItems = computed(() => {
     return Object.keys(inv)
         .map(id => getItem(id))
         .filter(item =>
-            item?.stats?.consumable &&
-            item?.stats?.healAmount &&
+            item?.use?.type === "heal" &&
             inv[item.id] > 0
         )
         .map(item => ({

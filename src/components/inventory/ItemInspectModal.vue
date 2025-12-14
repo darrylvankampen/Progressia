@@ -15,6 +15,22 @@
         {{ item.description }}
       </p>
 
+      <div v-if="maxQuantity > 1" class="quantity-box">
+        <span>Amount</span>
+
+        <div class="quantity-controls">
+          <button @click="quantity = Math.max(1, quantity - 1)">−</button>
+
+          <input type="number" v-model.number="quantity" :min="1" :max="maxQuantity" />
+
+          <button @click="quantity = Math.min(maxQuantity, quantity + 1)">+</button>
+        </div>
+
+        <div class="quantity-max" @click="quantity = maxQuantity">
+          Max ({{ maxQuantity }})
+        </div>
+      </div>
+
       <!-- TOOL-STATS BLOCK -->
       <div v-if="isTool && isTool === `t`" class="stats-section">
         <!-- REQUIRED LEVEL -->
@@ -70,6 +86,8 @@
           Open
         </button>
 
+        <button v-if="isConsumable" class="btn use" @click="consume">Use</button>
+
         <button class="btn destroy" @click="destroyItem">Destroy</button>
 
         <button class="btn sell" @click="sellItem">Sell ({{ item.value }})</button>
@@ -82,20 +100,29 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { getRarityColor, getRarityLabel } from "../../game/utils/rarity";
 import { getGame, removeItem, equipTool, openItem, equipItem, } from "../../game/state/gameState";
 import LootModal from "./LootModal.vue";
 import { isEquiped, isLocked } from "../../game/helpers/gameHelpers";
+import { useItem } from "../../game/ItemUseEngine";
 
 const lootVisible = ref(false);
 const lootResults = ref([]);
+const quantity = ref(1);
 
 const props = defineProps({
   item: Object,
   locked: Boolean,
   visible: Boolean,
 });
+
+watch(
+  () => props.visible,
+  (v) => {
+    if (v) quantity.value = 1;
+  }
+);
 
 const emits = defineEmits(["close"]);
 
@@ -112,45 +139,7 @@ const skillId = computed(() => item.value?.skill);
 const isEquipped = computed(() => isEquiped(item.value));
 const locked = computed(() => isLocked(item.value));
 
-// /* Equipped? */
-// const isEquipped = computed(() => {
-//   const player = game.player;
-//   const item = props.item;
-
-//   if (!item) return false;
-
-//   // 1) Tools
-//   if (isTool.value) {
-//     return player.equippedTools?.[skillId.value] === item.id;
-//   }
-
-//   // 2) Equipment (armor / weapon / offhand / misc)
-//   if (item.slot) {
-//     return player.equipment?.[item.slot] === item.id;
-//   }
-
-//   return false;
-// });
-
-// const isLocked = computed(() => {
-//   const item = props.item;
-//   if (!item) return false;
-
-//   const required = item.stats?.requiresLevel ?? 1;
-
-//   const skillKey = isTool.value
-//     ? skillId.value
-//     : item.skill;
-
-//   if (!skillKey) {
-//     return false;
-//   }
-
-//   const playerLevel = game.skills?.[skillKey]?.level ?? 1;
-
-//   return playerLevel < required;
-// });
-
+const isConsumable = computed(() => item.value?.use?.type);
 
 /* Rarity */
 const rarityColor = computed(() => getRarityColor(item.value?.rarity));
@@ -201,6 +190,10 @@ const final = computed(() => {
   };
 });
 
+const maxQuantity = computed(() => {
+  return game.inventory[item.value.id] ?? 0;
+});
+
 /* ACTIONS */
 function close() {
   emits("close");
@@ -222,13 +215,13 @@ function unequip() {
 
 function destroyItem() {
   if (confirm(`Destroy ${item.value.name}?`)) {
-    removeItem(item.value.id, 1, "destroy");
+    removeItem(item.value.id, quantity.value, "destroy");
     close();
   }
 }
 
 function sellItem() {
-  removeItem(item.value.id, 1, "sell");
+  removeItem(item.value.id, quantity.value, "sell");
   close();
 }
 
@@ -243,6 +236,12 @@ function openThisItem() {
   // close inspect modal so spam is impossible
   close();
 }
+
+function consume() {
+  useItem(item.value.id, quantity.value);
+  close();
+}
+
 </script>
 
 <style scoped>
@@ -382,9 +381,61 @@ function openThisItem() {
   color: #7fd6ff;
 }
 
+.use {
+  background: rgba(0, 26, 255, 0.25);
+  border: 1px solid blueviolet;
+  color: white;
+}
+
 .open:disabled {
   opacity: 0.4;
   cursor: not-allowed;
   filter: grayscale(1);
+}
+
+.quantity-box {
+  margin: 12px auto 18px;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.quantity-controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quantity-controls input {
+  width: 60px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 6px;
+}
+
+.quantity-max {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.quantity-max:hover {
+  opacity: 1;
 }
 </style>

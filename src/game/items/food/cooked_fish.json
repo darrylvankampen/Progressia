@@ -7,9 +7,11 @@
         "icon": "/icons/items/food/cooked_shrimp.png",
         "rarity": "common",
         "value": 4,
+        "use": {
+            "type": "heal",
+            "amount": 3
+        },
         "stats": {
-            "consumable": true,
-            "healAmount": 3,
             "cooldownMs": 1500,
             "cooldownKey": "food"
         }
@@ -22,9 +24,11 @@
         "icon": "/icons/items/food/cooked_trout.png",
         "rarity": "common",
         "value": 12,
+        "use": {
+            "type": "heal",
+            "amount": 8
+        },
         "stats": {
-            "consumable": true,
-            "healAmount": 8,
             "cooldownMs": 1500,
             "cooldownKey": "food"
         }
@@ -37,9 +41,11 @@
         "icon": "/icons/items/food/cooked_salmon.png",
         "rarity": "common",
         "value": 16,
+        "use": {
+            "type": "heal",
+            "amount": 10
+        },
         "stats": {
-            "consumable": true,
-            "healAmount": 10,
             "cooldownMs": 1500,
             "cooldownKey": "food"
         }
@@ -52,9 +58,11 @@
         "icon": "/icons/items/food/cooked_lobster.png",
         "rarity": "uncommon",
         "value": 30,
+        "use": {
+            "type": "heal",
+            "amount": 15
+        },
         "stats": {
-            "consumable": true,
-            "healAmount": 15,
             "cooldownMs": 1500,
             "cooldownKey": "food"
         }
@@ -67,9 +75,11 @@
         "icon": "/icons/items/food/cooked_swordfish.png",
         "rarity": "uncommon",
         "value": 40,
+        "use": {
+            "type": "heal",
+            "amount": 18
+        },
         "stats": {
-            "consumable": true,
-            "healAmount": 18,
             "cooldownMs": 1500,
             "cooldownKey": "food"
         }
