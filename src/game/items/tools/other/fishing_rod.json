@@ -1,0 +1,14 @@
+{
+    "id": "fishing_rod",
+    "name": "Fishing Rod",
+    "category": "tools",
+    "description": "A basic fishing rod used to catch fish.",
+    "icon": "/icons/items/tools/fishing_rod.png",
+    "rarity": "common",
+    "value": 25,
+    "skill": "fishing",
+    "stats": {
+        "tool": true,
+        "requiredLevel": 1
+    }
+}

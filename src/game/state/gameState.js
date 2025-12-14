@@ -35,11 +35,14 @@ import { recalculateModifiers } from "../modifierEngine";
 import { getBuffDef, rebuildDynamicBuffDefs, registerDynamicBuff } from "../utils/buffDB";
 import { checkAchievements } from "../achievements/achievementEngine";
 import { rollFromLootTable } from "../utils/lootTables";
-import { validateAmount } from "../helpers/gameHelpers";
+import { validateAmount, getItemName } from "../helpers/gameHelpers";
 import { resetPrestige } from "../prestiges/prestigesEngine";
 import { startNextInQueue, tickCrafting } from "../crafting/craftingEngine";
 
-const { pushNotification } = useNotifications();
+function notify(payload) {
+  const { pushNotification } = useNotifications();
+  pushNotification("gameState", payload);
+}
 
 /* ============================================================================
  * INTERNAL STATE
@@ -457,12 +460,13 @@ export function addItem(itemKey, amount = 1) {
   checkAchievements();
 
   // Notify UI
-  pushNotification(itemKey, {
-    type: "resources",
+  notify({
+    type: "resource",
+    message: `You found ${amount} ${getItemName(itemKey)}`,
     icon: item.icon,
     amount,
     item: item.name
-  });
+  })
 
   saveGame();
 }

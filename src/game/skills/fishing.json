@@ -1,17 +1,64 @@
 {
-  "id": "fishing",
-  "name": "Fishing",
-  "icon": "/icons/skills/fishing.png",
-  "level": 1,
-  "skillType": "idle",
-  "xp": 0,
-  "xpToNext": 100,
-  "totalXp": 0,
-  "actionTime": 3000,
-  "resource": "",
-  "xpGain": 10,
-  "amountGain": 1,
-  "isActive": false,
-  "wasActive": false,
-  "isIdle": true
+    "id": "fishing",
+    "name": "Fishing",
+    "icon": "/icons/skills/fishing.png",
+    "skillType": "idle",
+    "maxLevel": 120,
+    "actions": [
+        {
+            "id": "fish_shrimp",
+            "name": "Catch Shrimp",
+            "requiredLevel": 1,
+            "baseTime": 2000,
+            "xpGain": 3,
+            "resource": "raw_shrimp",
+            "amountBase": 1,
+            "toolRequired": "fishing_rod",
+            "rareDrops": []
+        },
+        {
+            "id": "fish_trout",
+            "name": "Catch Trout",
+            "requiredLevel": 20,
+            "baseTime": 2400,
+            "xpGain": 7,
+            "resource": "raw_trout",
+            "amountBase": 1,
+            "toolRequired": "fishing_rod",
+            "rareDrops": []
+        },
+        {
+            "id": "fish_salmon",
+            "name": "Catch Salmon",
+            "requiredLevel": 30,
+            "baseTime": 2600,
+            "xpGain": 10,
+            "resource": "raw_salmon",
+            "amountBase": 1,
+            "toolRequired": "fishing_rod",
+            "rareDrops": []
+        },
+        {
+            "id": "fish_lobster",
+            "name": "Catch Lobster",
+            "requiredLevel": 40,
+            "baseTime": 3000,
+            "xpGain": 15,
+            "resource": "raw_lobster",
+            "amountBase": 1,
+            "toolRequired": "fishing_rod",
+            "rareDrops": []
+        },
+        {
+            "id": "fish_swordfish",
+            "name": "Catch Swordfish",
+            "requiredLevel": 50,
+            "baseTime": 3400,
+            "xpGain": 20,
+            "resource": "raw_swordfish",
+            "amountBase": 1,
+            "toolRequired": "fishing_rod",
+            "rareDrops": []
+        }
+    ]
 }

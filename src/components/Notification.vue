@@ -58,13 +58,11 @@ function resolveColor(n) {
 
 .notification {
   transform: translateX(-8px);
-  /* <-- BELANGRIJK */
   width: fit-content;
   pointer-events: none;
   max-height: 40px;
 }
 
-/* Your visible bubble */
 .content {
   padding: 4px 10px;
   border-radius: 6px;
@@ -86,19 +84,15 @@ function resolveColor(n) {
   color: #fff;
   pointer-events: auto;
 
-  /* ❌ Verwijderd: min-width: 100%; */
   width: max-content;
-  /* ⬅ Nieuw: bubble past zich aan content aan */
   max-width: 240px;
-  /* ⬅ zodat hij niet groter dan je limit wordt */
   white-space: nowrap;
-  /* ⬅ geen wrap */
 }
 
 /* SUPER SMALL ICON */
 .icon-img {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   filter: drop-shadow(0 0 1px var(--accent));
 }
 

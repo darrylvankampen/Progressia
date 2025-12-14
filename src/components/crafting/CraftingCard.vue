@@ -1,8 +1,16 @@
 <template>
   <div class="craft-card">
     <div class="craft-header">
-      <h4 class="craft-title">{{ recipe.name }}</h4>
-      <div class="xp-badge">{{ recipe.xp }} XP</div>
+      <h4 class="craft-title">
+        {{ recipe.name }}
+        <span v-if="isLocked" class="locked-tag">
+          🔒 Lv. {{ requiredLevel }}
+        </span>
+      </h4>
+
+      <div class="xp-badge" v-if="!isLocked">
+        {{ recipe.xp }} XP
+      </div>
     </div>
 
     <!-- INPUTS -->
@@ -44,6 +52,7 @@ import { computed } from "vue";
 import { getItem } from "../../game/utils/itemDB";
 import { getRarityColor } from "../../game/utils/rarity";
 import { maxCraftAmount } from "../../game/crafting/craftingEngine";
+import { getGame } from "../../game/state/gameState";
 
 const props = defineProps({
   recipe: Object,
@@ -65,7 +74,20 @@ const outputItems = computed(() =>
   }))
 );
 
+const game = computed(() => getGame());
+
+const playerLevel = computed(() => {
+  const skill = props.recipe.skill;
+  return game.value.skills?.[skill]?.level ?? 1;
+});
+
+const requiredLevel = computed(() => props.recipe.requiredLevel ?? 1);
+
+const isLocked = computed(() => playerLevel.value < requiredLevel.value);
+
 const isDisabled = (opt) => {
+  if (isLocked.value) return true;
+
   if (opt.qty === "max") {
     return maxCraftAmount(props.recipe) <= 0;
   }
@@ -230,5 +252,20 @@ const isDisabled = (opt) => {
   opacity: 0.4;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+.locked-tag {
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  background: linear-gradient(145deg, #5a2a2a, #3a1a1a);
+  border: 1px solid #ff7a7a88;
+  color: #ffb3b3;
+
+  box-shadow: 0 0 8px rgba(255, 120, 120, 0.4);
 }
 </style>

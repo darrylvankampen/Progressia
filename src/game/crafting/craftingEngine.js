@@ -6,6 +6,7 @@
 import { getGame, saveGame, addItem, removeItem, addXp } from "../state/gameState";
 import { useNotifications } from "../../composables/useNotification";
 import { getFinalStats } from "../modifierEngine";
+import { getItemName } from "../helpers/gameHelpers";
 
 // Guard to prevent finishing the same craft multiple times in one tick
 let finishing = false;
@@ -275,25 +276,83 @@ export function finishActiveCraft() {
     return false;
   }
 
-  // Consume inputs
+  // ---------------------------------------------------------------------------
+  // Consume inputs (always, for entire batch)
+  // ---------------------------------------------------------------------------
   for (const input of recipe.inputs) {
     removeItem(input.item, input.amount * quantity);
   }
 
-  // Produce outputs
-  for (const output of recipe.outputs) {
-    addItem(output.item, output.amount * quantity);
+  // ---------------------------------------------------------------------------
+  // Burn calculation (PER ITEM)
+  // ---------------------------------------------------------------------------
+  const hasBurn = !!(recipe.burnLevel && recipe.failOutputs?.length);
+  const burnChance = hasBurn ? getBurnChance(recipe) : 0;
+
+  let successCount = quantity;
+  let burnCount = 0;
+
+  if (hasBurn && burnChance > 0) {
+    successCount = 0;
+    burnCount = 0;
+
+    for (let i = 0; i < quantity; i++) {
+      if (Math.random() < burnChance) burnCount++;
+      else successCount++;
+    }
   }
 
-  // Award XP
+  // ---------------------------------------------------------------------------
+  // Outputs
+  // ---------------------------------------------------------------------------
+  if (burnCount > 0) {
+    for (const output of recipe.failOutputs) {
+      addItem(output.item, output.amount * burnCount);
+    }
+  }
+
+  if (successCount > 0) {
+    for (const output of recipe.outputs) {
+      addItem(output.item, output.amount * successCount);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // XP calculation
+  // ---------------------------------------------------------------------------
   if (recipe.skill && recipe.xp) {
     const { xp } = getFinalStats(recipe.skill);
-    addXp(recipe.skill, recipe.xp * quantity * (xp ?? 1));
+    const xpMult = xp ?? 1;
+
+    const successXp = recipe.xp * successCount;
+    const burnXp = Math.floor(recipe.xp * 0.25) * burnCount;
+
+    addXp(recipe.skill, (successXp + burnXp) * xpMult);
   }
 
-  notify({ type: "success", message: `Crafted ${quantity}× ${recipe.name}` });
+  // ---------------------------------------------------------------------------
+  // Notifications
+  // ---------------------------------------------------------------------------
+  if (burnCount > 0 && successCount > 0) {
+    notify({
+      type: "warning",
+      message: `Cooked ${successCount}× successfully, burned ${burnCount}× ${recipe.name}.`,
+    });
+  } else if (burnCount > 0) {
+    notify({
+      type: "warning",
+      message: `You burn ${burnCount}× ${recipe.name}.`,
+    });
+  } else {
+    notify({
+      type: "success",
+      message: `Crafted ${successCount}× ${recipe.name}`,
+    });
+  }
 
+  // ---------------------------------------------------------------------------
   // Advance queue
+  // ---------------------------------------------------------------------------
   game.crafting.queue.shift();
   game.crafting.active = null;
   game.isCrafting = false;
@@ -336,6 +395,7 @@ export function canCraft(recipe, qty = 1) {
 
   const q = Math.max(Math.floor(qty), 0);
   if (!recipe || q <= 0) return false;
+  if (!hasRequiredLevel(recipe)) return false;
 
   return recipe.inputs.every((input) => {
     const have = game.inventory?.[input.item] || 0;
@@ -348,6 +408,7 @@ export function maxCraftAmount(recipe) {
   ensureCraftingState(game);
 
   if (!recipe?.inputs?.length) return 0;
+  if (!hasRequiredLevel(recipe)) return 0;
 
   let max = Infinity;
   for (const input of recipe.inputs) {
@@ -356,6 +417,27 @@ export function maxCraftAmount(recipe) {
   }
 
   return Math.max(max, 0);
+}
+
+function hasRequiredLevel(recipe) {
+  const game = getGame();
+  ensureCraftingState(game);
+
+  const level = game.skills?.[recipe.skill]?.level || 0;
+  return level >= recipe.requiredLevel;
+}
+
+function getBurnChance(recipe) {
+  const game = getGame();
+  ensureCraftingState(game);
+
+  const playerLevel = game.skills?.[recipe.skill]?.level || 0;
+  const burnLevel = recipe.burnLevel || 0;
+
+  if (playerLevel >= burnLevel) return 0;
+
+  const diff = burnLevel - playerLevel;
+  return Math.min(0.35, diff * 0.02);
 }
 
 // Convenience wrappers

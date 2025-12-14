@@ -1,0 +1,52 @@
+[
+    {
+        "id": "raw_shrimp",
+        "name": "Raw Shrimp",
+        "category": "resources",
+        "description": "A small raw shrimp, freshly caught.",
+        "icon": "/icons/items/resources/fishing/raw_shrimp.png",
+        "rarity": "common",
+        "value": 2,
+        "stats": {}
+    },
+    {
+        "id": "raw_trout",
+        "name": "Raw Trout",
+        "category": "resources",
+        "description": "A raw trout. Can be cooked for food.",
+        "icon": "/icons/items/resources/fishing/raw_trout.png",
+        "rarity": "common",
+        "value": 6,
+        "stats": {}
+    },
+    {
+        "id": "raw_salmon",
+        "name": "Raw Salmon",
+        "category": "resources",
+        "description": "A raw salmon, rich in nutrients.",
+        "icon": "/icons/items/resources/fishing/raw_salmon.png",
+        "rarity": "common",
+        "value": 9,
+        "stats": {}
+    },
+    {
+        "id": "raw_lobster",
+        "name": "Raw Lobster",
+        "category": "resources",
+        "description": "A large raw lobster. Requires skill to cook.",
+        "icon": "/icons/items/resources/fishing/raw_lobster.png",
+        "rarity": "uncommon",
+        "value": 18,
+        "stats": {}
+    },
+    {
+        "id": "raw_swordfish",
+        "name": "Raw Swordfish",
+        "category": "resources",
+        "description": "A powerful raw fish prized by adventurers.",
+        "icon": "/icons/items/resources/fishing/raw_swordfish.png",
+        "rarity": "uncommon",
+        "value": 25,
+        "stats": {}
+    }
+]

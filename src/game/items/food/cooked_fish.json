@@ -1,0 +1,77 @@
+[
+    {
+        "id": "cooked_shrimp",
+        "name": "Cooked Shrimp",
+        "category": "food",
+        "description": "A small cooked shrimp. Restores a little health.",
+        "icon": "/icons/items/food/cooked_shrimp.png",
+        "rarity": "common",
+        "value": 4,
+        "stats": {
+            "consumable": true,
+            "healAmount": 3,
+            "cooldownMs": 1500,
+            "cooldownKey": "food"
+        }
+    },
+    {
+        "id": "cooked_trout",
+        "name": "Cooked Trout",
+        "category": "food",
+        "description": "A cooked trout. A solid meal for adventurers.",
+        "icon": "/icons/items/food/cooked_trout.png",
+        "rarity": "common",
+        "value": 12,
+        "stats": {
+            "consumable": true,
+            "healAmount": 8,
+            "cooldownMs": 1500,
+            "cooldownKey": "food"
+        }
+    },
+    {
+        "id": "cooked_salmon",
+        "name": "Cooked Salmon",
+        "category": "food",
+        "description": "A cooked salmon, filling and nutritious.",
+        "icon": "/icons/items/food/cooked_salmon.png",
+        "rarity": "common",
+        "value": 16,
+        "stats": {
+            "consumable": true,
+            "healAmount": 10,
+            "cooldownMs": 1500,
+            "cooldownKey": "food"
+        }
+    },
+    {
+        "id": "cooked_lobster",
+        "name": "Cooked Lobster",
+        "category": "food",
+        "description": "A tasty cooked lobster. Restores a good amount of health.",
+        "icon": "/icons/items/food/cooked_lobster.png",
+        "rarity": "uncommon",
+        "value": 30,
+        "stats": {
+            "consumable": true,
+            "healAmount": 15,
+            "cooldownMs": 1500,
+            "cooldownKey": "food"
+        }
+    },
+    {
+        "id": "cooked_swordfish",
+        "name": "Cooked Swordfish",
+        "category": "food",
+        "description": "A hearty cooked swordfish, favored by seasoned fighters.",
+        "icon": "/icons/items/food/cooked_swordfish.png",
+        "rarity": "uncommon",
+        "value": 40,
+        "stats": {
+            "consumable": true,
+            "healAmount": 18,
+            "cooldownMs": 1500,
+            "cooldownKey": "food"
+        }
+    }
+]

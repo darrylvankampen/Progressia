@@ -1,0 +1,8 @@
+{
+    "id": "cooking",
+    "name": "Cooking",
+    "icon": "/icons/skills/cooking.png",
+    "skillType": "utility",
+    "maxLevel": 120,
+    "actions": []
+}

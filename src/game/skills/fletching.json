@@ -2,7 +2,7 @@
   "id": "fletching",
   "name": "Fletching",
   "icon": "/icons/skills/fletching.png",
-  "skillType": "idle",
+  "skillType": "utility",
   "maxLevel": 120,
   "actions": []
 }

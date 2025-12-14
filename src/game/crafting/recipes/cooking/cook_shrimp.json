@@ -1,0 +1,29 @@
+{
+    "id": "cook_shrimp",
+    "name": "Cook Shrimp",
+    "icon": "/icons/items/food/cooked_shrimp.png",
+    "category": "cooking",
+    "time": 2000,
+    "inputs": [
+        {
+            "item": "raw_shrimp",
+            "amount": 1
+        }
+    ],
+    "outputs": [
+        {
+            "item": "cooked_shrimp",
+            "amount": 1
+        }
+    ],
+    "failOutputs": [
+        {
+            "item": "burned_food",
+            "amount": 1
+        }
+    ],
+    "xp": 4,
+    "skill": "cooking",
+    "requiredLevel": 1,
+    "burnLevel": 5
+}

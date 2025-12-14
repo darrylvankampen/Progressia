@@ -13,10 +13,17 @@ import {
 } from "./modifierEngine";
 import { combatTick } from "./combat/combatEngine";
 import { tickCrafting } from "./crafting/craftingEngine";
+import { useNotifications } from "../composables/useNotification";
+import { getItemName } from "./helpers/gameHelpers";
 
 const GAME_TICK = 350;
 const CRAFTING_TICK = 200;
 const COMBAT_TICK = 150;
+
+function notify(payload) {
+  const { pushNotification } = useNotifications();
+  pushNotification("skill", payload);
+}
 
 
 /**
@@ -125,7 +132,6 @@ function computeEffectiveStats(skillKey, baseVals) {
 
   // AMOUNT MULTIPLIER
   const amountGain = Math.floor(baseVals.baseAmount * stats.amount);
-  console.log(amountGain)
   return {
     actionTime,
     xpGain,
@@ -283,6 +289,14 @@ export function startAction(skillKey, action) {
 
   const skill = game.skills[skillKey];
   if (!skill || !action) return;
+
+  if (actionHasToolRequired(action)) {
+    notify({
+      type: "info",
+      message: `You need a ${getItemName(action.toolRequired)} to perform this action.`,
+    })
+    return;
+  }
 
   skill.currentActionId = action.id;
 
@@ -513,6 +527,10 @@ function stopAllSkills(except = null) {
   } else {
     game.activeSkill = null;
   }
+}
+
+function actionHasToolRequired(action) {
+  return action.toolRequired && !getGame().inventory[action.toolRequired];
 }
 
 /* ============================================================================

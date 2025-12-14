@@ -1,0 +1,22 @@
+{
+    "id": "cook_salmon",
+    "name": "Cook Salmon",
+    "icon": "/icons/items/food/cooked_salmon.png",
+    "category": "cooking",
+    "time": 2400,
+    "inputs": [
+        {
+            "item": "raw_salmon",
+            "amount": 1
+        }
+    ],
+    "outputs": [
+        {
+            "item": "cooked_salmon",
+            "amount": 1
+        }
+    ],
+    "xp": 11,
+    "skill": "cooking",
+    "requiredLevel": 30
+}

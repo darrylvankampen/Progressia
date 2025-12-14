@@ -1,0 +1,28 @@
+{
+    "id": "cook_swordfish",
+    "name": "Cook Swordfish",
+    "icon": "/icons/items/food/cooked_swordfish.png",
+    "category": "cooking",
+    "time": 3200,
+    "inputs": [
+        {
+            "item": "raw_swordfish",
+            "amount": 1
+        }
+    ],
+    "outputs": [
+        {
+            "item": "cooked_swordfish",
+            "amount": 1
+        }
+    ],
+    "failOutputs": [
+        {
+            "item": "burned_food",
+            "amount": 1
+        }
+    ],
+    "xp": 21,
+    "skill": "cooking",
+    "requiredLevel": 50
+}

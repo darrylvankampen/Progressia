@@ -53,7 +53,7 @@
                 <div class="hp-bar">
                     <div class="hp-fill player" :style="{ width: playerHpPercent + '%' }"></div>
                 </div>
-                <div class="hp-text">{{ combat.playerHp }} / {{ combat.maxPlayerHp }}</div>
+                <div class="hp-text">{{ game.player.hp }} / {{ game.player.maxHp }}</div>
             </div>
 
             <div class="hp-block card-style">
@@ -89,6 +89,18 @@
             <button class="btn" @click="returnToWorld">Return</button>
         </div>
 
+        <div class="food-bar card-style" v-if="foodItems.length">
+            <h4>Food</h4>
+
+            <div class="food-buttons">
+                <button v-for="food in foodItems" :key="food.id" class="btn food" :disabled="!canUseItem(food.id).ok"
+                    @click="useItem(food.id, 1)">
+                    <img :src="food.icon" />
+                    <span>{{ food.amount }}</span>
+                </button>
+            </div>
+        </div>
+
         <!-- ACTION BUTTONS -->
         <div v-else class="actions card-style">
             <button class="btn flee" @click="flee">Flee</button>
@@ -106,9 +118,13 @@
 import { computed } from "vue";
 import { startCombat, getCurrentCombat, stopCombat } from "../game/combat/CombatEngine";
 import { getEnemy, getAllEnemies } from "../game/utils/enemyDB";
+import { canUseItem, useItem } from "../game/ItemUseEngine";
+import { getGame } from "../game/state/gameState";
+import { getItem } from "../game/utils/itemDB";
 
 // enemy list
 const enemies = getAllEnemies();
+const game = computed(() => getGame());
 
 // reactive combat state
 const combat = computed(() => getCurrentCombat());
@@ -117,17 +133,33 @@ const combat = computed(() => getCurrentCombat());
 const enemy = computed(() => combat.value ? getEnemy(combat.value.enemyId) : null);
 const enemyIcon = computed(() => enemy.value?.icon || "/icons/resources/placeholder.png");
 
-console.log(enemies)
-
 // % bars
 const playerHpPercent = computed(() => {
-    if (!combat.value) return 0;
-    return Math.max(0, (combat.value.playerHp / combat.value.maxPlayerHp) * 100);
+    if (!game.value?.player) return 0;
+    return Math.max(
+        0,
+        (game.value.player.hp / game.value.player.maxHp) * 100
+    );
 });
 
 const enemyHpPercent = computed(() => {
     if (!combat.value) return 0;
     return Math.max(0, (combat.value.enemyHp / combat.value.maxEnemyHp) * 100);
+});
+
+const foodItems = computed(() => {
+    const inv = game.value?.inventory || {};
+    return Object.keys(inv)
+        .map(id => getItem(id))
+        .filter(item =>
+            item?.stats?.consumable &&
+            item?.stats?.healAmount &&
+            inv[item.id] > 0
+        )
+        .map(item => ({
+            ...item,
+            amount: game.value.inventory[item.id]
+        }));
 });
 
 // start fight
@@ -387,5 +419,21 @@ function returnToWorld() {
 
 .btn:hover {
     box-shadow: 0 0 8px #8ab5ff55;
+}
+
+.food-bar {
+    padding: 14px;
+}
+
+.food-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn.food {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 </style>

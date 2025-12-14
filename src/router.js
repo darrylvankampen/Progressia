@@ -16,6 +16,7 @@ const routes = [
   { path: "/inventory", component: InventoryPage },
   { path: "/skill/crafting", component: CraftingPage, props: { skill: "crafting" } },
   { path: "/skill/fletching", component: CraftingPage, props: { skill: "fletching" } },
+  { path: "/skill/cooking", component: CraftingPage, props: { skill: "cooking" } },
   { path: "/shop", component: ShopPage },
   { path: "/settings", component: SettingsPage },
   { path: "/factions/:id", component: FactionPage, props: true },

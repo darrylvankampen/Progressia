@@ -1,0 +1,12 @@
+{
+    "id": "burned_food",
+    "name": "Burned Food",
+    "category": "food",
+    "description": "Completely burned. It is inedible.",
+    "icon": "/icons/items/food/burned_food.png",
+    "rarity": "common",
+    "value": 0,
+    "stats": {
+        "consumable": false
+    }
+}
