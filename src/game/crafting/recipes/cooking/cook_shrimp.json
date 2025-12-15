@@ -25,5 +25,6 @@
     "xp": 4,
     "skill": "cooking",
     "requiredLevel": 1,
-    "burnLevel": 5
+    "burnLevel": 5,
+    "cancelPolicy": "partial"
 }

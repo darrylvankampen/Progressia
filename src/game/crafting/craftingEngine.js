@@ -6,7 +6,6 @@
 import { getGame, saveGame, addItem, removeItem, addXp } from "../state/gameState";
 import { useNotifications } from "../../composables/useNotification";
 import { getFinalStats } from "../modifierEngine";
-import { getItemName } from "../helpers/gameHelpers";
 
 // Guard to prevent finishing the same craft multiple times in one tick
 let finishing = false;
@@ -73,26 +72,145 @@ function resetCraftUI(game) {
 // QUEUE MANAGEMENT
 // ============================================================================
 
+// export function addToQueue(recipe, quantity = 1) {
+//   const game = getGame();
+//   ensureCraftingState(game);
+
+//   const qty = Math.max(quantity);
+
+//   if (!recipe || qty <= 0) return false;
+
+//   const q = game.crafting.queue;
+//   const last = q.length > 0 ? q[q.length - 1] : null;
+
+//   if (last && isSameRecipe(last.recipe, recipe)) {
+//     last.quantity = Math.max(1, Math.floor(last.quantity) + qty);
+//     notify({
+//       type: "info",
+//       message: `Queue updated: ${recipe.name} is now ${last.quantity}×.`,
+//     });
+//     // If nothing is currently crafting, immediately try to start
+//     if (!game.crafting.active) startNextInQueue();
+//     saveGame();
+//     return true;
+//   }
+
+//   // Push job into queue
+//   game.crafting.queue.push({
+//     recipe,
+//     quantity: qty,
+//   });
+
+//   // If nothing is currently crafting, immediately try to start
+//   if (!game.crafting.active) {
+//     startNextInQueue();
+//   }
+
+//   saveGame();
+//   return true;
+// }
+
 export function addToQueue(recipe, quantity = 1) {
   const game = getGame();
   ensureCraftingState(game);
 
-  if (!recipe || quantity <= 0) return false;
+  const qty = Math.max(1, Math.floor(quantity));
+  if (!recipe || qty <= 0) return false;
 
-  // Push job into queue
-  game.crafting.queue.push({
-    recipe,
-    quantity: Math.floor(quantity),
-  });
+  // ------------------------------------------------------------
+  // A) If currently crafting the SAME recipe → extend active craft
+  // ------------------------------------------------------------
+  const active = game.crafting.active;
+  if (active && isSameRecipe(active.recipe, recipe)) {
+    // Need extra inputs now (because we reserve at start)
+    const extraReserved = computeReservedInputs(recipe, qty);
 
-  // If nothing is currently crafting, immediately try to start
-  if (!game.crafting.active) {
-    startNextInQueue();
+    // If we can't afford extra inputs, refuse (no silent partial)
+    if (!subtractInventoryOrFail(game, extraReserved)) {
+      notify({ type: "warning", message: "Not enough materials to add more to the active craft." });
+      saveGame();
+      return false;
+    }
+
+    // Merge reserved inputs (sum by item id)
+    if (!Array.isArray(active.reservedInputs)) active.reservedInputs = [];
+    for (const add of extraReserved) {
+      const existing = active.reservedInputs.find(x => x.item === add.item);
+      if (existing) existing.amount += add.amount;
+      else active.reservedInputs.push({ ...add });
+    }
+
+    // Extend quantity + totalTime without resetting startAt
+    const oldQty = active.quantity;
+    active.quantity = Math.max(1, Math.floor(oldQty) + qty);
+
+    const extraTime = computeTotalTimeMs(recipe, qty);
+    active.totalTime = Math.max(0, (active.totalTime || 0) + extraTime);
+
+    // Keep remaining/progress consistent immediately
+    const elapsed = Math.max(getNow() - active.startAt, 0);
+    game.craftingTimeRemaining = Math.max(active.totalTime - elapsed, 0);
+    game.craftingProgress = active.totalTime > 0
+      ? Math.min((elapsed / active.totalTime) * 100, 100)
+      : 100;
+
+    notify({
+      type: "info",
+      message: `Active craft updated: ${recipe.name} is now ${active.quantity}×.`,
+    });
+
+    saveGame();
+    return true;
   }
+
+  // ------------------------------------------------------------
+  // B) If craft is active but different → merge into NEXT job (queue[0])
+  // ------------------------------------------------------------
+  const q = game.crafting.queue;
+
+  if (active && q.length > 0 && isSameRecipe(q[0].recipe, recipe)) {
+    q[0].quantity = Math.max(1, Math.floor(q[0].quantity) + qty);
+
+    notify({
+      type: "info",
+      message: `Queue updated: ${recipe.name} is now ${q[0].quantity}× (next).`,
+    });
+
+    saveGame();
+    return true;
+  }
+
+  // ------------------------------------------------------------
+  // C) Otherwise: merge with last entry (nice cleanup)
+  // ------------------------------------------------------------
+  const last = q.length > 0 ? q[q.length - 1] : null;
+
+  if (last && isSameRecipe(last.recipe, recipe)) {
+    last.quantity = Math.max(1, Math.floor(last.quantity) + qty);
+
+    notify({
+      type: "info",
+      message: `Queue updated: ${recipe.name} is now ${last.quantity}×.`,
+    });
+
+    // If nothing is currently crafting, immediately try to start
+    if (!game.crafting.active) startNextInQueue();
+
+    saveGame();
+    return true;
+  }
+
+  // ------------------------------------------------------------
+  // D) New job
+  // ------------------------------------------------------------
+  q.push({ recipe, quantity: qty });
+
+  if (!game.crafting.active) startNextInQueue();
 
   saveGame();
   return true;
 }
+
 
 /**
  * Attempts to start the next valid craft in the queue.
@@ -151,6 +269,19 @@ export function startCraft(recipe, quantity = 1) {
   const qty = Math.floor(quantity);
   if (!canCraft(recipe, qty)) return false;
 
+  // Reserved inputs at start (prevents exploits)
+  const reserved = recipe.inputs.map(input => ({
+    item: input.item,
+    amount: input.amount * qty,
+  }));
+  // Remove items now; if something goes wrong, rollback
+  for (const r of reserved) {
+    const have = game.inventory?.[r.item] || 0;
+    if (have < r.amount) return false; // safety (shouldn't happen due to canCraft)
+  }
+
+  for (const r of reserved) removeItem(r.item, r.amount);
+
   const totalTime = computeTotalTimeMs(recipe, qty);
 
   // Snapshot active craft (timestamp-based, offline-safe)
@@ -160,6 +291,7 @@ export function startCraft(recipe, quantity = 1) {
     quantity: qty,
     startAt: getNow(),
     totalTime,
+    reservedInputs: reserved,
   };
 
   game.isCrafting = true;
@@ -259,28 +391,16 @@ export function finishActiveCraft() {
     return false;
   }
 
-  // Validate materials again before consuming
-  if (!canCraft(recipe, quantity)) {
-    notify({
-      type: "warning",
-      message: `Craft cancelled: missing materials for ${recipe.name}.`,
-    });
-
+  // If reserved inputs are missing for some reason, cancel safely
+  if (!active.reservedInputs?.length) {
+    notify({ type: "warning", message: `Craft cancelled: missing reserved materials for ${recipe.name}.` });
     game.crafting.queue.shift();
     game.crafting.active = null;
     game.isCrafting = false;
     resetCraftUI(game);
-
     saveGame();
     startNextInQueue();
     return false;
-  }
-
-  // ---------------------------------------------------------------------------
-  // Consume inputs (always, for entire batch)
-  // ---------------------------------------------------------------------------
-  for (const input of recipe.inputs) {
-    removeItem(input.item, input.amount * quantity);
   }
 
   // ---------------------------------------------------------------------------
@@ -371,7 +491,35 @@ export function cancelCraft() {
   const game = getGame();
   ensureCraftingState(game);
 
-  if (!game.crafting.active) return false;
+  const active = game.crafting.active
+  if (!active) return false;
+
+  const recipe = active.recipe;
+  const policy = getCancelPolicy(recipe);
+
+  const elapsed = Math.max(getNow() - active.startAt, 0);
+  const progress = active.totalTime > 0 ? Math.min(elapsed / active.totalTime, 1) : 1;
+
+  const reserved = active.reservedInputs ?? [];
+  const refunds = [];
+
+  if (policy === "full") {
+    // REFUND EVERYTHING
+    for (const r of reserved) {
+      addItem(r.item, r.amount);
+      refunds.push({ item: r.item, amount: r.amount });
+    }
+  } else if (policy === "partial") {
+    // proportional refund: remaining fraction
+    const remainingFrac = Math.max(1 - progress, 0);
+    for (const r of reserved) {
+      const amt = Math.floor(r.amount * remainingFrac);
+      if (amt > 0) {
+        addItem(r.item, amt);
+        refunds.push({ item: r.item, amount: amt });
+      }
+    }
+  }
 
   game.crafting.queue.shift();
   game.crafting.active = null;
@@ -379,7 +527,16 @@ export function cancelCraft() {
   resetCraftUI(game);
 
   saveGame();
-  notify({ type: "info", message: "Craft cancelled." });
+  const refundText = formatRefund(refunds);
+  notify({
+    type: "info",
+    message:
+      policy === "none"
+        ? "Craft cancelled."
+        : refundText
+          ? `Craft cancelled. Refunded: ${refundText}.`
+          : "Craft cancelled. No materials refunded.",
+  });
 
   startNextInQueue();
   return true;
@@ -447,3 +604,37 @@ export const craftMax = (recipe) => {
   const max = maxCraftAmount(recipe);
   return max > 0 && addToQueue(recipe, max);
 };
+
+// Cancel helpers
+function getCancelPolicy(recipe) {
+  return recipe?.cancelPolicy ?? "none";
+}
+
+function formatRefund(refundList = []) {
+  return refundList.filter(x => x.amount > 0)
+    .map(x => `${x.amount}x ${x.item}`)
+    .join(", ");
+}
+
+// Same Recipe helper
+function isSameRecipe(a, b) {
+  if (!a || !b) return false;
+  if (a.id && b.id) return a.id === b.id;
+  return a.name === b.name && a.skill === b.skill;
+}
+
+function computeReservedInputs(recipe, qty) {
+  return (recipe.inputs ?? []).map(input => ({
+    item: input.item,
+    amount: (input.amount ?? 0) * qty,
+  }));
+}
+
+function subtractInventoryOrFail(game, reserved) {
+  for (const r of reserved) {
+    const have = game.inventory?.[r.item] || 0;
+    if (have < r.amount) return false;
+  }
+  for (const r of reserved) removeItem(r.item, r.amount);
+  return true;
+}

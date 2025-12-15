@@ -491,22 +491,22 @@ export function removeItem(itemKey, amount = 1, type = "use") {
 
   if (type === "use") {
     game.resourceStats[itemKey].used += amount;
-    incrementPlayerStat("itemsCrafted", 1);
+    incrementPlayerStat("itemsCrafted", amount);
   }
 
   if (type === "sell") {
     const item = getItem(itemKey);
     if (item) {
-      game.player.gold += item.value;
+      game.player.gold += (item.value * amount);
     }
     playSound("sell");
-    incrementPlayerStat("itemsSold", 1);
-    incrementPlayerStat("goldEarned", item.value)
+    incrementPlayerStat("itemsSold", amount);
+    incrementPlayerStat("goldEarned", item.value * amount)
   }
 
   if (type === "destroy") {
     playSound("destroy");
-    incrementPlayerStat("itemsDestroyed", 1);
+    incrementPlayerStat("itemsDestroyed", amount);
   }
 
   // Modify inventory count

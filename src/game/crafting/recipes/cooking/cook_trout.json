@@ -16,7 +16,14 @@
             "amount": 1
         }
     ],
+    "failOutputs": [
+        {
+            "item": "burned_food",
+            "amount": 1
+        }
+    ],
     "xp": 8,
     "skill": "cooking",
-    "requiredLevel": 20
+    "requiredLevel": 20,
+    "cancelPolicy": "partial"
 }

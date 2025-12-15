@@ -14,7 +14,7 @@
         <!-- LEFT SIDE -->
         <div class="left">
           <span class="job-name">{{ job.recipe.name }}</span>
-          <span class="job-qty">× {{ job.quantity }}</span>
+          <span class="job-qty">× {{ quantity }}</span>
         </div>
 
         <!-- RIGHT SIDE -->
@@ -46,16 +46,14 @@ import { cancelCraft, getCraftingStatus } from "../../game/crafting/craftingEngi
 
 const game = getGame();
 
-console.log("ACTIVE", game.crafting.active);
-console.log("QUEUE", game.crafting.queue);
-console.log("IS", game.isCrafting);
+
 
 const queue = computed(() => game.crafting?.queue ?? []);
-
 const status = computed(() => getCraftingStatus());
 
 const isCrafting = computed(() => status.value.isCrafting);
 const progress = computed(() => status.value.progress);
+const quantity = computed(() => status.value.quantity);
 const timeLeft = computed(() =>
   formatTime(status.value.remaining)
 );

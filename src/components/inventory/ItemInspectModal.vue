@@ -90,7 +90,7 @@
 
         <button class="btn destroy" @click="destroyItem">Destroy</button>
 
-        <button class="btn sell" @click="sellItem">Sell ({{ item.value }})</button>
+        <button class="btn sell" @click="sellItem">Sell ({{ item.value * quantity }})</button>
 
         <button class="btn close" @click="close">Close</button>
       </div>
